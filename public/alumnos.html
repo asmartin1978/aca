@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="angularTodo">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  
+</head>
+<body ng-controller="alumnosController">
+
+
+<div ng-include="'navbar.html'"></div>
+
+
+<div class="container">
+    
+      <table class="table table-hover">
+        <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>apellidos</th>
+              <th>cint</th>
+            </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="alumno in alumnos">
+            <td>{{ alumno.nombre }}</td>
+            <td>{{ alumno.apellidos }}</td>
+            <td>{{ alumno.cinturon }}</td>
+          </tr>
+        </tbody>
+      </table>
+
+
+      <form name="userForm" ng-submit="submitForm()" novalidate> <!-- novalidate prevents HTML5 validation since we will be validating ourselves -->
+
+        <!-- NAME -->
+        <div class="form-group">
+            <label>Nombre</label>
+            <input type="text" name="nombre" placeholder = "Nombre del alumno" class="form-control" ng-model="formData.nombre">
+        </div>
+
+        <!-- USERNAME -->
+        <div class="form-group">
+            <label>Apellidos</label>
+            <input type="text" name="apellidos" placeholder = "Apellidos del alumno" ng-model="formData.apellidos" class="form-control">
+        </div>
+
+        <div class="form-group">  
+          <label>Cinturon</label>
+          <select ng-model="formData.cinturon" class="form-control" placeholder = "Graduacion">
+            <option value="blanco">Blanco</option>
+            <option value="azul">Azul</option>
+            <option value="morado">Morado</option>
+            <option value="marron">Marron</option>
+            <option value="negro">Negro</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+            <label>Academia</label>
+            <select ng-model="formData.id_academia" ng-options="item.nombre for item in academias " class="form-control">
+              
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Descripcion</label>
+            <input type="text" name="descripcion" placeholder = "Informacion de interes acerca del alumno" ng-model="formData.descripcion" class="form-control" >
+        </div>
+
+
+        
+
+
+
+        <!-- SUBMIT BUTTON -->
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary">Crear</button>
+        </div>
+
+    </form>
+
+
+
+</div>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="controller.js"></script>
+</body>
+</html>
