@@ -23,6 +23,7 @@ app.use(passport.initialize());
 var mongoose   = require('mongoose');   //Importacion de mongoose
 var Alumno     = require('./app/models/alumno'); // Importacion de la clase 
 var Academia     = require('./app/models/academia'); // Importacion de la clase 
+var Entrenamiento     = require('./app/models/Entrenamiento'); // Importacion de la clase 
 
 
 var dbURI = 'mongodb://user:user@ds149954.mlab.com:49954/bears';  //Cadena de conexion a la BD Mongo
@@ -47,6 +48,12 @@ mongoose.connection.on('disconnected', function () {
 
 app.use(express.static(__dirname + '/public'));
 
+app.use('/calendar', express.static(__dirname + '/node_modules/fullcalendar/dist/'));
+app.use('/jquery', express.static(__dirname + '/node_modules/jquery/dist/'));
+app.use('/moment', express.static(__dirname + '/node_modules/moment/min/'));
+
+
+
 //Seleccion del puerto
 var port = process.env.PORT || 8080;        // set our port
 
@@ -67,6 +74,9 @@ router.use(function(req, res, next) {
 router.get('/', function(req, res) {
     res.json({ message: 'hooray! welcome to our api!' });   
 });
+
+
+
 
 
 
@@ -257,6 +267,91 @@ router.route('/academias/:academia_id')
             res.json({ message: 'Successfully deleted' });
         });
     });
+
+
+
+//Api de sesiones de entrenamiento
+//Entutamiento de bears, para la colecion entera
+router.route('/entrenamientos')
+
+    .post(/*passport.authenticate('jwt', { session: false }),*/function(req, res) {
+
+        var entrenamiento = new Entrenamiento();      
+        
+        entrenamiento._id = req.body._id;
+        entrenamiento.nombre = req.body.nombre;
+        entrenamiento.profesor = req.body.profesor;  
+
+        // save the bear and check for errors
+        entrenamiento.save(function(err) {
+            if (err)
+                res.send(err);
+
+            res.json(entrenamiento);
+        });
+
+    })
+
+    .get(/*passport.authenticate('jwt', { session: false }),*/ function(req, res) {
+        Entrenamiento.find(function(err, entrenamientos) {
+            if (err)
+                res.send(err);
+
+            res.json(entrenamientos);
+        })
+    });
+
+
+//Acceso a un item de la coleccion
+router.route('/entrenamientos/:entrenamiento_id')
+
+    .get(/*passport.authenticate('jwt', { session: false }),*/function(req, res) {
+        Entrenamiento.findById(req.params.entrenamiento_id, function(err, entrenamiento) {
+            if (err)
+                res.send(err);
+            res.json(entrenamiento);
+        }).populate('alumnos');
+    })
+
+    .put(/*passport.authenticate('jwt', { session: false }),*/function(req, res) {
+
+        
+        console.log('Parametros:'+req.params.entrenamiento_id + '-' + req.body.alumnoid);
+        // use our bear model to find the bear we want
+        Entrenamiento.findById(req.params.entrenamiento_id, function(err, entrenamiento) {
+
+            if (err){
+                res.send(err);
+            }
+
+            //academia.nombre = req.body.alumnoid;
+            res.json({ message: 'usuario metio' + req.params.entrenamiento_id });
+
+            // save the bear
+            /*academia.save(function(err) {
+                if (err)
+                    res.send(err);
+
+                res.json({ message: 'Academia updated!' });
+            });*/
+
+        });
+    })
+
+    // delete the bear with this id (accessed at DELETE http://localhost:8080/api/bears/:bear_id)
+    .delete(/*passport.authenticate('jwt', { session: false }),*/function(req, res) {
+        Entrenamiento.remove({
+            _id: req.params.entrenamiento_id
+        }, function(err, entrenamiento_id) {
+            if (err)
+                res.send(err);
+
+            res.json({ message: 'Successfully deleted' });
+        });
+    });
+
+
+
 
 
 

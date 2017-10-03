@@ -13,6 +13,30 @@ function mainController($scope, $http) {
       console.log('Error: ' + data);
     });
 
+   // Cuando se cargue la página, pide del API todos los TODOs
+  $http.get('/api/alumnos')
+    .success(function(data) {
+      $scope.alumnos = data;
+    })
+    .error(function(data) {
+      console.log('Error: ' + data);
+    });
+    
+  
+
+  $scope.marcarAlumno = function(eventid, alumnoid) {
+          
+          alert(eventid+'---'+alumnoid);
+
+           $http.put('/api/entrenamientos/'+eventid, {alumnoid:alumnoid})
+          .success(function(data) {
+            console.log('Ok:' + data);
+          })
+          .error(function(data) {
+            console.log('Error:' + data);
+          });      
+  };     
+
 }
 
 

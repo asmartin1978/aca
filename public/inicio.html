@@ -6,10 +6,173 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   
+
+  <link rel='stylesheet' href='calendar/fullcalendar.css' />
+
+  <script src='jquery/jquery.min.js'></script>
+  <script src='moment/moment.min.js'></script>
+  <script src='calendar/fullcalendar.js'></script>
+  <script src='calendar/locale/es.js'></script>
+  
+
+<script>
+  $(document).ready(function() {
+
+    $('#calendar').fullCalendar({
+        // put your options and callbacks here
+        weekends: false,
+        defaultView: 'agendaDay',
+        allDaySlot: false,
+        editable: true,
+        minTime: '11:00:00',
+        maxTime: '22:00:00',
+        
+        
+        eventClick:  function(event, jsEvent, view) {
+            $('#modalTitle').html(event.title);
+            $('#fullCalModal').modal();
+            
+            $.ajax({
+                  url: "api/entrenamientos/"+$('#calendar').fullCalendar('getDate').format('YYYYMMDD')+event.id
+              }).then(function(data) {
+                    if(data!=null){
+                        console.log(data.alumnos);
+                    }else{
+                      //No existe la sesion creada todavia ... la creamos
+                      
+                      $.post("api/entrenamientos", {_id: $('#calendar').fullCalendar('getDate').format('YYYYMMDD')+event.id , profesor: "Alberto" , nombre: event.title }, function(result){
+                            console.log("-" + result);
+                      });  
+                      console.log('nulo!!');     
+                    } 
+              });
+
+        } , 
+
+        lang: 'es',
+
+
+        events: [
+        {
+          id: 5,
+          title: 'BJJ 17:00',
+          start: '17:00:00',
+          description: 'Clase de BJJ', 
+          end:   '18:00:00' ,
+          editable: false ,
+          dow: [2,4,5],
+          aa: new Date()
+        },
+        {
+          id: 1,
+          title: 'BJJ 11:00',
+          start: '11:00:00',
+          description: 'Clase de BJJ', 
+          end:   '12:30:00' ,
+          editable: false ,
+          dow: [1,2,3,4,5]
+        },
+        {
+          id: 2 ,
+          title: 'BJJ Iniciados (18:30)',
+          description: 'Clase de BJJ', 
+          start: '18:30:00',
+          end:   '19:30:00',
+          editable: false, 
+          dow: [1,2,3,4,5]
+        } ,
+        {
+          id: 3 ,
+          title: 'BJJ (19:00)',
+          description: 'Clase de BJJ', 
+          start: '19:30:00',
+          end:   '21:00:00',
+          editable: false, 
+          dow: [1,2,3,4,5]
+        } ,
+        {
+          id: 4 ,
+          title: 'BJJ (21:00)',
+          description: 'Clase de BJJ', 
+          start: '21:00:00',
+          end:   '22:00:00',
+          editable: false, 
+          dow: [1,2,3,4,5]
+        }
+      ],
+
+      businessHours: [ // specify an array instead
+      {
+          dow: [ 1, 2, 3 ,4, 5], // Monday, Tuesday, Wednesday
+          start: '11:00', 
+          end: '14:00' 
+      },
+      {
+          dow: [ 1, 2, 3 ,4, 5], // Thursday, Friday
+          start: '17:00', 
+          end: '22:00' 
+      }
+      ]
+
+
+
+
+    })
+
+});
+
+
+</script>
+
+
+
 </head>
 <body ng-controller="mainController">
 
 <div ng-include="'navbar.html'"></div>
+
+
+<div id="fullCalModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span> <span class="sr-only">close</span></button>
+                <h4 id="modalTitle" class="modal-title"></h4>
+                <h4 id="idevento" class="modal-title"></h4>
+            </div>
+            <div id="modal-desc" class="modal-body">Control de asistencia a clase:</div>
+            <div id="modalBody" class="modal-body">
+                  
+                  <table class="table table-hover">
+                      <thead>
+                          <tr>
+                            <th>Nombre</th>
+                            <th>Cinturon</th>
+                            <th>Asistencia</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                        
+                        
+                            <tr ng-repeat="alumno in alumnos">
+                            
+                              <td>{{ alumno.nombre }} {{ alumno.apellidos }}</td>
+                              <td>{{ alumno.cinturon }}</td>
+                              <td><span ng-click="marcarAlumno('ss' , alumno._id)"> NO </span></td>
+                            </tr>
+                        
+                      </tbody>
+                    </table>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
 <div class="container">
     
@@ -30,9 +193,13 @@
         </tbody>
       </table>
 
+
+    <div id='calendar'></div>
+    <div id="dialog" title="My dialog" style="display:none">
+
 </div>
 
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="controller.js"></script>
