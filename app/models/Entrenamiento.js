@@ -8,7 +8,12 @@ var EntrenamientoSchema   = new Schema({
     _id: String,
     nombre: String,
     profesor: String,
-    alumnos : [{ type: Schema.Types.ObjectId, ref: 'Alumno' }]
+    alumnos : [   	
+		{    		
+    		alum: {type: Schema.Types.ObjectId, ref: 'Alumno'},
+    		asiste: {type: Boolean, default: false}		 
+    	}
+    ]
 });
 
 module.exports = mongoose.model('Entrenamiento', EntrenamientoSchema);

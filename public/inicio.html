@@ -5,6 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
   
 
   <link rel='stylesheet' href='calendar/fullcalendar.css' />
@@ -31,21 +32,33 @@
         eventClick:  function(event, jsEvent, view) {
             $('#modalTitle').html(event.title);
             $('#fullCalModal').modal();
+            $('#eventId').text($('#calendar').fullCalendar('getDate').format('YYYYMMDD')+event.id);
             
+           
+           
+            
+            //TODO: Mejorar para que todo esto se haga en el Angular Controller
             $.ajax({
                   url: "api/entrenamientos/"+$('#calendar').fullCalendar('getDate').format('YYYYMMDD')+event.id
               }).then(function(data) {
                     if(data!=null){
-                        console.log(data.alumnos);
+                        
+                        var scope = angular.element($('#fullCalModal')).scope();
+                        scope.loadEntrenamiento($('#calendar').fullCalendar('getDate').format('YYYYMMDD')+event.id);
+
                     }else{
-                      //No existe la sesion creada todavia ... la creamos
-                      
+                      //No existe la sesion creada todavia ... la creamos                     
                       $.post("api/entrenamientos", {_id: $('#calendar').fullCalendar('getDate').format('YYYYMMDD')+event.id , profesor: "Alberto" , nombre: event.title }, function(result){
-                            console.log("-" + result);
+
+                            var scope = angular.element($('#fullCalModal')).scope();
+                            scope.loadEntrenamiento($('#calendar').fullCalendar('getDate').format('YYYYMMDD')+event.id);
                       });  
-                      console.log('nulo!!');     
+                      
                     } 
               });
+
+            
+
 
         } , 
 
@@ -114,9 +127,6 @@
       }
       ]
 
-
-
-
     })
 
 });
@@ -128,19 +138,22 @@
 
 </head>
 <body ng-controller="mainController">
-
 <div ng-include="'navbar.html'"></div>
 
-
-<div id="fullCalModal" class="modal fade">
+<div id="fullCalModal" ng-controller="entrenamientoController" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span> <span class="sr-only">close</span></button>
                 <h4 id="modalTitle" class="modal-title"></h4>
-                <h4 id="idevento" class="modal-title"></h4>
+                <h4 id="eventId" class="modal-title"></h4>
             </div>
-            <div id="modal-desc" class="modal-body">Control de asistencia a clase:</div>
+            <div id="modal-desc" class="modal-body">
+                Profesor: {{ angentrenamiento.profesor }}
+                Clase: {{ angentrenamiento.nombre }}
+
+                {{ angentrenamiento }}
+            </div>
             <div id="modalBody" class="modal-body">
                   
                   <table class="table table-hover">
@@ -152,18 +165,19 @@
                           </tr>
                       </thead>
                       <tbody>
-                        
-                        
-                            <tr ng-repeat="alumno in alumnos">
-                            
-                              <td>{{ alumno.nombre }} {{ alumno.apellidos }}</td>
-                              <td>{{ alumno.cinturon }}</td>
-                              <td><span ng-click="marcarAlumno('ss' , alumno._id)"> NO </span></td>
+                          
+                            <tr ng-repeat="alumno in angentrenamiento.alumnos">          
+                              <td>{{ alumno.alum.nombre }} {{ alumno.alum.apellidos }}</td>
+                              <td>{{ alumno.alum.cinturon }}  </td>
+
+                              <td>
+                                  <input type="checkbox" ng-model="alumno.asiste"  ng-click="marcarAlumno(alumno.alum._id, angentrenamiento._id)" >
+
+                              </td>
                             </tr>
                         
                       </tbody>
                     </table>
-
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

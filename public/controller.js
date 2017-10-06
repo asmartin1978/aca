@@ -7,30 +7,52 @@ function mainController($scope, $http) {
   $http.get('/api/academias')
     .success(function(data) {
       $scope.academias = data;
-      console.log(data)
+      //console.log(data)
     })
     .error(function(data) {
       console.log('Error: ' + data);
     });
 
-   // Cuando se cargue la página, pide del API todos los TODOs
-  $http.get('/api/alumnos')
+}
+
+function entrenamientoController($scope, $http) {
+  $scope.formData = {};
+
+  
+  // Cuando se cargue la página, pide del API todos los TODOs
+  /*$http.get('/api/alumnos')
     .success(function(data) {
       $scope.alumnos = data;
     })
     .error(function(data) {
       console.log('Error: ' + data);
-    });
+    });*/
     
+    // Cuando se cargue la página, pide del API todos los TODOs
   
-
-  $scope.marcarAlumno = function(eventid, alumnoid) {
-          
-          alert(eventid+'---'+alumnoid);
-
-           $http.put('/api/entrenamientos/'+eventid, {alumnoid:alumnoid})
+    $scope.loadEntrenamiento=function(id){
+        
+        $http.get('/api/entrenamientos/'+id)
           .success(function(data) {
-            console.log('Ok:' + data);
+            $scope.angentrenamiento = data;
+       })
+        .error(function(data) {
+          console.log('Error: ' + data);
+        });
+    };
+
+
+    $scope.alumnomarcado = function(alumnoid){
+      return true;
+
+    };
+
+  $scope.marcarAlumno = function(alumnoid, entrenamientoid) {
+          
+          //console.log(alumnoid+"--"+ entrenamientoid);
+          $http.put('/api/entrenamientos/'+entrenamientoid, {alumnoid:alumnoid})
+          .success(function(data) {
+            //console.log('Ok:' + data);
           })
           .error(function(data) {
             console.log('Error:' + data);
@@ -38,7 +60,6 @@ function mainController($scope, $http) {
   };     
 
 }
-
 
 
 function alumnosController($scope, $http) {

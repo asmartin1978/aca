@@ -75,11 +75,6 @@ router.get('/', function(req, res) {
     res.json({ message: 'hooray! welcome to our api!' });   
 });
 
-
-
-
-
-
 router.route('/login')
 
     .post(function(req, res) {
@@ -282,14 +277,24 @@ router.route('/entrenamientos')
         entrenamiento.nombre = req.body.nombre;
         entrenamiento.profesor = req.body.profesor;  
 
-        // save the bear and check for errors
-        entrenamiento.save(function(err) {
-            if (err)
-                res.send(err);
+        Alumno.find(function(err, alumnos) {
+                if (err){
+                    console.log('Error:' + err);
+                }
+                var arrayLength = alumnos.length;
+                for (var i = 0; i < arrayLength; i++) {
+                    entrenamiento.alumnos.push({alum:alumnos[i]._id , asiste:false});                    
+                }
 
-            res.json(entrenamiento);
+                entrenamiento.save(function(err) {
+                    if (err)
+                        res.send(err);
+
+                    res.json(entrenamiento);
+                });
         });
-
+   
+        
     })
 
     .get(/*passport.authenticate('jwt', { session: false }),*/ function(req, res) {
@@ -310,30 +315,37 @@ router.route('/entrenamientos/:entrenamiento_id')
             if (err)
                 res.send(err);
             res.json(entrenamiento);
-        }).populate('alumnos');
+        }).populate('alumnos.alum');
     })
 
     .put(/*passport.authenticate('jwt', { session: false }),*/function(req, res) {
-
-        
-        console.log('Parametros:'+req.params.entrenamiento_id + '-' + req.body.alumnoid);
+       
         // use our bear model to find the bear we want
         Entrenamiento.findById(req.params.entrenamiento_id, function(err, entrenamiento) {
 
             if (err){
                 res.send(err);
             }
+            
+            //Se marca el alumno como asistente al entrenamiento
+            //entrenamiento.alumnos.push(req.body.alumnoid);
+                
+            var arrayLength = entrenamiento.alumnos.length;
+                for (var i = 0; i < arrayLength; i++) {
 
-            //academia.nombre = req.body.alumnoid;
-            res.json({ message: 'usuario metio' + req.params.entrenamiento_id });
+                    console.log (entrenamiento.alumnos[i].alum._id + "-" + req.body.alumnoid);
 
-            // save the bear
-            /*academia.save(function(err) {
+                    if(entrenamiento.alumnos[i].alum._id == req.body.alumnoid){
+                            entrenamiento.alumnos[i].asiste = false;
+                    }
+                    
+            }
+
+            entrenamiento.save(function(err) {
                 if (err)
                     res.send(err);
-
                 res.json({ message: 'Academia updated!' });
-            });*/
+            });
 
         });
     })
