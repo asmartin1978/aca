@@ -333,10 +333,11 @@ router.route('/entrenamientos/:entrenamiento_id')
             var arrayLength = entrenamiento.alumnos.length;
                 for (var i = 0; i < arrayLength; i++) {
 
-                    console.log (entrenamiento.alumnos[i].alum._id + "-" + req.body.alumnoid);
+                    //console.log (entrenamiento.alumnos[i].alum + "-" + req.body.alumnoid);
 
-                    if(entrenamiento.alumnos[i].alum._id == req.body.alumnoid){
-                            entrenamiento.alumnos[i].asiste = false;
+                    if(entrenamiento.alumnos[i].alum == req.body.alumnoid){
+                            entrenamiento.alumnos[i].asiste = !entrenamiento.alumnos[i].asiste;
+                            break;
                     }
                     
             }
