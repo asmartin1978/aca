@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="angularTodo">
 <head>
-  <title>Bootstrap Example</title>
+  <title>Control de asistencia</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -34,12 +34,14 @@
             $('#fullCalModal').modal();
             //$('#eventId').text($('#calendar').fullCalendar('getDate').format('YYYYMMDD')+event.id);
             
-           
-           
-            
             //TODO: Mejorar para que todo esto se haga en el Angular Controller
             $.ajax({
-                  url: "api/entrenamientos/"+$('#calendar').fullCalendar('getDate').format('YYYYMMDD')+event.id
+                  url: "api/entrenamientos/"+$('#calendar').fullCalendar('getDate').format('YYYYMMDD')+event.id,
+                  
+
+                  headers: {
+                    'Authorization' :'JWT ' + sessionStorage.getItem('token')
+                  }
               }).then(function(data) {
                     if(data!=null){
                         
@@ -47,18 +49,28 @@
                         scope.loadEntrenamiento($('#calendar').fullCalendar('getDate').format('YYYYMMDD')+event.id);
 
                     }else{
-                      //No existe la sesion creada todavia ... la creamos                     
-                      $.post("api/entrenamientos", {_id: $('#calendar').fullCalendar('getDate').format('YYYYMMDD')+event.id , profesor: "Alberto" , nombre: event.title }, function(result){
+                      
+                      $.ajax({
+                            url: 'api/entrenamientos',
+                            type: 'post',
+                            data: {
+                                _id: $('#calendar').fullCalendar('getDate').format('YYYYMMDD')+event.id , 
+                                profesor: "Alberto" , 
+                                nombre: event.title,
+
+                            },
+                            headers: {
+                                'Authorization' :'JWT ' + sessionStorage.getItem('token')
+                            },
+                            dataType: 'json',
+                            success: function(result){
 
                             var scope = angular.element($('#fullCalModal')).scope();
                             scope.loadEntrenamiento($('#calendar').fullCalendar('getDate').format('YYYYMMDD')+event.id);
-                      });  
-                      
+                      }});
+                   
                     } 
               });
-
-            
-
 
         } , 
 
@@ -134,58 +146,16 @@
 
 </script>
 
-
-
 </head>
 <body ng-controller="mainController">
+
+<!-- Se incluye la barra de navegacion -->
 <div ng-include="'navbar.html'"></div>
 
-<div id="fullCalModal" ng-controller="entrenamientoController" class="modal fade">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span> <span class="sr-only">close</span></button>
-                <h4 id="modalTitle" class="modal-title"></h4>
-                <!--h4 id="eventId" class="modal-title"></h4-->
-            </div>
-            <div id="modal-desc" class="modal-body">
-                Profesor: {{ angentrenamiento.profesor }}
-                Clase: {{ angentrenamiento.nombre }}
-            </div>
-            <div id="modalBody" class="modal-body">
-                  
-                  <table class="table table-hover">
-                      <thead>
-                          <tr>
-                            <th>Nombre</th>
-                            <th>Cinturon</th>
-                            <th>Asistencia</th>
-                          </tr>
-                      </thead>
-                      <tbody>
-                          
-                            <tr ng-repeat="alumno in angentrenamiento.alumnos">          
-                              <td>{{ alumno.alum.nombre }} {{ alumno.alum.apellidos }}</td>
-                              <td>{{ alumno.alum.cinturon }}  </td>
+<!-- Se incluye la capa oculta que levnta la venta modal para gestionar los entrenamientos -->
+<div ng-include="'entrenamiento.html'"></div>
 
-                              <td>
-                                  <input type="checkbox" ng-model="alumno.asiste"  ng-click="marcarAlumno(alumno.alum._id, angentrenamiento._id)" >
-
-                              </td>
-                            </tr>
-                        
-                      </tbody>
-                    </table>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-
+<!-- Listado de academias -->
 <div class="container">
     
       <table class="table table-hover">
@@ -210,10 +180,10 @@
     <div id="dialog" title="My dialog" style="display:none">
 
 </div>
-
-    
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
+  
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.7/angular.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="controller.js"></script>
+
 </body>
 </html>

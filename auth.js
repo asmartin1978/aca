@@ -1,13 +1,27 @@
 var users = [
   {
-    id: 1,
-    name: 'jonathanmh',
-    password: '%2yx4'
-  },
-  {
     id: 2,
     name: 'test',
-    password: 'test'
+    password: 'test',
+    first_name:'Prueba', 
+    last_name:'Apellido' , 
+    email:'mail@mail.com'
+  },
+  {
+    id: 3,
+    name: 'alberto',
+    password: 'alberto',
+    first_name:'Alberto', 
+    last_name:'Gonzalez Ortiz' , 
+    email:'mail@mail.com'
+  },
+  {
+    id: 4,
+    name: 'aurelio',
+    password: 'aurelio',
+    first_name:'Aurelio',
+    last_name:'Castilla', 
+    email:'mail@mail.com'
   }
 ];
 
@@ -30,6 +44,7 @@ jwtOptions.secretOrKey = 'tasmanianDevil';
 var strategy = new JwtStrategy(jwtOptions, function(jwt_payload, next) {
   // usually this would be a database call:
   var user = users[_.findIndex(users, {id: jwt_payload.id})];
+  
   if (user) {
     next(null, user);
   } else {
@@ -54,7 +69,7 @@ function autenticar(name, password, res){
   if(user.password === password) {
     
     // from now on we'll identify the user by the id and the id is the only personalized value that goes into our token
-    var payload = {id: user.id};
+    var payload = {id: user.id , first_name: user.first_name, last_name: user.last_name };
     var token = getToken(payload);
     return res.json({message: "ok", token: token});
   } else {

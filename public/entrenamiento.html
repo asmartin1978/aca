@@ -1,0 +1,43 @@
+<div id="fullCalModal" ng-controller="entrenamientoController" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span> <span class="sr-only">close</span></button>
+                <h4 id="modalTitle" class="modal-title"></h4>
+                <!--h4 id="eventId" class="modal-title"></h4-->
+            </div>
+            <div id="modal-desc" class="modal-body">
+                Profesor: {{ angentrenamiento.profesor }}
+                Clase: {{ angentrenamiento.nombre }}
+            </div>
+            <div id="modalBody" class="modal-body">
+                  
+                  <table class="table table-hover">
+                      <thead>
+                          <tr>
+                            <th>Nombre</th>
+                            <th>Cinturon</th>
+                            <th>Asistencia</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          
+                            <tr ng-repeat="alumno in angentrenamiento.alumnos">          
+                              <td>{{ alumno.alum.nombre }} {{ alumno.alum.apellidos }}</td>
+                              <td>{{ alumno.alum.cinturon }}  </td>
+
+                              <td>
+                                  <input type="checkbox" ng-model="alumno.asiste"  ng-click="marcarAlumno(alumno.alum._id, angentrenamiento._id)" >
+
+                              </td>
+                            </tr>
+                        
+                      </tbody>
+                    </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
