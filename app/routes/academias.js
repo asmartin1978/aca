@@ -8,13 +8,13 @@ var Alumno     = require('../models/alumno'); // Importacion de la clase
 //Entutamiento de bears, para la colecion entera
 router.route('/academias')
 
-    .post(/*passport.authenticate('jwt', { session: false }),*/function(req, res) {
+    .post(function(req, res) {
 
         var academia = new Academia();      
         academia.nombre = req.body.nombre;
         academia.direccion = req.body.direccion;  
         academia.historia = req.body.historia;  
-        
+        academia.propietario = req.user.id;  
 
         // save the bear and check for errors
         academia.save(function(err) {
@@ -27,7 +27,7 @@ router.route('/academias')
     })
 
     .get(/*passport.authenticate('jwt', { session: false }),*/ function(req, res) {
-        Academia.find(function(err, academias) {
+        Academia.find({propietario: req.user.id}, function(err, academias) {
             if (err)
                 res.send(err);
 
@@ -58,6 +58,7 @@ router.route('/academias/:academia_id')
             academia.nombre = req.body.nombre;
             academia.direccion = req.body.direccion;  
             academia.historia = req.body.historia;
+            academia.propietario = req.body.propietario;
 
             // save the bear
             academia.save(function(err) {

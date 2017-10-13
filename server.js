@@ -78,7 +78,12 @@ var entrenamientoroute = require('./app/routes/entrenamientos');
 
 
 // REGISTER OUR ROUTES -------------------------------
+
+
+
 // all of our routes will be prefixed with /api
+//app.use(passport.authenticate('jwt', { session: false }));
+
 app.use('/api', router);
 app.use('/api', alumnosroute);
 app.use('/api', academiaroute);

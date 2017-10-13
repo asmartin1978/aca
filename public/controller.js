@@ -36,9 +36,33 @@ myApp.controller('mainController', function ($window, $scope, $http ) {
     });
 
 
-    $scope.caca = function (){
-          console.log("sadsa");
-    }; 
+    $scope.loadSesionesAcademia=function(id){        
+        
+        console.log('entra');
+        $http.get('/api/academias/'+id)
+          .success(function(data,status) {
+            $scope.detalleacademia = data;
+       })
+        .error(function(data,status) {
+          console.log('Error: ' + data + status);
+        });
+    };
+
+
+    // Cuando se hace submit (alta de alumno)
+  $scope.submitForm = function() {
+
+      $http.post('/api/academias', $scope.formData)
+          .success(function(data) {
+            $scope.formData = {};
+            $scope.academias.push(data);
+          })
+          .error(function(data) {
+            console.log('Error:' + data);
+          });
+      
+  };
+
 
 });
 

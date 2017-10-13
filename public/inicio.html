@@ -164,6 +164,7 @@
               <th>Nombre</th>
               <th>Direccion</th>
               <th>Historia</th>
+              <th>Seleccionar</th>
             </tr>
         </thead>
         <tbody>
@@ -171,10 +172,13 @@
             <td>{{ academia.nombre }}</td>
             <td>{{ academia.direccion }}</td>
             <td>{{ academia.historia }}</td>
+            <td><a ng-click="loadSesionesAcademia(academia._id)" >X</a></td>
           </tr>
         </tbody>
       </table>
 
+
+      {{detalleacademia}}
 
     <div id='calendar'></div>
     <div id="dialog" title="My dialog" style="display:none">

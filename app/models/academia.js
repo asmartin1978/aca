@@ -8,7 +8,8 @@ var AcademiaSchema   = new Schema({
     nombre: String,
     direccion: String,
     historia: String,
-    alumnos : [{ type: Schema.Types.ObjectId, ref: 'Alumno' }]
+    alumnos : [{ type: Schema.Types.ObjectId, ref: 'Alumno' }],
+    propietario: String
 });
 
 module.exports = mongoose.model('Academia', AcademiaSchema);

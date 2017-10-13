@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="angularTodo">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="nav.css">
+</head>
+<body ng-controller="mainController">
+
+
+<div ng-include="'navbar.html'"></div>
+
+
+<div class="container">
+    
+      <table class="table table-hover">
+        <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Direccion</th>
+              <th>Historia</th>
+            </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="academia in academias">
+            <td>{{ academia.nombre }}</td>
+            <td>{{ academia.direccion }}</td>
+            <td>{{ academia.historia }}</td>
+          </tr>
+        </tbody>
+      </table>
+
+
+      <form name="userForm" ng-submit="submitForm()" novalidate> <!-- novalidate prevents HTML5 validation since we will be validating ourselves -->
+
+        <!-- NAME -->
+        <div class="form-group">
+            <label>Nombre</label>
+            <input type="text" name="nombre" placeholder = "Nombre de la academia" class="form-control" ng-model="formData.nombre">
+        </div>
+
+        <!-- USERNAME -->
+        <div class="form-group">
+            <label>Direccion</label>
+            <input type="text" name="direccion" placeholder = "Direccion de la academia" ng-model="formData.direccion" class="form-control">
+        </div>
+
+        <div class="form-group">
+            <label>Historia</label>
+            <input type="text" name="historia" placeholder = "Breve historia" ng-model="formData.historia" class="form-control">
+        </div>
+
+
+        <!-- SUBMIT BUTTON -->
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary">Crear</button>
+        </div>
+
+    </form>
+
+</div>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.7/angular.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="controller.js"></script>
+</body>
+</html>

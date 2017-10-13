@@ -40,14 +40,28 @@ router.route('/alumnos')
     })
 
     .get(/*passport.authenticate('jwt', { session: false }),*/ function(req, res) {
-        Alumno.find(function(err, alumnos) {
-            if (err){
-                console.log(err);
-                res.status(500).json({ message: 'Error al acceder al detalle' });
-            }
+        
 
-            res.json(alumnos);
-        }).populate('academia', 'nombre direccion historia');
+
+        Academia.find({propietario: req.user.id},{_id:1}, function(err, academias) {
+            if (err){
+                res.send(err);
+            }
+            console.log(academias);
+            Alumno.find( {'academia': {$in: academias.map(function(el) {
+                                                            return el._id
+                                                            })}
+                                      }   , function(err, alumnos) {
+                if (err){
+                    console.log(err);
+                    res.status(500).json({ message: 'Error al acceder al detalle' });
+                }
+                    res.json(alumnos);
+                }).populate('academia', 'nombre direccion historia');
+
+        })
+
+        
     });
 
 

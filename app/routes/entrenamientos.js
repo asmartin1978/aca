@@ -38,10 +38,12 @@ router.route('/entrenamientos')
     })
 
     .get(/*passport.authenticate('jwt', { session: false }),*/ function(req, res) {
+        
         Entrenamiento.find(function(err, entrenamientos) {
             if (err)
                 res.send(err);
 
+            //console.log(passport);
             res.json(entrenamientos);
         })
     });
