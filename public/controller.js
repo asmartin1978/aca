@@ -2,6 +2,7 @@ var myApp = angular.module('angularTodo', [])
 ;
 
 
+
 //this is used to parse the profile
 function url_base64_decode(str) {
   var output = str.replace('-', '+').replace('_', '/');
@@ -33,6 +34,11 @@ myApp.controller('mainController', function ($window, $scope, $http ) {
     .error(function(data,status) {
           console.log('Error: ' + data );
     });
+
+
+    $scope.caca = function (){
+          console.log("sadsa");
+    }; 
 
 });
 
@@ -109,7 +115,7 @@ myApp.controller('alumnosController', function ($scope, $http) {
 
 
 
-myApp.controller('UserCtrl', function ($scope, $http, $window) {
+myApp.controller('UserCtrl', function ($scope, $http, $window, $rootScope) {
   $scope.user = {name: '', password: ''};
   $scope.isAuthenticated = false;
   $scope.welcome = '';
@@ -124,14 +130,17 @@ myApp.controller('UserCtrl', function ($scope, $http, $window) {
         var encodedProfile = data.token.split('.')[1];
         var profile = JSON.parse(url_base64_decode(encodedProfile));
         $scope.welcome = 'Welcome ' + profile.first_name + ' ' + profile.last_name;
-        
         $window.location.href = '/inicio.html'
+
+
       })
       .error(function (data, status, headers, config) {
         // Erase the token if the user fails to log in
         delete $window.sessionStorage.token;
         $scope.isAuthenticated = false;
 
+        $rootScope.isAutenticated = false;
+        $rootScope.nombreus = '';
         // Handle login errors here
         $scope.error = 'Error: Invalid user or password';
         $scope.welcome = '';
@@ -142,7 +151,10 @@ myApp.controller('UserCtrl', function ($scope, $http, $window) {
     $scope.welcome = '';
     $scope.message = '';
     $scope.isAuthenticated = false;
+    $rootScope.isAutenticated = false;
+    $rootScope.nombreus = '';
     delete $window.sessionStorage.token;
+    $window.location.href = '/login.html'
   };
 
 });
@@ -154,13 +166,25 @@ myApp.factory('authInterceptor', function ($rootScope, $q, $window) {
       config.headers = config.headers || {};
       if ($window.sessionStorage.token) {
         config.headers.Authorization = 'JWT ' + $window.sessionStorage.token;
+        //$rootScope.prueba = 'yeahh';
+
+        var encodedProfile = $window.sessionStorage.token.split('.')[1];
+        var profile = JSON.parse(url_base64_decode(encodedProfile));
+
+        $rootScope.isAutenticated = true;
+        $rootScope.nombreus = profile.first_name + ' ' + profile.last_name;
+
       }
       return config;
     },
     responseError: function (rejection) {
       if (rejection.status === 401) {
         // handle the case where the user is not authenticated
+        
+        $rootScope.isAutenticated = false;
+        $rootScope.nombreus = '';
         $window.location.href = '/login.html'
+
       }
       return $q.reject(rejection);
     }
