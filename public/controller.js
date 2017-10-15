@@ -42,6 +42,12 @@ myApp.controller('mainController', function ($window, $scope, $http ) {
         $http.get('/api/academias/'+id)
           .success(function(data,status) {
             $scope.detalleacademia = data;
+
+            $('#calendar').fullCalendar('removeEvents')
+            
+            //TODO: Buscar los eventos de la academia seleccionada
+            $('#calendar').fullCalendar('addEventSource','event_feed2.json');            
+
        })
         .error(function(data,status) {
           console.log('Error: ' + data + status);

@@ -77,54 +77,7 @@
         lang: 'es',
 
 
-        events: [
-        {
-          id: 5,
-          title: 'BJJ 17:00',
-          start: '17:00:00',
-          description: 'Clase de BJJ', 
-          end:   '18:00:00' ,
-          editable: false ,
-          dow: [2,4,5],
-          aa: new Date()
-        },
-        {
-          id: 1,
-          title: 'BJJ 11:00',
-          start: '11:00:00',
-          description: 'Clase de BJJ', 
-          end:   '12:30:00' ,
-          editable: false ,
-          dow: [1,2,3,4,5]
-        },
-        {
-          id: 2 ,
-          title: 'BJJ Iniciados (18:30)',
-          description: 'Clase de BJJ', 
-          start: '18:30:00',
-          end:   '19:30:00',
-          editable: false, 
-          dow: [1,2,3,4,5]
-        } ,
-        {
-          id: 3 ,
-          title: 'BJJ (19:00)',
-          description: 'Clase de BJJ', 
-          start: '19:30:00',
-          end:   '21:00:00',
-          editable: false, 
-          dow: [1,2,3,4,5]
-        } ,
-        {
-          id: 4 ,
-          title: 'BJJ (21:00)',
-          description: 'Clase de BJJ', 
-          start: '21:00:00',
-          end:   '22:00:00',
-          editable: false, 
-          dow: [1,2,3,4,5]
-        }
-      ],
+        events: 'event_feed.json',
 
       businessHours: [ // specify an array instead
       {
@@ -178,9 +131,7 @@
       </table>
 
 
-      {{detalleacademia}}
-
-    <div id='calendar'></div>
+    <div id='calendar' ></div>
     <div id="dialog" title="My dialog" style="display:none">
 
 </div>
