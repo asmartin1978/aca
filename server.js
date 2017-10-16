@@ -57,7 +57,7 @@ var port = process.env.PORT || 8080;        // set our port
 var router = express.Router();              // Instancio el router de express
 
 // middleware
-router.use( passport.authenticate('jwt', { session: false }),function(req, res, next) {
+router.use(passport.authenticate('jwt', { session: false }),function(req, res, next) {
     // do logging
     console.log('Peticion recibida');
     next(); // Hay que llamar al siguiente middleware
@@ -75,20 +75,20 @@ var loginroute = require('./app/routes/login');
 var alumnosroute = require('./app/routes/alumnos');
 var academiaroute = require('./app/routes/academias');
 var entrenamientoroute = require('./app/routes/entrenamientos');
-
+var eventoroute = require('./app/routes/eventos');
 
 // REGISTER OUR ROUTES -------------------------------
 
 
-
 // all of our routes will be prefixed with /api
-//app.use(passport.authenticate('jwt', { session: false }));
-
+//TODO: La ruta de eventos esta desprotegida para escritura ...
+app.use('/api' , eventoroute);
 app.use('/api', router);
 app.use('/api', alumnosroute);
 app.use('/api', academiaroute);
 app.use('/api', entrenamientoroute);
 app.use('/autenticacion' , loginroute);
+
 
 
 // START THE SERVER

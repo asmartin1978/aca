@@ -55,7 +55,7 @@
                             type: 'post',
                             data: {
                                 _id: $('#calendar').fullCalendar('getDate').format('YYYYMMDD')+event.id , 
-                                profesor: "Alberto" , 
+                                profesor: sessionStorage.getItem('nombre') , 
                                 nombre: event.title,
 
                             },
@@ -77,7 +77,7 @@
         lang: 'es',
 
 
-        events: 'event_feed.json',
+        //events: 'event_feed.json',
 
       businessHours: [ // specify an array instead
       {
@@ -115,17 +115,18 @@
         <thead>
             <tr>
               <th>Nombre</th>
-              <th>Direccion</th>
-              <th>Historia</th>
               <th>Seleccionar</th>
             </tr>
         </thead>
         <tbody>
           <tr ng-repeat="academia in academias">
             <td>{{ academia.nombre }}</td>
-            <td>{{ academia.direccion }}</td>
-            <td>{{ academia.historia }}</td>
-            <td><a ng-click="loadSesionesAcademia(academia._id)" >X</a></td>
+            <td>
+
+              <div class="form-group">
+                  <button type="submit" class="btn btn-primary" ng-click="loadSesionesAcademia(academia._id)">Seleccionar</button>
+                </div>
+
           </tr>
         </tbody>
       </table>

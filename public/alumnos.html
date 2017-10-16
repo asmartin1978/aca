@@ -6,6 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <link rel="stylesheet" href="nav.css">
+
+
 </head>
 <body ng-controller="alumnosController">
 
@@ -15,69 +17,249 @@
 
 <div class="container">
     
+
+
+      
+
+
+      <form name="userForm" ng-show="mostrarFormulario" ng-submit="submitForm()" novalidate> <!-- novalidate prevents HTML5 validation since we will be validating ourselves -->
+
+        
+        <div class="panel panel-primary">
+        <div class="panel-heading">Gestion de los datos del alumno</div>
+        <div class="panel-body">
+            
+          <input type="hidden" name="_id" placeholder = "Nombre del alumno" class="form-control" ng-model="formData._id">
+          
+          <div class="form-group">
+              <label>Nombre</label>
+              <input type="text" name="nombre" placeholder = "Nombre del alumno" class="form-control" ng-model="formData.nombre">
+          </div>
+
+          <!-- USERNAME -->
+          <div class="form-group">
+              <label>Apellidos</label>
+              <input type="text" name="apellidos" placeholder = "Apellidos del alumno" ng-model="formData.apellidos" class="form-control">
+          </div>
+
+          <div class="form-group">  
+            <label>Cinturon</label>
+            <select ng-model="formData.cinturon" class="form-control" placeholder = "Graduacion">
+              <option value="blanco">Blanco</option>
+              <option value="azul">Azul</option>
+              <option value="morado">Morado</option>
+              <option value="marron">Marron</option>
+              <option value="negro">Negro</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+              <label>Academia</label>
+              <select ng-model="formData.id_academia" ng-options="item.nombre for item in academias " class="form-control">
+                
+              </select>
+          </div>
+
+          <div class="form-group">
+              <label>Descripcion</label>
+              <input type="text" name="descripcion" placeholder = "Informacion de interes acerca del alumno" ng-model="formData.descripcion" class="form-control" >
+          </div>
+          <div class="form-group">
+                <label>Fecha de graduacion de cinturon blanco</label>
+                <input type="date"  name="blanco" ng-model="formData.graduaciones.blanco.desde" class="form-control" >
+            </div>
+            <div class="form-group">
+                <label>Fecha de graduacion de cinturon azul</label>
+                <input type="date" name="azul" ng-model="formData.graduaciones.azul.desde" class="form-control" >
+            </div>
+          <div class="form-group">
+              <label>Fecha de graduacion de cinturon morado</label>
+              <input type="date" name="morado" ng-model="formData.graduaciones.morado.desde" class="form-control" >
+          </div>
+          <div class="form-group">
+              <label>Fecha de graduacion de cinturon marron</label>
+              <input type="date" name="marron" ng-model="formData.graduaciones.marron.desde" class="form-control" >
+          </div>
+          <div class="form-group">
+              <label>Fecha de graduacion de cinturon negro</label>
+              <input type="date" name="negro" ng-model="formData.graduaciones.negro.desde" class="form-control" >
+          </div>
+
+          <!-- SUBMIT BUTTON -->
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary">Crear</button>
+          </div>
+
+        </div>
+      </div>
+
+
+    </form>
+
+    
+
+
+      <div class="form-group">
+                  <button type="submit" ng-show="!mostrarFormulario" ng-click="formularioAlta()" class="btn btn-primary">Alta de nuevo alumno</button>
+      </div>
+      
+
+      <div class="panel panel-default">
+        <div class="panel-heading panel-heading-black">Listado de cinturones negros</div>
+        <div class="panel-body">
+
       <table class="table table-hover">
         <thead>
             <tr>
-              <th>Nombre</th>
-              <th>Apellidos</th>
-              <th>Cinturon actual</th>
+              <th>Nombre del alumno</th>
+              
               <th>Academia</th>
+              <th>Opciones</th>
             </tr>
         </thead>
         <tbody>
-          <tr ng-repeat="alumno in alumnos">
-            <td>{{ alumno.nombre }}</td>
-            <td>{{ alumno.apellidos }}</td>
-            <td>{{ alumno.cinturon }}</td>
+          <tr ng-repeat="alumno in alumnos | filter : cinturon = 'negro' ">
+            <td>{{ alumno.nombre }} {{ alumno.apellidos }}</td>
+            
             <td>{{ alumno.academia.nombre}}</td>
+            <td>
+                <div class="form-group">
+                  <button type="submit" ng-click="cargarAlumno(alumno._id)" class="btn btn-primary">Actualizar alumno</button>
+                </div>
+            </td>
           </tr>
         </tbody>
       </table>
 
+  </div>
+  </div>
 
-      <form name="userForm" ng-submit="submitForm()" novalidate> <!-- novalidate prevents HTML5 validation since we will be validating ourselves -->
 
-        <!-- NAME -->
-        <div class="form-group">
-            <label>Nombre</label>
-            <input type="text" name="nombre" placeholder = "Nombre del alumno" class="form-control" ng-model="formData.nombre">
-        </div>
 
-        <!-- USERNAME -->
-        <div class="form-group">
-            <label>Apellidos</label>
-            <input type="text" name="apellidos" placeholder = "Apellidos del alumno" ng-model="formData.apellidos" class="form-control">
-        </div>
+      <div class="panel panel-default">
+        <div class="panel-heading panel-heading-brown">Listado de cinturones marrones</div>
+        <div class="panel-body">
 
-        <div class="form-group">  
-          <label>Cinturon</label>
-          <select ng-model="formData.cinturon" class="form-control" placeholder = "Graduacion">
-            <option value="blanco">Blanco</option>
-            <option value="azul">Azul</option>
-            <option value="morado">Morado</option>
-            <option value="marron">Marron</option>
-            <option value="negro">Negro</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-            <label>Academia</label>
-            <select ng-model="formData.id_academia" ng-options="item.nombre for item in academias " class="form-control">
+      <table class="table table-hover">
+        <thead>
+            <tr>
+              <th>Nombre del alumno</th>
               
-            </select>
-        </div>
+              <th>Academia</th>
+              <th>Opciones</th>
+            </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="alumno in alumnos | filter : cinturon = 'marron' ">
+            <td>{{ alumno.nombre }} {{ alumno.apellidos }}</td>
+            
+            <td>{{ alumno.academia.nombre}}</td>
+            <td>
+                <div class="form-group">
+                  <button type="submit" ng-click="cargarAlumno(alumno._id)" class="btn btn-primary">Actualizar alumno</button>
+                </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
 
-        <div class="form-group">
-            <label>Descripcion</label>
-            <input type="text" name="descripcion" placeholder = "Informacion de interes acerca del alumno" ng-model="formData.descripcion" class="form-control" >
-        </div>
+      </div>
+      </div>
 
-        <!-- SUBMIT BUTTON -->
-        <div class="form-group">
-          <button type="submit" class="btn btn-primary">Crear</button>
-        </div>
 
-    </form>
+      <div class="panel panel-default">
+        <div class="panel-heading panel-heading-purple">Listado de cinturones morados</div>
+        <div class="panel-body">
+
+
+      <table class="table table-hover">
+        <thead>
+            <tr>
+              <th>Nombre del alumno</th>
+              
+              <th>Academia</th>
+              <th>Opciones</th>
+            </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="alumno in alumnos | filter : cinturon = 'morado' ">
+            <td>{{ alumno.nombre }} {{ alumno.apellidos }}</td>
+            
+            <td>{{ alumno.academia.nombre}}</td>
+            <td>
+                <div class="form-group">
+                  <button type="submit" ng-click="cargarAlumno(alumno._id)" class="btn btn-primary">Actualizar alumno</button>
+                </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      </div>
+      </div>
+
+
+      <div class="panel panel-default">
+        <div class="panel-heading panel-heading-blue">Listado de cinturones azules</div>
+        <div class="panel-body">
+
+
+      <table class="table table-hover">
+        <thead>
+            <tr>
+              <th>Nombre del alumno</th>
+              
+              <th>Academia</th>
+              <th>Opciones</th>
+            </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="alumno in alumnos | filter : cinturon = 'azul' ">
+            <td>{{ alumno.nombre }} {{ alumno.apellidos }}</td>
+            
+            <td>{{ alumno.academia.nombre}}</td>
+            <td>
+                <div class="form-group">
+                  <button type="submit" ng-click="cargarAlumno(alumno._id)" class="btn btn-primary">Actualizar alumno</button>
+                </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      </div>
+      </div>
+
+      <div class="panel panel-default">
+        <div class="panel-heading panel-heading-gray">Listado de cinturones blancos</div>
+        <div class="panel-body">
+
+
+      <table class="table table-hover">
+        <thead>
+            <tr>
+              <th>Nombre del alumno</th>
+              
+              <th>Academia</th>
+              <th>Opciones</th>
+            </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="alumno in alumnos | filter : cinturon = 'blanco' ">
+            <td>{{ alumno.nombre }} {{ alumno.apellidos }}</td>
+            
+            <td>{{ alumno.academia.nombre}}</td>
+            <td>
+                <div class="form-group">
+                  <button type="submit" ng-click="cargarAlumno(alumno._id)" class="btn btn-primary">Actualizar alumno</button>
+                </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      </div>
+      </div>
 
 </div>
 

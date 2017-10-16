@@ -2,7 +2,6 @@ var myApp = angular.module('angularTodo', [])
 ;
 
 
-
 //this is used to parse the profile
 function url_base64_decode(str) {
   var output = str.replace('-', '+').replace('_', '/');
@@ -38,7 +37,7 @@ myApp.controller('mainController', function ($window, $scope, $http ) {
 
     $scope.loadSesionesAcademia=function(id){        
         
-        console.log('entra');
+        //console.log(id);
         $http.get('/api/academias/'+id)
           .success(function(data,status) {
             $scope.detalleacademia = data;
@@ -46,7 +45,7 @@ myApp.controller('mainController', function ($window, $scope, $http ) {
             $('#calendar').fullCalendar('removeEvents')
             
             //TODO: Buscar los eventos de la academia seleccionada
-            $('#calendar').fullCalendar('addEventSource','event_feed2.json');            
+            $('#calendar').fullCalendar('addEventSource','/api/eventos/'+id);            
 
        })
         .error(function(data,status) {
@@ -79,7 +78,7 @@ myApp.controller('entrenamientoController', function ($scope, $http) {
     
     // Cuando se cargue la página, pide del API todos los TODOs
   
-    $scope.loadEntrenamiento=function(id){
+  $scope.loadEntrenamiento=function(id){
         
         $http.get('/api/entrenamientos/'+id)
           .success(function(data,status) {
@@ -118,6 +117,26 @@ myApp.controller('alumnosController', function ($scope, $http) {
     });
 
 
+  $scope.mostrarFormulario = false;
+  $scope.formularioAlta = function(){
+    $scope.mostrarFormulario = true;
+  }
+
+
+  $scope.cargarAlumno = function(id){
+
+      $scope.mostrarFormulario = true;
+      $http.get('/api/alumnos/'+id)
+      .success(function(data) {
+        $scope.formData = data;
+        console.log(data.graduaciones.blanco.desde);
+      
+      })
+      .error(function(data) {
+        console.log('Error: ' + data);
+      });
+  }
+
   $http.get('/api/academias')
     .success(function(data) {
       $scope.academias = data;
@@ -129,15 +148,29 @@ myApp.controller('alumnosController', function ($scope, $http) {
   // Cuando se hace submit (alta de alumno)
   $scope.submitForm = function() {
 
-      $http.post('/api/alumnos', $scope.formData)
+
+    if($scope.formData._id == null){
+        $http.post('/api/alumnos', $scope.formData)
           .success(function(data) {
             $scope.formData = {};
             $scope.alumnos.push(data);
+            $scope.mostrarFormulario = false;
           })
           .error(function(data) {
             console.log('Error:' + data);
           });
-      
+    } else {
+         $http.put('/api/alumnos/'+ $scope.formData._id, $scope.formData)
+          .success(function(data) {
+            $scope.formData = {};
+            $scope.alumnos.push(data);
+            $scope.mostrarFormulario = false;
+          })
+          .error(function(data) {
+            console.log('Error:' + data);
+          });
+
+    }
   };
 
 } );
@@ -145,11 +178,12 @@ myApp.controller('alumnosController', function ($scope, $http) {
 
 
 
-myApp.controller('UserCtrl', function ($scope, $http, $window, $rootScope) {
+myApp.controller('UserCtrl', function ($scope, $http, $window, $rootScope, $location) {
   $scope.user = {name: '', password: ''};
   $scope.isAuthenticated = false;
   $scope.welcome = '';
   $scope.message = '';
+
 
   $scope.submit = function () {
     $http
@@ -160,6 +194,7 @@ myApp.controller('UserCtrl', function ($scope, $http, $window, $rootScope) {
         var encodedProfile = data.token.split('.')[1];
         var profile = JSON.parse(url_base64_decode(encodedProfile));
         $scope.welcome = 'Welcome ' + profile.first_name + ' ' + profile.last_name;
+        $window.sessionStorage.nombre = profile.first_name + ' ' + profile.last_name;
         $window.location.href = '/inicio.html'
 
 
@@ -167,6 +202,7 @@ myApp.controller('UserCtrl', function ($scope, $http, $window, $rootScope) {
       .error(function (data, status, headers, config) {
         // Erase the token if the user fails to log in
         delete $window.sessionStorage.token;
+        delete $window.sessionStorage.nombre;
         $scope.isAuthenticated = false;
 
         $rootScope.isAutenticated = false;
@@ -184,6 +220,7 @@ myApp.controller('UserCtrl', function ($scope, $http, $window, $rootScope) {
     $rootScope.isAutenticated = false;
     $rootScope.nombreus = '';
     delete $window.sessionStorage.token;
+    delete $window.sessionStorage.nombre;
     $window.location.href = '/login.html'
   };
 

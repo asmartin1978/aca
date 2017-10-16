@@ -9,7 +9,7 @@ var Alumno     = require('../models/alumno'); // Importacion de la clase
 //Entutamiento de bears, para la colecion entera
 router.route('/entrenamientos')
 
-    .post(/*passport.authenticate('jwt', { session: false }),*/function(req, res) {
+    .post(function(req, res) {
 
         var entrenamiento = new Entrenamiento();      
         
@@ -37,7 +37,7 @@ router.route('/entrenamientos')
         
     })
 
-    .get(/*passport.authenticate('jwt', { session: false }),*/ function(req, res) {
+    .get(function(req, res) {
         
         Entrenamiento.find(function(err, entrenamientos) {
             if (err)
@@ -52,7 +52,7 @@ router.route('/entrenamientos')
 //Acceso a un item de la coleccion
 router.route('/entrenamientos/:entrenamiento_id')
 
-    .get(/*passport.authenticate('jwt', { session: false }),*/function(req, res) {
+    .get(function(req, res) {
         Entrenamiento.findById(req.params.entrenamiento_id, function(err, entrenamiento) {
             if (err)
                 res.send(err);
@@ -60,7 +60,7 @@ router.route('/entrenamientos/:entrenamiento_id')
         }).populate('alumnos.alum');
     })
 
-    .put(/*passport.authenticate('jwt', { session: false }),*/function(req, res) {
+    .put(function(req, res) {
        
         // use our bear model to find the bear we want
         Entrenamiento.findById(req.params.entrenamiento_id, function(err, entrenamiento) {
@@ -94,7 +94,7 @@ router.route('/entrenamientos/:entrenamiento_id')
     })
 
     // delete the bear with this id (accessed at DELETE http://localhost:8080/api/bears/:bear_id)
-    .delete(/*passport.authenticate('jwt', { session: false }),*/function(req, res) {
+    .delete(function(req, res) {
         Entrenamiento.remove({
             _id: req.params.entrenamiento_id
         }, function(err, entrenamiento_id) {

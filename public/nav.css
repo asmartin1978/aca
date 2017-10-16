@@ -26,3 +26,18 @@ overflow: hidden;
 {
     font-size: 87px;
 }
+
+.panel-default > .panel-heading-brown {
+background: brown; color: #fff; }
+
+.panel-default > .panel-heading-blue {
+background: blue; color: #fff; }
+
+.panel-default > .panel-heading-black {
+background: black; color: #fff; }
+
+.panel-default > .panel-heading-purple {
+background: purple; color: #fff; }
+
+.panel-default > .panel-heading-gray {
+background: gray; color: #fff; }

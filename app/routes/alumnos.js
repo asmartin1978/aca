@@ -8,7 +8,7 @@ var Alumno     = require('../models/alumno'); // Importacion de la clase
 //Entutamiento de bears, para la colecion entera
 router.route('/alumnos')
 
-    .post(/*passport.authenticate('jwt', { session: false }),*/function(req, res) {
+    .post(function(req, res) {
 
         var alumno = new Alumno();      
         alumno.nombre = req.body.nombre;
@@ -16,6 +16,28 @@ router.route('/alumnos')
         alumno.cinturon = req.body.cinturon;  
         alumno.descripcion = req.body.descripcion;    
         alumno.academia = req.body.id_academia;
+        
+        
+        if(req.body.graduaciones.blanco!=null)
+            alumno.graduaciones.blanco.desde = req.body.graduaciones.blanco.desde;
+        if(req.body.graduaciones.blanco!=null)
+            alumno.graduaciones.blanco.hasta = req.body.graduaciones.blanco.hasta;
+        if(req.body.graduaciones.azul!=null)
+            alumno.graduaciones.azul.desde = req.body.graduaciones.azul.desde;
+        if(req.body.graduaciones.azul!=null)
+            alumno.graduaciones.azul.hasta = req.body.graduaciones.azul.hasta;
+        if(req.body.graduaciones.morado!=null)
+            alumno.graduaciones.morado.desde = req.body.graduaciones.morado.desde;
+        if(req.body.graduaciones.morado!=null)
+            alumno.graduaciones.morado.hasta = req.body.graduaciones.morado.hasta;
+        if(req.body.graduaciones.marron!=null)
+            alumno.graduaciones.marron.desde = req.body.graduaciones.marron.desde;
+        if(req.body.graduaciones.marron!=null)
+            alumno.graduaciones.marron.hasta = req.body.graduaciones.marron.hasta;
+        if(req.body.graduaciones.negro!=null)
+            alumno.graduaciones.negro.desde = req.body.graduaciones.negro.desde;
+
+
         //console.log(JSON.stringify(req.body));
         alumno.save(function(err) {
                                
@@ -39,7 +61,7 @@ router.route('/alumnos')
 
     })
 
-    .get(/*passport.authenticate('jwt', { session: false }),*/ function(req, res) {
+    .get(function(req, res) {
         
 
 
@@ -68,7 +90,7 @@ router.route('/alumnos')
 //Acceso a un item de la coleccion
 router.route('/alumnos/:alumno_id')
 
-    .get(/*passport.authenticate('jwt', { session: false }),*/function(req, res) {
+    .get(function(req, res) {
         Alumno.findById(req.params.alumno_id, function(err, alumno) {
             if (err){
                 console.log(err);
@@ -78,7 +100,7 @@ router.route('/alumnos/:alumno_id')
         }).populate('academia', 'nombre direccion historia');
     })
 
-    .put(/*passport.authenticate('jwt', { session: false }),*/function(req, res) {
+    .put(function(req, res) {
 
         // use our bear model to find the bear we want
         Alumno.findById(req.params.alumno_id, function(err, alumno) {
@@ -90,6 +112,27 @@ router.route('/alumnos/:alumno_id')
             alumno.apellidos = req.body.apellidos;  
             alumno.cinturon = req.body.cinturon;  
             alumno.descripcion = req.body.descripcion;  // update the bears info
+
+
+            if(req.body.graduaciones.blanco!=null)
+            alumno.graduaciones.blanco.desde = req.body.graduaciones.blanco.desde;
+            if(req.body.graduaciones.blanco!=null)
+                alumno.graduaciones.blanco.hasta = req.body.graduaciones.blanco.hasta;
+            if(req.body.graduaciones.azul!=null)
+                alumno.graduaciones.azul.desde = req.body.graduaciones.azul.desde;
+            if(req.body.graduaciones.azul!=null)
+                alumno.graduaciones.azul.hasta = req.body.graduaciones.azul.hasta;
+            if(req.body.graduaciones.morado!=null)
+                alumno.graduaciones.morado.desde = req.body.graduaciones.morado.desde;
+            if(req.body.graduaciones.morado!=null)
+                alumno.graduaciones.morado.hasta = req.body.graduaciones.morado.hasta;
+            if(req.body.graduaciones.marron!=null)
+                alumno.graduaciones.marron.desde = req.body.graduaciones.marron.desde;
+            if(req.body.graduaciones.marron!=null)
+                alumno.graduaciones.marron.hasta = req.body.graduaciones.marron.hasta;
+            if(req.body.graduaciones.negro!=null)
+                alumno.graduaciones.negro.desde = req.body.graduaciones.negro.desde;
+
 
             // save the bear
             alumno.save(function(err) {
@@ -103,7 +146,7 @@ router.route('/alumnos/:alumno_id')
     })
 
     // delete the bear with this id (accessed at DELETE http://localhost:8080/api/bears/:bear_id)
-    .delete(/*passport.authenticate('jwt', { session: false }),*/function(req, res) {
+    .delete(function(req, res) {
         Alumno.remove({
             _id: req.params.alumno_id
         }, function(err, alumno) {
