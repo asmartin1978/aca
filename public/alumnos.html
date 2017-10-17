@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="nav.css">
 
 
+
 </head>
 <body ng-controller="alumnosController">
 
@@ -17,93 +18,104 @@
 
 <div class="container">
     
-
-
-      
-
-
-      <form name="userForm" ng-show="mostrarFormulario" ng-submit="submitForm()" novalidate> <!-- novalidate prevents HTML5 validation since we will be validating ourselves -->
-
+<!-- Trigger the modal with a button -->
+<div class="form-group">
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Alta de nuevo alumno</button>
+</div>
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
         
-        <div class="panel panel-primary">
-        <div class="panel-heading">Gestion de los datos del alumno</div>
-        <div class="panel-body">
-            
-          <input type="hidden" name="_id" placeholder = "Nombre del alumno" class="form-control" ng-model="formData._id">
+        <div class="modal-body">
           
-          <div class="form-group">
-              <label>Nombre</label>
-              <input type="text" name="nombre" placeholder = "Nombre del alumno" class="form-control" ng-model="formData.nombre">
-          </div>
+                  <form name="userForm" ng-submit="submitForm()" novalidate> <!-- novalidate prevents HTML5 validation since we will be validating ourselves -->
 
-          <!-- USERNAME -->
-          <div class="form-group">
-              <label>Apellidos</label>
-              <input type="text" name="apellidos" placeholder = "Apellidos del alumno" ng-model="formData.apellidos" class="form-control">
-          </div>
+                  
+                  <div class="panel panel-primary">
+                  <div class="panel-heading">Gestion de los datos del alumno</div>
+                  <div class="panel-body">
+                      
+                    <input type="hidden" name="_id" placeholder = "Nombre del alumno" class="form-control" ng-model="formData._id">
+                    
+                    <div class="form-group">
+                        <label>Nombre</label>
+                        <input type="text" name="nombre" placeholder = "Nombre del alumno" class="form-control" ng-model="formData.nombre">
+                    </div>
 
-          <div class="form-group">  
-            <label>Cinturon</label>
-            <select ng-model="formData.cinturon" class="form-control" placeholder = "Graduacion">
-              <option value="blanco">Blanco</option>
-              <option value="azul">Azul</option>
-              <option value="morado">Morado</option>
-              <option value="marron">Marron</option>
-              <option value="negro">Negro</option>
-            </select>
-          </div>
+                    <!-- USERNAME -->
+                    <div class="form-group">
+                        <label>Apellidos</label>
+                        <input type="text" name="apellidos" placeholder = "Apellidos del alumno" ng-model="formData.apellidos" class="form-control">
+                    </div>
 
-          <div class="form-group">
-              <label>Academia</label>
-              <select ng-model="formData.id_academia" ng-options="item.nombre for item in academias " class="form-control">
-                
-              </select>
-          </div>
+                    <div class="form-group">  
+                      <label>Cinturon</label>
+                      <select ng-model="formData.cinturon" class="form-control" placeholder = "Graduacion">
+                        <option value="blanco">Blanco</option>
+                        <option value="azul">Azul</option>
+                        <option value="morado">Morado</option>
+                        <option value="marron">Marron</option>
+                        <option value="negro">Negro</option>
+                      </select>
+                    </div>
 
-          <div class="form-group">
-              <label>Descripcion</label>
-              <input type="text" name="descripcion" placeholder = "Informacion de interes acerca del alumno" ng-model="formData.descripcion" class="form-control" >
-          </div>
-          <div class="form-group">
-                <label>Fecha de graduacion de cinturon blanco</label>
-                <input type="date"  name="blanco" ng-model="formData.graduaciones.blanco.desde" class="form-control" >
-            </div>
-            <div class="form-group">
-                <label>Fecha de graduacion de cinturon azul</label>
-                <input type="date" name="azul" ng-model="formData.graduaciones.azul.desde" class="form-control" >
-            </div>
-          <div class="form-group">
-              <label>Fecha de graduacion de cinturon morado</label>
-              <input type="date" name="morado" ng-model="formData.graduaciones.morado.desde" class="form-control" >
-          </div>
-          <div class="form-group">
-              <label>Fecha de graduacion de cinturon marron</label>
-              <input type="date" name="marron" ng-model="formData.graduaciones.marron.desde" class="form-control" >
-          </div>
-          <div class="form-group">
-              <label>Fecha de graduacion de cinturon negro</label>
-              <input type="date" name="negro" ng-model="formData.graduaciones.negro.desde" class="form-control" >
-          </div>
+                    <div class="form-group">
+                        <label>Academia</label>
+                        <select ng-model="formData.id_academia" ng-options="item.nombre for item in academias " class="form-control">
+                          
+                        </select>
+                    </div>
 
-          <!-- SUBMIT BUTTON -->
-          <div class="form-group">
-            <button type="submit" class="btn btn-primary">Crear</button>
-          </div>
+                    <div class="form-group">
+                        <label>Descripcion</label>
+                        <input type="text" name="descripcion" placeholder = "Informacion de interes acerca del alumno" ng-model="formData.descripcion" class="form-control" >
+                    </div>
+                    <div class="form-group">
+                          <label>Fecha de graduacion de cinturon blanco</label>
+                          <input type="date"  name="graduaciones.blanco.desde" ng-model="formData.graduaciones.blanco.desde" class="form-control" >
+                      </div>
+                      <div class="form-group">
+                          <label>Fecha de graduacion de cinturon azul</label>
+                          <input type="date" name="azul" ng-model="formData.graduaciones.azul.desde" class="form-control" >
+                      </div>
+                    <div class="form-group">
+                        <label>Fecha de graduacion de cinturon morado</label>
+                        <input type="date" name="morado" ng-model="formData.graduaciones.morado.desde" class="form-control" >
+                    </div>
+                    <div class="form-group">
+                        <label>Fecha de graduacion de cinturon marron</label>
+                        <input type="date" name="marron" ng-model="formData.graduaciones.marron.desde" class="form-control" >
+                    </div>
+                    <div class="form-group">
+                        <label>Fecha de graduacion de cinturon negro</label>
+                        <input type="date" name="negro" ng-model="formData.graduaciones.negro.desde" class="form-control" >
+                    </div>
+
+                    <!-- SUBMIT BUTTON -->
+                    <div class="form-group">
+                      <button type="submit" class="btn btn-primary">Crear</button>
+                      <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    </div>
+
+                  </div>
+                </div>
+
+              </form>
+
+
 
         </div>
-      </div>
-
-
-    </form>
-
-    
-
-
-      <div class="form-group">
-                  <button type="submit" ng-show="!mostrarFormulario" ng-click="formularioAlta()" class="btn btn-primary">Alta de nuevo alumno</button>
+        
       </div>
       
-
+    </div>
+  </div>
+   
+      
+    
       <div class="panel panel-default">
         <div class="panel-heading panel-heading-black">Listado de cinturones negros</div>
         <div class="panel-body">
@@ -124,7 +136,7 @@
             <td>{{ alumno.academia.nombre}}</td>
             <td>
                 <div class="form-group">
-                  <button type="submit" ng-click="cargarAlumno(alumno._id)" class="btn btn-primary">Actualizar alumno</button>
+                  <button type="button" ng-click="cargarAlumno(alumno._id)" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Actualizar alumno</button>
                 </div>
             </td>
           </tr>
@@ -156,7 +168,7 @@
             <td>{{ alumno.academia.nombre}}</td>
             <td>
                 <div class="form-group">
-                  <button type="submit" ng-click="cargarAlumno(alumno._id)" class="btn btn-primary">Actualizar alumno</button>
+                  <button type="button" ng-click="cargarAlumno(alumno._id)" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Actualizar alumno</button>
                 </div>
             </td>
           </tr>
@@ -188,7 +200,7 @@
             <td>{{ alumno.academia.nombre}}</td>
             <td>
                 <div class="form-group">
-                  <button type="submit" ng-click="cargarAlumno(alumno._id)" class="btn btn-primary">Actualizar alumno</button>
+                  <button type="button" ng-click="cargarAlumno(alumno._id)" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Actualizar alumno</button>
                 </div>
             </td>
           </tr>
@@ -220,7 +232,7 @@
             <td>{{ alumno.academia.nombre}}</td>
             <td>
                 <div class="form-group">
-                  <button type="submit" ng-click="cargarAlumno(alumno._id)" class="btn btn-primary">Actualizar alumno</button>
+                  <button type="button" ng-click="cargarAlumno(alumno._id)" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Actualizar alumno</button>
                 </div>
             </td>
           </tr>
@@ -251,7 +263,7 @@
             <td>{{ alumno.academia.nombre}}</td>
             <td>
                 <div class="form-group">
-                  <button type="submit" ng-click="cargarAlumno(alumno._id)" class="btn btn-primary">Actualizar alumno</button>
+                  <button type="button" ng-click="cargarAlumno(alumno._id)" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Actualizar alumno</button>
                 </div>
             </td>
           </tr>
@@ -265,6 +277,8 @@
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.7/angular.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.5.1/moment.min.js"></script>
+    <script src="angular-momentjs.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="controller.js"></script>
 </body>

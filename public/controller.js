@@ -1,4 +1,4 @@
-var myApp = angular.module('angularTodo', [])
+var myApp = angular.module('angularTodo',['angular-momentjs'])
 ;
 
 
@@ -106,7 +106,7 @@ myApp.controller('entrenamientoController', function ($scope, $http) {
 
 /*Controller para cargar y gestionar los alumnos*/
 
-myApp.controller('alumnosController', function ($scope, $http) {
+myApp.controller('alumnosController', function ($scope, $http , $moment ) {
   
   $http.get('/api/alumnos')
     .success(function(data) {
@@ -125,12 +125,14 @@ myApp.controller('alumnosController', function ($scope, $http) {
 
   $scope.cargarAlumno = function(id){
 
-      $scope.mostrarFormulario = true;
       $http.get('/api/alumnos/'+id)
       .success(function(data) {
+        
         $scope.formData = data;
-        console.log(data.graduaciones.blanco.desde);
-      
+
+        console.log($scope.formData);
+
+
       })
       .error(function(data) {
         console.log('Error: ' + data);
