@@ -21,6 +21,38 @@ function url_base64_decode(str) {
 }
 
 
+
+myApp.controller('academiasController', function ($window, $scope, $http ) {
+  $scope.formData = {};
+  
+  // Cuando se cargue la página, pide del API todos los TODOs
+  $http.get('/api/academias')
+    .success(function(data) {
+      $scope.academias = data;
+    })
+    .error(function(data,status) {
+          console.log('Error: ' + data );
+    });
+
+    // Cuando se hace submit (alta de alumno)
+  $scope.submitForm = function() {
+
+      $http.post('/api/academias', $scope.formData)
+          .success(function(data) {
+            $scope.formData = {};
+            $scope.academias.push(data);
+          })
+          .error(function(data) {
+            console.log('Error:' + data);
+          });
+      
+  };
+
+});
+
+
+
+
 myApp.controller('mainController', function ($window, $scope, $http ) {
   $scope.formData = {};
   

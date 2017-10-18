@@ -69,7 +69,7 @@ router.route('/alumnos')
             if (err){
                 res.send(err);
             }
-            console.log(academias);
+            //console.log(academias);
             Alumno.find( {'academia': {$in: academias.map(function(el) {
                                                             return el._id
                                                             })}
