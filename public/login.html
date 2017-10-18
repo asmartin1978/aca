@@ -6,16 +6,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <link href="signin.css" rel="stylesheet">
+  
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.7/angular.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <script src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.5.1/moment.min.js"></script>
   <script src="angular-momentjs/angular-momentjs.js"></script>
   <script src="controller.js"></script>
+
 </head>
-<body ng-app="angularTodo">
+<body ng-app="angularTodo" ng-cloack>
+
   <div ng-controller="UserCtrl">
 
+    <page-loader flag="isLoading"></page-loader>
+    
      <div class="container">
 
       <form class="form-signin" ng-show="!isAuthenticated" ng-submit="submit()">
@@ -30,6 +35,9 @@
       </form>
       <div>{{error}}</div>
     </div> <!-- /container -->
+
+
+
   </div>
 </body>
 </html>

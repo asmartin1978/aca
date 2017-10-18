@@ -218,7 +218,6 @@ myApp.controller('UserCtrl', function ($scope, $http, $window, $rootScope, $loca
   $scope.welcome = '';
   $scope.message = '';
 
-
   $scope.submit = function () {
     $http
       .post('/autenticacion/login', $scope.user)

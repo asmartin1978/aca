@@ -1,0 +1,98 @@
+<!-- 
+Custom server side script is used to fetch data from the remote REST API server,
+handlebars to render html and phantom-pdf recipe to convert html into pdf.
+The template also uses helper function toJSON defined in global helpers asset.
+
+It requires allowed http module in scripts in the configuration file:
+"scripts": { "allowedModules": ["http"] }
+!-->
+<html>
+  <head>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.6/Chart.min.js'></script>
+  </head>
+  <body>
+    
+<div class="chart-container" style="position: relative; height:30vh; width:30vw">  
+	<canvas id="myChart" ></canvas>
+</div>
+
+<div class="chart-container" style="position: relative; height:40vh; width:40vw">  
+	<canvas id="asistenciaChart" ></canvas>
+</div>
+
+<script>
+var ctx = document.getElementById("myChart").getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ["Red", "Blue", "Yellow", "Green", "Purple"],
+        datasets: [{
+            label: 'Meses en el cinturon',
+            data: [12, 19, 3, 5, 2],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255,99,132,1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)'
+            ],
+            borderWidth: 5
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:true
+                }
+            }]
+        }
+    }
+});
+</script>
+
+
+<script>
+var ctx = document.getElementById("asistenciaChart").getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ["Enero", "Febrero", "Marzo", "Abril", "Mayo" , "Junio" , "Julio" , "Agosto" , "Septiembre" , "Octubre" , "Noviembre" , "Diciembre"],
+        datasets: [{
+            label: 'Asistencia a clases',
+            data: [1,2,3,4,5,6,7,8,9,10,11,12],
+            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                
+            borderColor: 'rgba(54, 162, 235, 0.2)',
+                
+            borderWidth: 5
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:true
+                }
+            }]
+        }
+    }
+});
+</script>
+
+
+
+
+  </body>
+</html>
+
+
+
