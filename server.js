@@ -45,7 +45,7 @@ app.use(express.static(__dirname + '/public'));
 app.use('/calendar', express.static(__dirname + '/node_modules/fullcalendar/dist/'));
 app.use('/jquery', express.static(__dirname + '/node_modules/jquery/dist/'));
 app.use('/moment', express.static(__dirname + '/node_modules/moment/min/'));
-
+app.use('/angular-momentjs', express.static(__dirname + '/node_modules/angular-momentjs/'));
 
 
 //Seleccion del puerto

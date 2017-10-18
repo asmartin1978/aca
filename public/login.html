@@ -3,40 +3,33 @@
 <head>
   <title>Bootstrap Example</title>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link href="signin.css" rel="stylesheet">
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.7/angular.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <script src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.5.1/moment.min.js"></script>
-  <script src="angular-momentjs.js"></script>
+  <script src="angular-momentjs/angular-momentjs.js"></script>
   <script src="controller.js"></script>
 </head>
 <body ng-app="angularTodo">
   <div ng-controller="UserCtrl">
 
+     <div class="container">
 
-      <div class="container">
-        <h2>Acceso a la aplicacion</h2>
-        <form ng-show="!isAuthenticated" ng-submit="submit()">
-          <div class="form-group">
-            <label for="email">Nombre de usuario</label>
-                <input ng-model="user.name" class="form-control" type="text" name="user" placeholder="Introduzca el nombre de usuario" />        
-          </div>
-          <div class="form-group">
-            <label for="pwd">Password</label>
-            <input ng-model="user.password" class="form-control" type="password" name="pass" placeholder="Introduzca la contraseña" />
-            
-          </div>
-          
-          <button type="submit" class="btn btn-default" value="login">Acceso</button>
-        </form>
-
-        <div>{{error}}</div>
+      <form class="form-signin" ng-show="!isAuthenticated" ng-submit="submit()">
+        <h2 class="form-signin-heading">Acceso al sistema</h2>
+        <label for="inputEmail" class="sr-only">Nombre de usuario</label>
         
-      </div>
-
-
+        <input ng-model="user.name" class="form-control" type="text" name="user" placeholder="Introduzca el nombre de usuario" />        
+        <label for="inputPassword" class="sr-only">Contraseña</label>
+        
+        <input ng-model="user.password" class="form-control" type="password" name="pass" placeholder="Introduzca la contraseña" />
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Acceder</button>
+      </form>
+      <div>{{error}}</div>
+    </div> <!-- /container -->
   </div>
 </body>
 </html>
