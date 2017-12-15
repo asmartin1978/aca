@@ -32,7 +32,15 @@ var AlumnoSchema   = new Schema({
     		hasta: Date
     	}
 
-    }
+    },
+
+    entrenamientos : [     
+        {           
+            entrenamiento: {type: Schema.Types.ObjectId, ref: 'Entrenamiento'},           
+        }
+    ]
+
+
 });
 
 module.exports = mongoose.model('Alumno', AlumnoSchema);

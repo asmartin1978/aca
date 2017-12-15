@@ -1,0 +1,43 @@
+ <!-- Modal -->
+  <div class="modal fade" id="myModalFicha" role="dialog">
+    <div class="modal-dialog modal-lg">    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-body">
+                          
+              <div class="panel panel-primary">
+              <div class="panel-heading">Gestion de los datos del alumno</div>
+              <div class="panel-body">
+                  
+                <input type="hidden" name="_id" placeholder = "Nombre del alumno" class="form-control" ng-model="formData._id">
+                
+                <span type="text">{{formData.nombre}} {{formData.apellidos}}</span>
+                <span type="text">{{formData.cinturon}}</span>
+                <span type="text">{{formData.cinturon}}</span>
+                <span type="text">{{formData.descripcion}}</span>
+                
+                <span type="text">{{formData.graduaciones.blanco.desde}}</span>
+                <span type="text">{{formData.graduaciones.blanco.hasta}}</span>
+                <span type="text">{{formData.graduaciones.azul.desde}}</span>
+                <span type="text">{{formData.graduaciones.azul.hasta}}</span>
+                <span type="text">{{formData.graduaciones.morado.desde}}</span>
+                
+                
+
+                <canvas class="chart chart-horizontal-bar" chart-data="data" chart-labels="labels" 
+                         ></canvas> 
+
+                <div class="form-group">
+                  
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+
+
+
+
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -87,7 +87,20 @@ router.route('/entrenamientos/:entrenamiento_id')
             entrenamiento.save(function(err) {
                 if (err)
                     res.send(err);
-                res.json({ message: 'Academia updated!' });
+                
+                Alumno.findById(req.body.alumnoid,function(err,alu){
+                    alu.entrenamientos.push({entrenamiento:entrenamiento});
+                    
+                    
+                    alu.save(function(err){
+                         if (err)
+                            res.send(err);
+
+                        console.log(alu);
+                        res.json({ message: 'Academia updated!' });
+                    })
+                })
+
             });
 
         });

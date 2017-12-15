@@ -1,4 +1,4 @@
-var myApp = angular.module('angularTodo',['angular-momentjs'])
+var myApp = angular.module('angularTodo',['angular-momentjs' , "chart.js"])
 ;
 
 
@@ -163,7 +163,58 @@ myApp.controller('alumnosController', function ($scope, $http , $moment ) {
         $scope.formData = data;
 
         console.log($scope.formData);
+      })
+      .error(function(data) {
+        console.log('Error: ' + data);
+      });
+  }
 
+
+  $scope.cargarAlumnoYAsistencia = function(id){
+
+      $http.get('/api/alumnosficha/'+id)
+      .success(function(data) {
+        
+        $scope.formData = data;
+        $scope.labels = ["Blanco", "Azul", "Morado", "Marron", "Negro"];
+        
+        var blanco = 0;
+        var azul= 0;
+        var morado= 0;
+        var marron= 0;
+        var negro= 0;
+
+        if(data.graduaciones.blanco !=null){
+          var fechab1 = moment(data.graduaciones.blanco.desde);
+          var fechab2 = moment(data.graduaciones.blanco.hasta);
+          blanco = fechab2.diff(fechab1, 'months');
+        }
+
+        if(data.graduaciones.azul !=null){
+        var fechaa1 = moment(data.graduaciones.azul.desde);
+        var fechaa2 = moment(data.graduaciones.azul.hasta);
+        azul = fechaa2.diff(fechaa1, 'months');
+        }
+
+        /*if(data.graduaciones.morado !=null){
+        var fecham1 = moment(data.graduaciones.morado.desde);
+        var fecham2 = moment(data.graduaciones.morado.hasta);
+        morado = fecham2.diff(fecham1, 'months');
+        }
+
+        if(data.graduaciones.marron !=null){
+        var fechama1 = moment(data.graduaciones.marron.desde);
+        var fechama2 = moment(data.graduaciones.marron.hasta);
+        marron = fechama2.diff(fechama1, 'months');
+        }
+
+        if(data.graduaciones.negro !=null){
+        var fechan1 = moment(data.graduaciones.negro.desde);
+        var fechan2 = moment(data.graduaciones.negro.hasta);
+        negro = fechan2.diff(fechan1, 'months');
+        }*/
+
+        $scope.data = [blanco, azul ,morado ,marron ,negro];
 
       })
       .error(function(data) {
@@ -181,7 +232,6 @@ myApp.controller('alumnosController', function ($scope, $http , $moment ) {
 
   // Cuando se hace submit (alta de alumno)
   $scope.submitForm = function() {
-
 
     if($scope.formData._id == null){
         $http.post('/api/alumnos', $scope.formData)

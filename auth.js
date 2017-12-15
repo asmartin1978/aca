@@ -9,10 +9,10 @@ var users = [
   },
   {
     id: 3,
-    name: 'alberto',
-    password: 'alberto',
-    first_name:'Alberto', 
-    last_name:'Gonzalez Ortiz' , 
+    name: 'sutemi',
+    password: 'Sutem1',
+    first_name:'Sutemi', 
+    last_name:'Fight Academy' , 
     email:'mail@mail.com'
   },
   {

@@ -8,7 +8,6 @@
   <link rel="stylesheet" href="nav.css">
 
 
-
 </head>
 <body ng-controller="alumnosController">
 
@@ -22,8 +21,9 @@
 <div class="form-group">
   <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Alta de nuevo alumno</button>
 </div>
-  <!-- Modal -->
-  <div class="modal fade" id="myModal" role="dialog">
+
+   
+       <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog modal-lg">
     
       <!-- Modal content-->
@@ -40,6 +40,7 @@
                       
                     <input type="hidden" name="_id" placeholder = "Nombre del alumno" class="form-control" ng-model="formData._id">
                     
+
                     <div class="form-group">
                         <label>Nombre</label>
                         <input type="text" name="nombre" placeholder = "Nombre del alumno" class="form-control" ng-model="formData.nombre">
@@ -113,8 +114,8 @@
       
     </div>
   </div>
-   
-      
+      <div ng-include="'fichaalumno.html'"></div>
+
     
       <div class="panel panel-default">
         <div class="panel-heading panel-heading-black">Listado de cinturones negros</div>
@@ -136,7 +137,8 @@
             <td>{{ alumno.academia.nombre}}</td>
             <td>
                 <div class="form-group">
-                  <button type="button" ng-click="cargarAlumno(alumno._id)" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Actualizar alumno</button>
+                  <button type="button" ng-click="cargarAlumno(alumno._id)" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Editar</button>
+                  <button type="button" ng-click="cargarAlumnoYAsistencia(alumno._id)" class="btn btn-primary" data-toggle="modal" data-target="#myModalFicha">Ficha del Alumno</button>
                 </div>
             </td>
           </tr>
@@ -169,6 +171,7 @@
             <td>
                 <div class="form-group">
                   <button type="button" ng-click="cargarAlumno(alumno._id)" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Actualizar alumno</button>
+                   <button type="button" ng-click="cargarAlumnoYAsistencia(alumno._id)" class="btn btn-primary" data-toggle="modal" data-target="#myModalFicha">Ficha del Alumno</button>
                 </div>
             </td>
           </tr>
@@ -201,6 +204,7 @@
             <td>
                 <div class="form-group">
                   <button type="button" ng-click="cargarAlumno(alumno._id)" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Actualizar alumno</button>
+                   <button type="button" ng-click="cargarAlumnoYAsistencia(alumno._id)" class="btn btn-primary" data-toggle="modal" data-target="#myModalFicha">Ficha del Alumno</button>
                 </div>
             </td>
           </tr>
@@ -233,6 +237,7 @@
             <td>
                 <div class="form-group">
                   <button type="button" ng-click="cargarAlumno(alumno._id)" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Actualizar alumno</button>
+                   <button type="button" ng-click="cargarAlumnoYAsistencia(alumno._id)" class="btn btn-primary" data-toggle="modal" data-target="#myModalFicha">Ficha del Alumno</button>
                 </div>
             </td>
           </tr>
@@ -264,6 +269,7 @@
             <td>
                 <div class="form-group">
                   <button type="button" ng-click="cargarAlumno(alumno._id)" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Actualizar alumno</button>
+                   <button type="button" ng-click="cargarAlumnoYAsistencia(alumno._id)" class="btn btn-primary" data-toggle="modal" data-target="#myModalFicha">Ficha del Alumno</button>
                 </div>
             </td>
           </tr>
@@ -281,5 +287,7 @@
     <script src="angular-momentjs/angular-momentjs.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="controller.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.6/Chart.min.js'></script>
+    <script src='http://cdn.jsdelivr.net/angular.chartjs/latest/angular-chart.min.js'></script>
 </body>
 </html>
