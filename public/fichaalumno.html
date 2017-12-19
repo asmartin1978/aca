@@ -6,34 +6,69 @@
         <div class="modal-body">
                           
               <div class="panel panel-primary">
-              <div class="panel-heading">Gestion de los datos del alumno</div>
+              <div class="panel-heading">Ficha del alumno</div>
               <div class="panel-body">
                   
                 <input type="hidden" name="_id" placeholder = "Nombre del alumno" class="form-control" ng-model="formData._id">
                 
-                <span type="text">{{formData.nombre}} {{formData.apellidos}}</span>
-                <span type="text">{{formData.cinturon}}</span>
-                <span type="text">{{formData.cinturon}}</span>
-                <span type="text">{{formData.descripcion}}</span>
+                <p class="bg-info">Datos basicos del alumno</p>
+                <p class="font-weight-bold">Nombre:</p>
+                <p>{{formData.nombre}} {{formData.apellidos}}</p>
+                <p class="font-weight-bold">Cinturon actual:</p>
+                <p>{{formData.cinturon}}</p>
+                <p class="font-weight-bold">Comentarios:</p>
+                <p>{{formData.descripcion}}</p>
                 
-                <span type="text">{{formData.graduaciones.blanco.desde}}</span>
-                <span type="text">{{formData.graduaciones.blanco.hasta}}</span>
-                <span type="text">{{formData.graduaciones.azul.desde}}</span>
-                <span type="text">{{formData.graduaciones.azul.hasta}}</span>
-                <span type="text">{{formData.graduaciones.morado.desde}}</span>
-                
-                
+                <p class="bg-info">Graduación y meses en cada cinturon</p>
+                <p type="text">Graduacion de cinturon blanco: {{formData.graduaciones.blanco.desde}}</p>
+                <p type="text">Graduacion de cinturon azul: {{formData.graduaciones.azul.desde}}</p>
+                <p type="text">Graduacion de cinturon morado: {{formData.graduaciones.morado.desde}}</p>
+                <p type="text">Graduacion de cinturon marron: {{formData.graduaciones.marron.desde}}</p>
+                <p type="text">Graduacion de cinturon negro: {{formData.graduaciones.negro.desde}}</p>
 
                 <canvas class="chart chart-horizontal-bar" chart-data="data" chart-labels="labels" 
                          ></canvas> 
 
+                <p class="bg-info">Asistencia a clases por meses</p>
+
+                <p>
+                  <select name="show-filter" ng-model="selectedYear" ng-change="changeYear()"> 
+                        <option ng-repeat="a in anyos" ng-value="a.id">{{a.value}} </option>
+                  </select>
+                </p>
+
+                <canvas class="chart chart-bar" chart-data="datapormes" chart-labels="labelsmes" 
+                         ></canvas> 
+
+
+                <p class="bg-info">Detalle de la asistencia a clases</p>
+
+                Asistencia a clase en el año: {{selectedYear}}
+
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                          <th>Fecha</th>
+                          <th>Clase</th>
+                          <th>Profesor</th>
+                          <th>Inicio</th>
+                          <th>Fin</th>
+                        </tr>
+                    </thead>
+                    <tbody>  
+                      <tr ng-repeat="ent in formData.entrenamientos | orderBy:'-fecha' | filter:selectedYear:false:ent.entrenamiento.fecha" >                          
+                          <td>{{ ent.entrenamiento.fecha }}</td>
+                          <td>{{ ent.entrenamiento.nombre }}</td>
+                          <td>{{ ent.entrenamiento.profesor }}</td>
+                          <td>{{ ent.entrenamiento.inicio }}</td>
+                          <td>{{ ent.entrenamiento.fin }}</td>                          
+                      </tr>
+                    </tbody>
+                </table>
+
                 <div class="form-group">
-                  
-                  <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                 </div>
-
-
-
 
               </div>
             </div>

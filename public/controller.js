@@ -1,4 +1,4 @@
-var myApp = angular.module('angularTodo',['angular-momentjs' , "chart.js"])
+var myApp = angular.module('angularTodo',['angular-momentjs' , 'chart.js'])
 ;
 
 
@@ -170,6 +170,11 @@ myApp.controller('alumnosController', function ($scope, $http , $moment ) {
   }
 
 
+  $scope.changeYear = function(){
+    $scope.datapormes = [11,3,4,17,6,7,8,6,7,8,2,4];
+  }
+
+
   $scope.cargarAlumnoYAsistencia = function(id){
 
       $http.get('/api/alumnosficha/'+id)
@@ -178,41 +183,76 @@ myApp.controller('alumnosController', function ($scope, $http , $moment ) {
         $scope.formData = data;
         $scope.labels = ["Blanco", "Azul", "Morado", "Marron", "Negro"];
         
+        $scope.labelsmes = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio" , "Julio" , "Agosto" , "Septiembre" , "Octubre" , "Noviembre" , "Diciembre"];
+        $scope.datapormes = [2,3,4,5,6,7,8,6,7,8,2,4];
+
+        $scope.anyos = [{id:2017,value:2017} ,{id:2018,value:2018} ,
+        {id:2019,value:2019} ,{id:2020,value:2020} ,{id:2021,value:2021} ,{id:2022,value:2022} , {id:2023,value:2023},
+        {id:2024,value:2024}, {id:2025,value:2025}, {id:2026,value:2026}];
+
         var blanco = 0;
         var azul= 0;
         var morado= 0;
         var marron= 0;
         var negro= 0;
 
+        console.log("--" + data.entrenamientos.length);
+        console.log("--" + data.entrenamientos.filter(function(x){return moment(x.entrenamiento.fecha).month() == 11;}).length);
+
+
+        var now = moment();
+
         if(data.graduaciones.blanco !=null){
-          var fechab1 = moment(data.graduaciones.blanco.desde);
-          var fechab2 = moment(data.graduaciones.blanco.hasta);
-          blanco = fechab2.diff(fechab1, 'months');
+            var fechab1 = moment(data.graduaciones.blanco.desde);
+            
+            var fechab2 = now;
+            if(data.graduaciones.blanco.hasta!=null){
+              fechab2 = moment(data.graduaciones.blanco.hasta);
+            }
+            
+            blanco = fechab2.diff(fechab1, 'months');
         }
 
         if(data.graduaciones.azul !=null){
-        var fechaa1 = moment(data.graduaciones.azul.desde);
-        var fechaa2 = moment(data.graduaciones.azul.hasta);
-        azul = fechaa2.diff(fechaa1, 'months');
+            var fechaa1 = moment(data.graduaciones.azul.desde);
+
+            var fechaa2 = now;
+            if(data.graduaciones.azul.hasta!=null){
+              fechaa2 = moment(data.graduaciones.azul.hasta);
+            }
+            azul = fechaa2.diff(fechaa1, 'months');
         }
 
-        /*if(data.graduaciones.morado !=null){
-        var fecham1 = moment(data.graduaciones.morado.desde);
-        var fecham2 = moment(data.graduaciones.morado.hasta);
-        morado = fecham2.diff(fecham1, 'months');
+        if(data.graduaciones.morado !=null){
+          var fecham1 = moment(data.graduaciones.morado.desde);
+          
+           var fecham2 = now;
+            if(data.graduaciones.morado.hasta!=null){
+              fecham2 = moment(data.graduaciones.morado.hasta)
+            }
+          morado = fecham2.diff(fecham1, 'months');
         }
 
         if(data.graduaciones.marron !=null){
-        var fechama1 = moment(data.graduaciones.marron.desde);
-        var fechama2 = moment(data.graduaciones.marron.hasta);
-        marron = fechama2.diff(fechama1, 'months');
+          var fechama1 = moment(data.graduaciones.marron.desde);
+          
+          var fechama2 = now;
+            if(data.graduaciones.marron.hasta!=null){
+              fechama2 = moment(data.graduaciones.marron.hasta);
+            }
+
+          marron = fechama2.diff(fechama1, 'months');
         }
 
         if(data.graduaciones.negro !=null){
-        var fechan1 = moment(data.graduaciones.negro.desde);
-        var fechan2 = moment(data.graduaciones.negro.hasta);
-        negro = fechan2.diff(fechan1, 'months');
-        }*/
+          var fechan1 = moment(data.graduaciones.negro.desde);
+
+          var fechan2 = now;
+            if(data.graduaciones.negro.hasta!=null){
+              fechan2 = moment(data.graduaciones.negro.hasta);
+            } 
+          negro = fechan2.diff(fechan1, 'months');
+        }
 
         $scope.data = [blanco, azul ,morado ,marron ,negro];
 

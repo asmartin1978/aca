@@ -170,7 +170,7 @@ router.route('/alumnosficha/:alumno_id')
                 res.status(500).json({ message: 'Error al acceder al detalle' });
             }
             res.json(alumno);
-        }).populate('academia', 'nombre direccion historia').populate('entrenamientos.entrenamiento' , 'profesor nombre');
+        }).populate('academia', 'nombre direccion historia').populate('entrenamientos.entrenamiento' , 'profesor nombre fecha inicio fin');
     })
 
     ;

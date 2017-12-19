@@ -16,7 +16,11 @@ router.route('/entrenamientos')
         entrenamiento._id = req.body._id;
         entrenamiento.nombre = req.body.nombre;
         entrenamiento.profesor = req.body.profesor;  
-
+        
+        entrenamiento.fecha = req.body.fecha;
+        entrenamiento.inicio = req.body.inicio;
+        entrenamiento.fin = req.body.fin;
+        
         Alumno.find(function(err, alumnos) {
                 if (err){
                     console.log('Error:' + err);
@@ -51,8 +55,9 @@ router.route('/entrenamientos')
 
 //Acceso a un item de la coleccion
 router.route('/entrenamientos/:entrenamiento_id')
-
+    
     .get(function(req, res) {
+        
         Entrenamiento.findById(req.params.entrenamiento_id, function(err, entrenamiento) {
             if (err)
                 res.send(err);
