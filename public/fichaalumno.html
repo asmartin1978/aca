@@ -32,7 +32,7 @@
                 <p class="bg-info">Asistencia a clases por meses</p>
 
                 <p>
-                  <select name="show-filter" ng-model="selectedYear" ng-change="changeYear()"> 
+                  <select name="show-filter" ng-model="selectedYear" ng-change="changeYear(selectedYear)"> 
                         <option ng-repeat="a in anyos" ng-value="a.id">{{a.value}} </option>
                   </select>
                 </p>
@@ -56,12 +56,12 @@
                         </tr>
                     </thead>
                     <tbody>  
-                      <tr ng-repeat="ent in formData.entrenamientos | orderBy:'-fecha' | filter:selectedYear:false:ent.entrenamiento.fecha" >                          
-                          <td>{{ ent.entrenamiento.fecha }}</td>
-                          <td>{{ ent.entrenamiento.nombre }}</td>
-                          <td>{{ ent.entrenamiento.profesor }}</td>
-                          <td>{{ ent.entrenamiento.inicio }}</td>
-                          <td>{{ ent.entrenamiento.fin }}</td>                          
+                      <tr ng-repeat="ent in entrenamientos | orderBy:'-fecha' | filter:selectedYear:false:ent.entrenamiento.fecha" >                          
+                          <td>{{ ent.fecha }}</td>
+                          <td>{{ ent.nombre }}</td>
+                          <td>{{ ent.profesor }}</td>
+                          <td>{{ ent.inicio }}</td>
+                          <td>{{ ent.fin }}</td>                          
                       </tr>
                     </tbody>
                 </table>

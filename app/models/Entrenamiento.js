@@ -5,6 +5,7 @@ var Schema       = mongoose.Schema;
 
 var EntrenamientoSchema   = new Schema({
     
+    _uniid: Schema.Types.ObjectId,
     _id: String,
     nombre: String,
     fecha: Date, 

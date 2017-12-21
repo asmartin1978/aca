@@ -5,6 +5,8 @@ var Academia     = require('../models/academia'); // Importacion de la clase
 var Entrenamiento     = require('../models/Entrenamiento'); // Importacion de la clase
 var Alumno     = require('../models/alumno'); // Importacion de la clase
 
+var mongoose     = require('mongoose');
+
 //Api de sesiones de entrenamiento
 //Entutamiento de bears, para la colecion entera
 router.route('/entrenamientos')
@@ -13,6 +15,7 @@ router.route('/entrenamientos')
 
         var entrenamiento = new Entrenamiento();      
         
+        entrenamiento._uniid = new mongoose.Types.ObjectId();
         entrenamiento._id = req.body._id;
         entrenamiento.nombre = req.body.nombre;
         entrenamiento.profesor = req.body.profesor;  
@@ -92,20 +95,8 @@ router.route('/entrenamientos/:entrenamiento_id')
             entrenamiento.save(function(err) {
                 if (err)
                     res.send(err);
+                res.json({ message: 'Academia updated!' });
                 
-                Alumno.findById(req.body.alumnoid,function(err,alu){
-                    alu.entrenamientos.push({entrenamiento:entrenamiento});
-                    
-                    
-                    alu.save(function(err){
-                         if (err)
-                            res.send(err);
-
-                        console.log(alu);
-                        res.json({ message: 'Academia updated!' });
-                    })
-                })
-
             });
 
         });
@@ -123,5 +114,22 @@ router.route('/entrenamientos/:entrenamiento_id')
         });
     });
 
+
+
+router.route('/entrenamientosporalumno/:alumno_id')
+   
+    .get(function(req, res) {
+        
+        Entrenamiento.
+
+          find({"alumnos":{ $elemMatch: {alum: req.params.alumno_id , asiste:true} }}).
+          exec(function(err, entrenamientos) {
+            if (err)
+                res.send(err);
+            //console.log(passport);
+            res.json(entrenamientos);
+        });
+
+    });
 
 module.exports = router;  

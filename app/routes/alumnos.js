@@ -158,21 +158,4 @@ router.route('/alumnos/:alumno_id')
     });
 
 
-
-
-//Acceso a un item de la coleccion
-router.route('/alumnosficha/:alumno_id')
-
-    .get(function(req, res) {
-        Alumno.findById(req.params.alumno_id, function(err, alumno) {
-            if (err){
-                console.log(err);
-                res.status(500).json({ message: 'Error al acceder al detalle' });
-            }
-            res.json(alumno);
-        }).populate('academia', 'nombre direccion historia').populate('entrenamientos.entrenamiento' , 'profesor nombre fecha inicio fin');
-    })
-
-    ;
-
 module.exports = router;
