@@ -172,54 +172,58 @@ myApp.controller('alumnosController', function ($scope, $http , $moment ) {
 
   $scope.changeYear = function(year){
     
+    //Agrupa la informacion por mes para el año seleccionado
+
+    console.log($scope.entrenamientos);
+
     $scope.selectedYear=year;
     $scope.datapormes = [
-          $scope.formData.entrenamientos.filter(function(x){
-            return (moment(x.entrenamiento.fecha).month() == 0 & moment(x.entrenamiento.fecha).year() == year);
+          $scope.entrenamientos.filter(function(x){
+            return (moment(x.fecha).month() == 0 & moment(x.fecha).year() == year);
           }).length,
 
-          $scope.formData.entrenamientos.filter(function(x){
-            return (moment(x.entrenamiento.fecha).month() == 1 & moment(x.entrenamiento.fecha).year() == year);
+          $scope.entrenamientos.filter(function(x){
+            return (moment(x.fecha).month() == 1 & moment(x.fecha).year() == year);
           }).length,
 
-          $scope.formData.entrenamientos.filter(function(x){
-            return (moment(x.entrenamiento.fecha).month() == 2 & moment(x.entrenamiento.fecha).year() == year);
+          $scope.entrenamientos.filter(function(x){
+            return (moment(x.fecha).month() == 2 & moment(x.fecha).year() == year);
           }).length,
 
-          $scope.formData.entrenamientos.filter(function(x){
-            return (moment(x.entrenamiento.fecha).month() == 3 & moment(x.entrenamiento.fecha).year() == year);
+          $scope.entrenamientos.filter(function(x){
+            return (moment(x.fecha).month() == 3 & moment(x.fecha).year() == year);
           }).length,
 
-          $scope.formData.entrenamientos.filter(function(x){
-            return (moment(x.entrenamiento.fecha).month() == 4 & moment(x.entrenamiento.fecha).year() == year);
+          $scope.entrenamientos.filter(function(x){
+            return (moment(x.fecha).month() == 4 & moment(x.fecha).year() == year);
           }).length,
 
-          $scope.formData.entrenamientos.filter(function(x){
-            return (moment(x.entrenamiento.fecha).month() == 5 & moment(x.entrenamiento.fecha).year() == year);
+          $scope.entrenamientos.filter(function(x){
+            return (moment(x.fecha).month() == 5 & moment(x.fecha).year() == year);
           }).length,
 
-          $scope.formData.entrenamientos.filter(function(x){
-            return (moment(x.entrenamiento.fecha).month() == 6 & moment(x.entrenamiento.fecha).year() == year);
+          $scope.entrenamientos.filter(function(x){
+            return (moment(x.fecha).month() == 6 & moment(x.fecha).year() == year);
           }).length,
 
-          $scope.formData.entrenamientos.filter(function(x){
-            return (moment(x.entrenamiento.fecha).month() == 7 & moment(x.entrenamiento.fecha).year() == year);
+          $scope.entrenamientos.filter(function(x){
+            return (moment(x.fecha).month() == 7 & moment(x.fecha).year() == year);
           }).length,
 
-          $scope.formData.entrenamientos.filter(function(x){
-            return (moment(x.entrenamiento.fecha).month() == 8 & moment(x.entrenamiento.fecha).year() == year);
+          $scope.entrenamientos.filter(function(x){
+            return (moment(x.fecha).month() == 8 & moment(x.fecha).year() == year);
           }).length,
 
-          $scope.formData.entrenamientos.filter(function(x){
-            return (moment(x.entrenamiento.fecha).month() == 9 & moment(x.entrenamiento.fecha).year() == year);
+          $scope.entrenamientos.filter(function(x){
+            return (moment(x.fecha).month() == 9 & moment(x.fecha).year() == year);
           }).length,
 
-          $scope.formData.entrenamientos.filter(function(x){
-            return (moment(x.entrenamiento.fecha).month() == 10 & moment(x.entrenamiento.fecha).year() == year);
+          $scope.entrenamientos.filter(function(x){
+            return (moment(x.fecha).month() == 10 & moment(x.fecha).year() == year);
           }).length,
 
-          $scope.formData.entrenamientos.filter(function(x){
-            return (moment(x.entrenamiento.fecha).month() == 11 & moment(x.entrenamiento.fecha).year() == year);
+          $scope.entrenamientos.filter(function(x){
+            return (moment(x.fecha).month() == 11 & moment(x.fecha).year() == year);
           }).length            
     ];
   }
@@ -230,9 +234,9 @@ myApp.controller('alumnosController', function ($scope, $http , $moment ) {
 
       $http.get('/api/entrenamientosporalumno/'+id)
       .success(function(data) {
-          
           $scope.entrenamientos = data;
-          
+          var y = new moment().year();
+          $scope.changeYear(y);         
       });
 
 
@@ -246,9 +250,7 @@ myApp.controller('alumnosController', function ($scope, $http , $moment ) {
         $scope.labelsmes = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio" , "Julio" 
         , "Agosto" , "Septiembre" , "Octubre" , "Noviembre" , "Diciembre"];
         
-        var y = new moment().year();
-          
-        $scope.changeYear(y);
+        
 
         $scope.anyos = [{id:2017,value:2017} ,{id:2018,value:2018} ,
         {id:2019,value:2019} ,{id:2020,value:2020} ,{id:2021,value:2021} ,{id:2022,value:2022} , {id:2023,value:2023},
