@@ -19,7 +19,7 @@
     
 <!-- Trigger the modal with a button -->
 <div class="form-group">
-  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Alta de nuevo alumno</button>
+  <button type="button" class="btn btn-primary" ng-click="clearForm()" data-toggle="modal" data-target="#myModal">Alta de nuevo alumno</button>
 </div>
 
    
@@ -31,7 +31,7 @@
         
         <div class="modal-body">
           
-                  <form name="userForm" ng-submit="submitForm()" novalidate> <!-- novalidate prevents HTML5 validation since we will be validating ourselves -->
+                  <form name="userForm" ng-submit="submitForm(userForm.$valid)" novalidate> <!-- novalidate prevents HTML5 validation since we will be validating ourselves -->
 
                   
                   <div class="panel panel-primary">
@@ -43,18 +43,24 @@
 
                     <div class="form-group">
                         <label>Nombre</label>
-                        <input type="text" name="nombre" placeholder = "Nombre del alumno" class="form-control" ng-model="formData.nombre">
+                        <input type="text" name="nombre" placeholder = "Nombre del alumno" class="form-control" ng-model="formData.nombre" required="true">
+                        
+                        <p ng-show="userForm.nombre.$invalid && !userForm.nombre.$pristine" class="help-block">Es obligatorio indicar un nombre</p>
+
                     </div>
 
                     <!-- USERNAME -->
                     <div class="form-group">
                         <label>Apellidos</label>
-                        <input type="text" name="apellidos" placeholder = "Apellidos del alumno" ng-model="formData.apellidos" class="form-control">
+                        <input type="text" name="apellidos" placeholder = "Apellidos del alumno" ng-model="formData.apellidos" class="form-control" required="true">
+
+                        <p ng-show="userForm.apellidos.$invalid && !userForm.apellidos.$pristine" class="help-block">Es obligatorio indicar el apellido</p>
+
                     </div>
 
                     <div class="form-group">  
                       <label>Cinturon</label>
-                      <select ng-model="formData.cinturon" class="form-control" placeholder = "Graduacion">
+                      <select name="cinturon" ng-model="formData.cinturon" class="form-control" placeholder = "Graduacion" required="true">
                         <option value="blanco">Blanco</option>
                         <option value="azul">Azul</option>
                         <option value="morado">Morado</option>
@@ -65,10 +71,12 @@
 
                     <div class="form-group">
                         <label>Academia</label>
-                        <select ng-model="formData.id_academia" ng-options="item.nombre for item in academias " class="form-control">
-                          
+                        <select ng-model="formData.id_academia"class="form-control" required="true">                         
+                              <option ng-selected = "formData.id_academia == item._id" ng-repeat="item in academias" ng-value="item._id">{{item.nombre}}</option>
+
                         </select>
                     </div>
+
 
                     <div class="form-group">
                         <label>Descripcion</label>
@@ -76,11 +84,14 @@
                     </div>
                     <div class="form-group">
                           <label>Fecha de graduacion de cinturon blanco</label>
-                          <input type="date"  name="graduaciones.blanco.desde" ng-model="formData.graduaciones.blanco.desde" class="form-control" >
+                          <input type="date"  name="graduaciones.blanco.desde" ng-model="formData.graduaciones.blanco.desde" class="form-control"  >
+                          
                       </div>
                       <div class="form-group">
                           <label>Fecha de graduacion de cinturon azul</label>
                           <input type="date" name="azul" ng-model="formData.graduaciones.azul.desde" class="form-control" >
+
+
                       </div>
                     <div class="form-group">
                         <label>Fecha de graduacion de cinturon morado</label>
@@ -97,7 +108,7 @@
 
                     <!-- SUBMIT BUTTON -->
                     <div class="form-group">
-                      <button type="submit" class="btn btn-primary">Crear</button>
+                      <button type="submit" class="btn btn-primary" ng-disabled="userForm.$invalid" >Crear</button>
                       <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                     </div>
 
@@ -282,7 +293,7 @@
 </div>
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.7/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.0/angular.min.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.5.1/moment.min.js"></script>
     <script src="angular-momentjs/angular-momentjs.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>

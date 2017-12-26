@@ -37,7 +37,7 @@ router.route('/alumnos')
         if(req.body.graduaciones.negro!=null)
             alumno.graduaciones.negro.desde = req.body.graduaciones.negro.desde;
 
-
+        console.log(req.body.id_academia);
         //console.log(JSON.stringify(req.body));
         alumno.save(function(err) {
                                
@@ -45,7 +45,7 @@ router.route('/alumnos')
                     if (err){
                         res.send(err);
                     }
-                    //res.send(aca.nombre);
+                   
                     aca.alumnos.push(alumno);
                     aca.save(function(err) {
                         if (err){

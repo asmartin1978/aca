@@ -6,7 +6,7 @@
         <div class="modal-body">
                           
               <div class="panel panel-primary">
-              <div class="panel-heading">FICHA DEL ALUMNO</div>
+              <div class="panel-heading">FICHA DEL ALUMNO <button type="button" class="btn btn-default" data-dismiss="modal">X</button></div>
               <div class="panel-body">
                   
                 <input type="hidden" name="_id" placeholder = "Nombre del alumno" class="form-control" ng-model="formData._id">
@@ -18,11 +18,11 @@
                 
                 
                 <p class="bg-info"><strong>GRADUACION Y MESES EN CADA CINTURON </strong></p>
-                <p type="text"><strong>Graduacion de cinturon blanco:</strong> {{formData.graduaciones.blanco.desde}}</p>
-                <p type="text"><strong>Graduacion de cinturon azul:</strong> {{formData.graduaciones.azul.desde}}</p>
-                <p type="text"><strong>Graduacion de cinturon morado:</strong> {{formData.graduaciones.morado.desde}}</p>
-                <p type="text"><strong>Graduacion de cinturon marron:</strong> {{formData.graduaciones.marron.desde}}</p>
-                <p type="text"><strong>Graduacion de cinturon negro:</strong> {{formData.graduaciones.negro.desde}}</p>
+                <p type="text"><strong>Graduacion de cinturon blanco:</strong> {{formData.graduaciones.blanco.desde | date }}</p>
+                <p type="text"><strong>Graduacion de cinturon azul:</strong> {{formData.graduaciones.azul.desde | date }}</p>
+                <p type="text"><strong>Graduacion de cinturon morado:</strong> {{formData.graduaciones.morado.desde | date }}</p>
+                <p type="text"><strong>Graduacion de cinturon marron:</strong> {{formData.graduaciones.marron.desde | date }}</p>
+                <p type="text"><strong>Graduacion de cinturon negro:</strong> {{formData.graduaciones.negro.desde | date }}</p>
 
                 
                 <canvas class="chart chart-horizontal-bar" chart-data="data" chart-labels="labels" 

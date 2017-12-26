@@ -51,8 +51,6 @@ myApp.controller('academiasController', function ($window, $scope, $http ) {
 });
 
 
-
-
 myApp.controller('mainController', function ($window, $scope, $http ) {
   $scope.formData = {};
   
@@ -60,7 +58,10 @@ myApp.controller('mainController', function ($window, $scope, $http ) {
   $http.get('/api/academias')
     .success(function(data) {
       $scope.academias = data;
-      //console.log(data)
+      if($scope.academias.length==1){
+        $scope.loadSesionesAcademia($scope.academias[0]._id);
+      }
+      
     })
     .error(function(data,status) {
           console.log('Error: ' + data );
@@ -69,7 +70,7 @@ myApp.controller('mainController', function ($window, $scope, $http ) {
 
     $scope.loadSesionesAcademia=function(id){        
         
-        //console.log(id);
+        
         $http.get('/api/academias/'+id)
           .success(function(data,status) {
             $scope.detalleacademia = data;
@@ -137,7 +138,6 @@ myApp.controller('entrenamientoController', function ($scope, $http) {
 
 
 /*Controller para cargar y gestionar los alumnos*/
-
 myApp.controller('alumnosController', function ($scope, $http , $moment ) {
   
   $http.get('/api/alumnos')
@@ -155,14 +155,61 @@ myApp.controller('alumnosController', function ($scope, $http , $moment ) {
   }
 
 
+  $scope.clearForm = function(){
+    $scope.formData=null;
+  }
+
   $scope.cargarAlumno = function(id){
 
       $http.get('/api/alumnos/'+id)
-      .success(function(data) {
-        
+      .success(function(data) {        
         $scope.formData = data;
 
-        console.log($scope.formData);
+        $scope.formData.id_academia = data.academia._id;
+
+         if($scope.formData.graduaciones.blanco!=null){
+          if($scope.formData.graduaciones.blanco.desde!=null){
+            $scope.formData.graduaciones.blanco.desde = new Date($scope.formData.graduaciones.blanco.desde);   
+          }
+          if($scope.formData.graduaciones.blanco.hasta!=null){
+            $scope.formData.graduaciones.blanco.hasta = new Date($scope.formData.graduaciones.blanco.hasta);
+          }
+        }
+        if($scope.formData.graduaciones.azul!=null){
+          if($scope.formData.graduaciones.azul.desde!=null){  
+            $scope.formData.graduaciones.azul.desde = new Date($scope.formData.graduaciones.azul.desde);          
+          }
+          if($scope.formData.graduaciones.azul.hasta!=null){
+            $scope.formData.graduaciones.azul.hasta = new Date($scope.formData.graduaciones.azul.hasta);
+          }
+        }
+        if($scope.formData.graduaciones.morado!=null){
+          if($scope.formData.graduaciones.morado.desde !=null){
+            $scope.formData.graduaciones.morado.desde = new Date($scope.formData.graduaciones.morado.desde);
+          }
+          if($scope.formData.graduaciones.morado.hasta){
+            $scope.formData.graduaciones.morado.hasta = new Date($scope.formData.graduaciones.morado.hasta);
+          }
+        }
+        if($scope.formData.graduaciones.marron!=null){
+          if($scope.formData.graduaciones.marron.desde){
+            $scope.formData.graduaciones.marron.desde = new Date($scope.formData.graduaciones.marron.desde);
+          }
+          if($scope.formData.graduaciones.marron.hasta){
+            $scope.formData.graduaciones.marron.hasta = new Date($scope.formData.graduaciones.marron.hasta);
+          }
+        }
+        if($scope.formData.graduaciones.negro!=null){
+          if($scope.formData.graduaciones.negro.desde){
+            $scope.formData.graduaciones.negro.desde = new Date($scope.formData.graduaciones.negro.desde);
+          }
+          if($scope.formData.graduaciones.negro.hasta){
+            $scope.formData.graduaciones.negro.hasta = new Date($scope.formData.graduaciones.negro.hasta);
+          }
+        }
+
+
+
       })
       .error(function(data) {
         console.log('Error: ' + data);
@@ -173,8 +220,7 @@ myApp.controller('alumnosController', function ($scope, $http , $moment ) {
   $scope.changeYear = function(year){
     
     //Agrupa la informacion por mes para el año seleccionado
-
-    console.log($scope.entrenamientos);
+    //console.log($scope.entrenamientos);
 
     $scope.selectedYear=year;
     $scope.datapormes = [
@@ -228,7 +274,6 @@ myApp.controller('alumnosController', function ($scope, $http , $moment ) {
     ];
   }
 
-
   $scope.cargarAlumnoYAsistencia = function(id){
 
 
@@ -245,13 +290,12 @@ myApp.controller('alumnosController', function ($scope, $http , $moment ) {
         
         //console.log(data);
         $scope.formData = data;
+        
         $scope.labels = ["Blanco", "Azul", "Morado", "Marron", "Negro"];
         
         $scope.labelsmes = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio" , "Julio" 
         , "Agosto" , "Septiembre" , "Octubre" , "Noviembre" , "Diciembre"];
         
-        
-
         $scope.anyos = [{id:2017,value:2017} ,{id:2018,value:2018} ,
         {id:2019,value:2019} ,{id:2020,value:2020} ,{id:2021,value:2021} ,{id:2022,value:2022} , {id:2023,value:2023},
         {id:2024,value:2024}, {id:2025,value:2025}, {id:2026,value:2026}];
@@ -265,7 +309,7 @@ myApp.controller('alumnosController', function ($scope, $http , $moment ) {
         //console.log("--" + data.entrenamientos.length);
         //console.log("--" + data.entrenamientos.filter(function(x){return moment(x.entrenamiento.fecha).month() == 11;}).length);
 
-        var now = moment();
+        var now = new moment();
 
         if(data.graduaciones.blanco !=null){
             var fechab1 = moment(data.graduaciones.blanco.desde);
@@ -296,6 +340,7 @@ myApp.controller('alumnosController', function ($scope, $http , $moment ) {
               fecham2 = moment(data.graduaciones.morado.hasta)
             }
           morado = fecham2.diff(fecham1, 'months');
+          
         }
 
         if(data.graduaciones.marron !=null){
@@ -321,46 +366,94 @@ myApp.controller('alumnosController', function ($scope, $http , $moment ) {
 
         $scope.data = [blanco, azul ,morado ,marron ,negro];
 
+        if($scope.formData.graduaciones.blanco!=null){
+          if($scope.formData.graduaciones.blanco.desde!=null){
+            $scope.formData.graduaciones.blanco.desde = new Date($scope.formData.graduaciones.blanco.desde);   
+          }
+          if($scope.formData.graduaciones.blanco.hasta!=null){
+            $scope.formData.graduaciones.blanco.hasta = new Date($scope.formData.graduaciones.blanco.hasta);
+          }
+        }
+        if($scope.formData.graduaciones.azul!=null){
+          if($scope.formData.graduaciones.azul.desde!=null){  
+            $scope.formData.graduaciones.azul.desde = new Date($scope.formData.graduaciones.azul.desde);          
+          }
+          if($scope.formData.graduaciones.azul.hasta!=null){
+            $scope.formData.graduaciones.azul.hasta = new Date($scope.formData.graduaciones.azul.hasta);
+          }
+        }
+        if($scope.formData.graduaciones.morado!=null){
+          if($scope.formData.graduaciones.morado.desde !=null){
+            $scope.formData.graduaciones.morado.desde = new Date($scope.formData.graduaciones.morado.desde);
+          }
+          if($scope.formData.graduaciones.morado.hasta){
+            $scope.formData.graduaciones.morado.hasta = new Date($scope.formData.graduaciones.morado.hasta);
+          }
+        }
+        if($scope.formData.graduaciones.marron!=null){
+          if($scope.formData.graduaciones.marron.desde){
+            $scope.formData.graduaciones.marron.desde = new Date($scope.formData.graduaciones.marron.desde);
+          }
+          if($scope.formData.graduaciones.marron.hasta){
+            $scope.formData.graduaciones.marron.hasta = new Date($scope.formData.graduaciones.marron.hasta);
+          }
+        }
+        if($scope.formData.graduaciones.negro!=null){
+          if($scope.formData.graduaciones.negro.desde){
+            $scope.formData.graduaciones.negro.desde = new Date($scope.formData.graduaciones.negro.desde);
+          }
+          if($scope.formData.graduaciones.negro.hasta){
+            $scope.formData.graduaciones.negro.hasta = new Date($scope.formData.graduaciones.negro.hasta);
+          }
+        }
+
       })
       .error(function(data) {
         console.log('Error: ' + data);
       });
   }
 
-  $http.get('/api/academias')
+  
+
+  // Cuando se hace submit (alta de alumno)
+  $scope.submitForm = function(isvalid) {
+
+    if(isvalid){
+        if($scope.formData._id == null){
+            $http.post('/api/alumnos', $scope.formData)
+              .success(function(data) {
+                $scope.formData = {};
+                $scope.alumnos.push(data);
+                $scope.mostrarFormulario = false;
+              })
+              .error(function(data) {
+                console.log('Error:' + data);
+              });
+        } else {
+             $http.put('/api/alumnos/'+ $scope.formData._id, $scope.formData)
+              .success(function(data) {
+                $scope.formData = {};
+                $scope.alumnos.push(data);
+                $scope.mostrarFormulario = false;
+              })
+              .error(function(data) {
+                console.log('Error:' + data);
+              });
+
+        }
+      }else{
+
+      }
+  };
+
+
+$http.get('/api/academias')
     .success(function(data) {
       $scope.academias = data;
     })
     .error(function(data) {
       console.log('Error: ' + data);
     });
-
-  // Cuando se hace submit (alta de alumno)
-  $scope.submitForm = function() {
-
-    if($scope.formData._id == null){
-        $http.post('/api/alumnos', $scope.formData)
-          .success(function(data) {
-            $scope.formData = {};
-            $scope.alumnos.push(data);
-            $scope.mostrarFormulario = false;
-          })
-          .error(function(data) {
-            console.log('Error:' + data);
-          });
-    } else {
-         $http.put('/api/alumnos/'+ $scope.formData._id, $scope.formData)
-          .success(function(data) {
-            $scope.formData = {};
-            $scope.alumnos.push(data);
-            $scope.mostrarFormulario = false;
-          })
-          .error(function(data) {
-            console.log('Error:' + data);
-          });
-
-    }
-  };
 
 } );
 
