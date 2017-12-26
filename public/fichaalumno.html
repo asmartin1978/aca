@@ -24,10 +24,10 @@
                 <p type="text"><strong>Graduacion de cinturon marron:</strong> {{formData.graduaciones.marron.desde}}</p>
                 <p type="text"><strong>Graduacion de cinturon negro:</strong> {{formData.graduaciones.negro.desde}}</p>
 
-                <div class="chart-container" style="position: relative; height:40vh; width:40vw"> 
-                      <canvas class="chart chart-horizontal-bar" chart-data="data" chart-labels="labels" 
+                
+                <canvas class="chart chart-horizontal-bar" chart-data="data" chart-labels="labels" 
                          ></canvas> 
-                </div>         
+                
                 <p class="bg-info"><strong>ASISTENCIA A CLASES POR MESES Y AÑO</strong></p>
                 <p>
                   <select name="show-filter" ng-model="selectedYear" ng-change="changeYear(selectedYear)"> 
@@ -35,10 +35,10 @@
                   </select>
                 </p>
 
-                <div class="chart-container" align="middle" style="align-content: middle; position: relative; height:40vh; width:40vw"> 
-                      <canvas class="chart chart-bar" chart-data="datapormes" chart-labels="labelsmes" 
+                 
+                <canvas class="chart chart-bar" chart-data="datapormes" chart-labels="labelsmes" 
                          ></canvas> 
-                </div>         
+                
 
                 <p><strong>Año seleccionado: {{selectedYear}}</strong></p>
 
