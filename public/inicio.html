@@ -27,8 +27,10 @@
         editable: true,
         minTime: '11:00:00',
         maxTime: '22:00:00',
-        
-        
+        slotDuration : '00:30:00',
+        slotLabelFormat: 'HH:mm',
+        slotEventOverlap: false,
+
         eventClick:  function(event, jsEvent, view) {
             $('#modalTitle').html(event.title);
             $('#fullCalModal').modal();
