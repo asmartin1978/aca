@@ -10,7 +10,25 @@
                 Profesor: {{ angentrenamiento.profesor }}
             </div>
             <div id="modalBody" class="modal-body">
-                  
+            
+
+               <div class="form-inline">
+                  <div class="form-group">
+                  <input type="text" name="filtro" placeholder = "Filtrar por datos del alumno" ng-model="filtro" class="form-control" />
+                  </div>
+                  <div class="form-group">
+                  <select class="form-control" name="filtrocinturon" ng-model="filtrocinturon" >
+                                <option value="">Todos</option>
+                                <option value="blanco">Blanco</option>
+                                <option value="azul">Azul</option>
+                                <option value="morado">Morado</option>
+                                <option value="marron">Marron</option>
+                                <option value="negro">Negro</option>
+                  </select>
+                </div>
+              </div>
+
+
                   <table class="table table-hover">
                       <thead>
                           <tr>
@@ -21,7 +39,7 @@
                       </thead>
                       <tbody>
                           
-                            <tr ng-repeat="alumno in angentrenamiento.alumnos">          
+                            <tr ng-repeat="alumno in angentrenamiento.alumnos | filter:alumno.cinturon = filtrocinturon | filter:filtro">          
                               <td>{{ alumno.alum.nombre }} {{ alumno.alum.apellidos }}</td>
                               <td>{{ alumno.alum.cinturon }}  </td>
 
