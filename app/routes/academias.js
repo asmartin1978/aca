@@ -27,6 +27,7 @@ router.route('/academias')
     })
 
     .get(/*passport.authenticate('jwt', { session: false }),*/ function(req, res) {
+        
         Academia.find({propietario: req.user.id}, function(err, academias) {
             if (err)
                 res.send(err);
@@ -49,7 +50,6 @@ router.route('/academias/:academia_id')
 
     .put(/*passport.authenticate('jwt', { session: false }),*/function(req, res) {
 
-        // use our bear model to find the bear we want
         Academia.findById(req.params.academia_id, function(err, academia) {
 
             if (err)
@@ -71,7 +71,6 @@ router.route('/academias/:academia_id')
         });
     })
 
-    // delete the bear with this id (accessed at DELETE http://localhost:8080/api/bears/:bear_id)
     .delete(/*passport.authenticate('jwt', { session: false }),*/function(req, res) {
         Academia.remove({
             _id: req.params.academia_id

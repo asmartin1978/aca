@@ -414,6 +414,45 @@ myApp.controller('alumnosController', function ($scope, $http , $moment ) {
   }
 
   
+  $scope.cinturoncomparator = function(v1, v2) {
+    // If we don't get strings, just compare by index
+    /*if (v1.type !== 'string' || v2.type !== 'string') {
+      return (v1.index < v2.index) ? -1 : 1;
+    }*/
+      
+    if(v1.value == 'negro'){
+      if(v2.value == 'negro'){
+        return 0;
+      } else {
+        return 1;  
+      }
+    }else if (v1.value=='marron'){
+      if(v2.value == 'negro'){
+        return -1;
+      } else if (v2.value == 'marron'){
+        return 0
+      }else { return 1;}
+    }else if (v1.value == 'morado'){
+      if(v2.value == 'morado'){
+        return 0;
+      }else if(v2.value == 'negro' || v2.value == 'marron'){
+        return -1;
+      } else{ return 1;}
+    }else if (v1.value == 'azul'){
+      if(v2.value == 'azul'){
+        0
+      }else if(v2.value == 'negro' || v2.value == 'marron' || v2.value == 'morado'){
+        return -1;
+      } else{ return 1;}
+    }else {
+      if(v2.value == 'blanco'){
+          0 ;
+      }else {
+        return -1;
+      }
+    }
+  };
+
 
   // Cuando se hace submit (alta de alumno)
   $scope.submitForm = function(isvalid) {
@@ -442,7 +481,7 @@ myApp.controller('alumnosController', function ($scope, $http , $moment ) {
 
         }
       }else{
-
+        return true;
       }
   };
 

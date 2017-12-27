@@ -37,29 +37,30 @@
                   <div class="panel panel-primary">
                   <div class="panel-heading">Gestion de los datos del alumno</div>
                   <div class="panel-body">
-                      
+                   
+                   <div class="form-group">
+                          <span class="text-muted"><em><span style="color:red;">*</span> Campos obligatorios</em></span>
+                    </div>
+
                     <input type="hidden" name="_id" placeholder = "Nombre del alumno" class="form-control" ng-model="formData._id">
-                    
 
                     <div class="form-group">
-                        <label>Nombre</label>
+                        <label>Nombre <span style="color:red;">*</span></label> 
                         <input type="text" name="nombre" placeholder = "Nombre del alumno" class="form-control" ng-model="formData.nombre" required="true">
+                        <small id="help" class="form-text text-muted">Nombre del alumno</small>
                         
-                        <p ng-show="userForm.nombre.$invalid && !userForm.nombre.$pristine" class="help-block">Es obligatorio indicar un nombre</p>
-
                     </div>
 
                     <!-- USERNAME -->
                     <div class="form-group">
-                        <label>Apellidos</label>
+                        <label>Apellidos <span style="color:red;">*</span></label>
                         <input type="text" name="apellidos" placeholder = "Apellidos del alumno" ng-model="formData.apellidos" class="form-control" required="true">
-
-                        <p ng-show="userForm.apellidos.$invalid && !userForm.apellidos.$pristine" class="help-block">Es obligatorio indicar el apellido</p>
+                        <small id="help" class="form-text text-muted">Apellidos del alumno</small>
 
                     </div>
 
                     <div class="form-group">  
-                      <label>Cinturon</label>
+                      <label>Cinturon <span style="color:red;">*</span></label>
                       <select name="cinturon" ng-model="formData.cinturon" class="form-control" placeholder = "Graduacion" required="true">
                         <option value="blanco">Blanco</option>
                         <option value="azul">Azul</option>
@@ -67,44 +68,149 @@
                         <option value="marron">Marron</option>
                         <option value="negro">Negro</option>
                       </select>
+                      <small id="help" class="form-text text-muted">Graduacion actual del alumno</small>
                     </div>
 
                     <div class="form-group">
-                        <label>Academia</label>
-                        <select ng-model="formData.id_academia"class="form-control" required="true">                         
+                        <label>Academia <span style="color:red;">*</span></label>
+                        <select name="theaca" ng-model="formData.id_academia"class="form-control" required="true">                         
                               <option ng-selected = "formData.id_academia == item._id" ng-repeat="item in academias" ng-value="item._id">{{item.nombre}}</option>
 
                         </select>
+                        <small id="help" class="form-text text-muted">Academia a la que pertenece el alumno</small>
                     </div>
 
-
-                    <div class="form-group">
+                     <div class="form-group">
                         <label>Descripcion</label>
                         <input type="text" name="descripcion" placeholder = "Informacion de interes acerca del alumno" ng-model="formData.descripcion" class="form-control" >
+                        <small id="help" class="form-text text-muted">Indique cualquier dato de interes general.</small>
                     </div>
-                    <div class="form-group">
-                          <label>Fecha de graduacion de cinturon blanco</label>
-                          <input type="date"  name="graduaciones.blanco.desde" ng-model="formData.graduaciones.blanco.desde" class="form-control"  >
-                          
-                      </div>
-                      <div class="form-group">
-                          <label>Fecha de graduacion de cinturon azul</label>
-                          <input type="date" name="azul" ng-model="formData.graduaciones.azul.desde" class="form-control" >
 
 
-                      </div>
-                    <div class="form-group">
-                        <label>Fecha de graduacion de cinturon morado</label>
-                        <input type="date" name="morado" ng-model="formData.graduaciones.morado.desde" class="form-control" >
+                   <div id="exTab1">
+                    <ul class="nav nav-tabs" id="tabContent">
+                        <li class="active"><a id="cintos" href="#blanco" data-toggle="tab">Cinturon blanco</a></li>
+                        <li><a id="cintos" href="#azul" data-toggle="tab">Cinturon azul</a></li>
+                        <li><a id="cintos" href="#morado" data-toggle="tab">Cinturon morado</a></li>
+                        <li><a id="cintos" href="#marron" data-toggle="tab">Cinturon marron</a></li>
+                        <li><a id="cintos" href="#negro" data-toggle="tab">Cinturon negro</a></li>
+                    </ul>
+
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="blanco">
+                            <div class="form-group">
+                                Fecha de graduacion de cinturon blanco
+                                <input type="date"  name="graduaciones.blanco.desde" ng-model="formData.graduaciones.blanco.desde" class="form-control"  >                          
+                            </div>
+                            <div class="form-inline">
+                                <span class="label label-default">Grado 1</span>
+                                <input type="date"  name="graduaciones.blanco.grado1" ng-model="formData.graduaciones.blanco.grado1" class="form-control"  >
+                                <span class="label label-default">Grado 2</span>
+                                <input type="date"  name="graduaciones.blanco.grado2" ng-model="formData.graduaciones.blanco.grado2" class="form-control"  >
+                            </div>
+                            <div class="form-inline">
+                                <span class="label label-default">Grado 3</span>
+                                <input type="date"  name="graduaciones.blanco.grado3" ng-model="formData.graduaciones.blanco.grado3" class="form-control"  >
+                                <span class="label label-default">Grado 4</span>
+                                <input type="date"  name="graduaciones.blanco.grado4" ng-model="formData.graduaciones.blanco.grado4" class="form-control"  >
+                            </div>
+                        </div>
+
+
+                        <div class="tab-pane" id="azul">
+                           <div class="form-group">
+                                Fecha de graduacion de cinturon azul
+                                <input type="date" name="azul" ng-model="formData.graduaciones.azul.desde" class="form-control" >
+                            </div>
+
+                            <div class="form-inline">
+                                <span class="label label-default">Grado 1</span>
+                                <input type="date"  name="graduaciones.azul.grado1" ng-model="formData.graduaciones.azul.grado1" class="form-control"  >
+                                <span class="label label-default">Grado 2</span>
+                                <input type="date"  name="graduaciones.azul.grado2" ng-model="formData.graduaciones.azul.grado2" class="form-control"  >
+                            </div>
+                            <div class="form-inline">
+                                <span class="label label-default">Grado 3</span>
+                                <input type="date"  name="graduaciones.azul.grado3" ng-model="formData.graduaciones.azul.grado3" class="form-control"  >
+                                <span class="label label-default">Grado 4</span>
+                                <input type="date"  name="graduaciones.azul.grado4" ng-model="formData.graduaciones.azul.grado4" class="form-control"  >
+                            </div>
+
+
+                          </div> 
+                        <div class="tab-pane" id="morado">
+                            <div class="form-group">
+                              Fecha de graduacion de cinturon morado
+                              <input type="date" name="morado" ng-model="formData.graduaciones.morado.desde" class="form-control" >
+                          </div>
+                          <div class="form-inline">
+                                <span class="label label-default">Grado 1</span>
+                                <input type="date"  name="graduaciones.morado.grado1" ng-model="formData.graduaciones.morado.grado1" class="form-control"  >
+                                <span class="label label-default">Grado 2</span>
+                                <input type="date"  name="graduaciones.morado.grado2" ng-model="formData.graduaciones.morado.grado2" class="form-control"  >
+                            </div>
+                            <div class="form-inline">
+                                <span class="label label-default">Grado 3</span>
+                                <input type="date"  name="graduaciones.morado.grado3" ng-model="formData.graduaciones.morado.grado3" class="form-control"  >
+                                <span class="label label-default">Grado 4</span>
+                                <input type="date"  name="graduaciones.morado.grado4" ng-model="formData.graduaciones.morado.grado4" class="form-control"  >
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="marron">
+                            <div class="form-group">
+                              Fecha de graduacion de cinturon marron
+                              <input type="date" name="marron" ng-model="formData.graduaciones.marron.desde" class="form-control" >
+                          </div>
+                          <div class="form-inline">
+                                <span class="label label-default">Grado 1</span>
+                                <input type="date"  name="graduaciones.marron.grado1" ng-model="formData.graduaciones.marron.grado1" class="form-control"  >
+                                <span class="label label-default">Grado 2</span>
+                                <input type="date"  name="graduaciones.marron.grado2" ng-model="formData.graduaciones.marron.grado2" class="form-control"  >
+                            </div>
+                            <div class="form-inline">
+                                <span class="label label-default">Grado 3</span>
+                                <input type="date"  name="graduaciones.marron.grado3" ng-model="formData.graduaciones.marron.grado3" class="form-control"  >
+                                <span class="label label-default">Grado 4</span>
+                                <input type="date"  name="graduaciones.marron.grado4" ng-model="formData.graduaciones.marron.grado4" class="form-control"  >
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="negro">
+                            <div class="form-group">
+                                Fecha de graduacion de cinturon negro
+                                <input type="date" name="negro" ng-model="formData.graduaciones.negro.desde" class="form-control" >
+                            </div>
+                             <div class="form-inline">
+                                <span class="label label-default">Grado 1</span>
+                                <input type="date"  name="graduaciones.negro.grado1" ng-model="formData.graduaciones.negro.grado1" class="form-control"  >
+                                <span class="label label-default">Grado 2</span>
+                                <input type="date"  name="graduaciones.negro.grado2" ng-model="formData.graduaciones.negro.grado2" class="form-control"  >
+                            </div>
+                            <div class="form-inline">
+                                <span class="label label-default">Grado 3</span>
+                                <input type="date"  name="graduaciones.negro.grado3" ng-model="formData.graduaciones.negro.grado3" class="form-control"  >
+                                <span class="label label-default">Grado 4</span>
+                                <input type="date"  name="graduaciones.negro.grado4" ng-model="formData.graduaciones.negro.grado4" class="form-control"  >
+                            </div>
+                        </div> 
                     </div>
-                    <div class="form-group">
-                        <label>Fecha de graduacion de cinturon marron</label>
-                        <input type="date" name="marron" ng-model="formData.graduaciones.marron.desde" class="form-control" >
+
+                  </div>
+
+                    <div ng-show="userForm.nombre.$invalid" class="alert alert-warning">
+                        Falta rellenar el campo nombre del alumno
                     </div>
-                    <div class="form-group">
-                        <label>Fecha de graduacion de cinturon negro</label>
-                        <input type="date" name="negro" ng-model="formData.graduaciones.negro.desde" class="form-control" >
+                    <div ng-show="userForm.apellidos.$invalid" class="alert alert-warning">
+                        Falta por rellenar el campo apellido
                     </div>
+                    <div ng-show="userForm.cinturon.$invalid" class="alert alert-warning">
+                        Falta indicar el cinturon actual del alumno
+                    </div>
+                    <div ng-show="userForm.theaca.$invalid" class="alert alert-warning">
+                        Falta indicar la academia
+                    </div>
+
+
+                    <br/>
 
                     <!-- SUBMIT BUTTON -->
                     <div class="form-group">
@@ -129,23 +235,40 @@
 
     
       <div class="panel panel-default">
-        <div class="panel-heading panel-heading-black">Listado de cinturones negros</div>
-        <div class="panel-body">
+        <div class="panel-heading">Listado de alumnos
+
+          <div class="form-inline">
+              <div class="form-group">
+              <input type="text" name="filtro" placeholder = "Filtrar por datos del alumno" ng-model="filtro" class="form-control" />
+              </div>
+              <div class="form-group">
+              <select class="form-control" name="filtrocinturon" ng-model="filtrocinturon" >
+                            <option value="">Todos</option>
+                            <option value="blanco">Blanco</option>
+                            <option value="azul">Azul</option>
+                            <option value="morado">Morado</option>
+                            <option value="marron">Marron</option>
+                            <option value="negro">Negro</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+
 
       <table class="table table-hover">
         <thead>
             <tr>
-              <th>Nombre del alumno</th>
-              
-              <th>Academia</th>
+              <th>Nombre del alumno</th>          
+              <th>Cinturon</th>
               <th>Opciones</th>
             </tr>
         </thead>
         <tbody>
-          <tr ng-repeat="alumno in alumnos | filter : cinturon = 'negro' ">
+          <tr ng-repeat="alumno in alumnos | filter:alumno.cinturon = filtrocinturon | filter:filtro | orderBy: '-cinturon':false:cinturoncomparator">
             <td>{{ alumno.nombre }} {{ alumno.apellidos }}</td>
             
-            <td>{{ alumno.academia.nombre}}</td>
+            <td>{{ alumno.cinturon}}</td>
             <td>
                 <div class="form-group">
                   <button type="button" ng-click="cargarAlumno(alumno._id)" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Editar</button>
@@ -161,139 +284,12 @@
 
 
 
-      <div class="panel panel-default">
-        <div class="panel-heading panel-heading-brown">Listado de cinturones marrones</div>
-        <div class="panel-body">
-
-      <table class="table table-hover">
-        <thead>
-            <tr>
-              <th>Nombre del alumno</th>
-              
-              <th>Academia</th>
-              <th>Opciones</th>
-            </tr>
-        </thead>
-        <tbody>
-          <tr ng-repeat="alumno in alumnos | filter : cinturon = 'marron' ">
-            <td>{{ alumno.nombre }} {{ alumno.apellidos }}</td>
-            
-            <td>{{ alumno.academia.nombre}}</td>
-            <td>
-                <div class="form-group">
-                  <button type="button" ng-click="cargarAlumno(alumno._id)" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Actualizar alumno</button>
-                   <button type="button" ng-click="cargarAlumnoYAsistencia(alumno._id)" class="btn btn-primary" data-toggle="modal" data-target="#myModalFicha">Ficha del Alumno</button>
-                </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-
-      </div>
-      </div>
-
-
-      <div class="panel panel-default">
-        <div class="panel-heading panel-heading-purple">Listado de cinturones morados</div>
-        <div class="panel-body">
-
-
-      <table class="table table-hover">
-        <thead>
-            <tr>
-              <th>Nombre del alumno</th>
-              
-              <th>Academia</th>
-              <th>Opciones</th>
-            </tr>
-        </thead>
-        <tbody>
-          <tr ng-repeat="alumno in alumnos | filter : cinturon = 'morado' ">
-            <td>{{ alumno.nombre }} {{ alumno.apellidos }}</td>
-            
-            <td>{{ alumno.academia.nombre}}</td>
-            <td>
-                <div class="form-group">
-                  <button type="button" ng-click="cargarAlumno(alumno._id)" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Actualizar alumno</button>
-                   <button type="button" ng-click="cargarAlumnoYAsistencia(alumno._id)" class="btn btn-primary" data-toggle="modal" data-target="#myModalFicha">Ficha del Alumno</button>
-                </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-
-      </div>
-      </div>
-
-
-      <div class="panel panel-default">
-        <div class="panel-heading panel-heading-blue">Listado de cinturones azules</div>
-        <div class="panel-body">
-
-
-      <table class="table table-hover">
-        <thead>
-            <tr>
-              <th>Nombre del alumno</th>
-              
-              <th>Academia</th>
-              <th>Opciones</th>
-            </tr>
-        </thead>
-        <tbody>
-          <tr ng-repeat="alumno in alumnos | filter : cinturon = 'azul' ">
-            <td>{{ alumno.nombre }} {{ alumno.apellidos }}</td>
-            
-            <td>{{ alumno.academia.nombre}}</td>
-            <td>
-                <div class="form-group">
-                  <button type="button" ng-click="cargarAlumno(alumno._id)" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Actualizar alumno</button>
-                   <button type="button" ng-click="cargarAlumnoYAsistencia(alumno._id)" class="btn btn-primary" data-toggle="modal" data-target="#myModalFicha">Ficha del Alumno</button>
-                </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-
-      </div>
-      </div>
-
-      <div class="panel panel-default">
-        <div class="panel-heading panel-heading-gray">Listado de cinturones blancos</div>
-        <div class="panel-body">
-
-
-      <table class="table table-hover">
-        <thead>
-            <tr>
-              <th>Nombre del alumno</th>
-              
-              <th>Academia</th>
-              <th>Opciones</th>
-            </tr>
-        </thead>
-        <tbody>
-          <tr ng-repeat="alumno in alumnos | filter : cinturon = 'blanco' ">
-            <td>{{ alumno.nombre }} {{ alumno.apellidos }}</td>
-            
-            <td>{{ alumno.academia.nombre}}</td>
-            <td>
-                <div class="form-group">
-                  <button type="button" ng-click="cargarAlumno(alumno._id)" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Actualizar alumno</button>
-                   <button type="button" ng-click="cargarAlumnoYAsistencia(alumno._id)" class="btn btn-primary" data-toggle="modal" data-target="#myModalFicha">Ficha del Alumno</button>
-                </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-
-      </div>
-      </div>
+      
 
 </div>
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.0/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.5.1/moment.min.js"></script>
     <script src="angular-momentjs/angular-momentjs.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>

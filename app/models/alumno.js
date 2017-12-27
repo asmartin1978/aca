@@ -13,23 +13,43 @@ var AlumnoSchema   = new Schema({
     graduaciones:{
     	blanco : {
     		desde: Date,
-    		hasta: Date
+    		hasta: Date,
+            grado1: Date,
+            grado2: Date,
+            grado3: Date,
+            grado4: Date
     	},
     	azul : {
     		desde: Date,
-    		hasta: Date
+    		hasta: Date,
+            grado1: Date,
+            grado2: Date,
+            grado3: Date,
+            grado4: Date
     	}, 
     	morado : {
     		desde: Date,
-    		hasta: Date
+    		hasta: Date,
+            grado1: Date,
+            grado2: Date,
+            grado3: Date,
+            grado4: Date
     	}, 
     	marron : {
     		desde: Date,
-    		hasta: Date
+    		hasta: Date,
+            grado1: Date,
+            grado2: Date,
+            grado3: Date,
+            grado4: Date
     	},
     	negro : {
     		desde: Date,
-    		hasta: Date
+    		hasta: Date,
+            grado1: Date,
+            grado2: Date,
+            grado3: Date,
+            grado4: Date
     	}
 
     },

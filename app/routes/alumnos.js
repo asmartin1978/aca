@@ -18,46 +18,57 @@ router.route('/alumnos')
         alumno.academia = req.body.id_academia;
         
         
-        if(req.body.graduaciones.blanco!=null)
+        if(req.body.graduaciones.blanco!=null){
             alumno.graduaciones.blanco.desde = req.body.graduaciones.blanco.desde;
-        if(req.body.graduaciones.blanco!=null)
             alumno.graduaciones.blanco.hasta = req.body.graduaciones.blanco.hasta;
-        if(req.body.graduaciones.azul!=null)
+        }
+        if(req.body.graduaciones.azul!=null){
             alumno.graduaciones.azul.desde = req.body.graduaciones.azul.desde;
-        if(req.body.graduaciones.azul!=null)
             alumno.graduaciones.azul.hasta = req.body.graduaciones.azul.hasta;
-        if(req.body.graduaciones.morado!=null)
+        }
+        if(req.body.graduaciones.morado!=null){
             alumno.graduaciones.morado.desde = req.body.graduaciones.morado.desde;
-        if(req.body.graduaciones.morado!=null)
             alumno.graduaciones.morado.hasta = req.body.graduaciones.morado.hasta;
-        if(req.body.graduaciones.marron!=null)
+        }
+        if(req.body.graduaciones.marron!=null){
             alumno.graduaciones.marron.desde = req.body.graduaciones.marron.desde;
-        if(req.body.graduaciones.marron!=null)
             alumno.graduaciones.marron.hasta = req.body.graduaciones.marron.hasta;
-        if(req.body.graduaciones.negro!=null)
-            alumno.graduaciones.negro.desde = req.body.graduaciones.negro.desde;
+        }
+        if(req.body.graduaciones.negro!=null){
+            alumno.graduaciones.negro.desde = req.body.graduaciones.negro.desde;           
+        }
 
         console.log(req.body.id_academia);
         //console.log(JSON.stringify(req.body));
-        alumno.save(function(err) {
-                               
-                Academia.findById(req.body.id_academia, function(err, aca) {
+        
+        //Se comprueba que el usuario conectado es propietario de la academia donde se esta insertando
+        Academia.findById(alumno.academia, function (err, _acad){
+            if (err){
+                    res.send(err);
+            }
+            if(_acad.propietario != req.user.id){
+                    res.send({ message: 'Error. No tiene permisos sobre esa academia' })
+            }
+
+            alumno.save(function(err) {
+                 
+                //console.log("usuario conectado: "+ req.user.id + ". Propietario academia: " + _acad.propietario);
+                /*Academia.findById(req.body.id_academia, function(err, aca) {*/
                     if (err){
                         res.send(err);
-                    }
-                   
-                    aca.alumnos.push(alumno);
-                    aca.save(function(err) {
+                    }                  
+                    _acad.alumnos.push(alumno);
+                    _acad.save(function(err) {
                         if (err){
                             res.send(err);
                         }
-
                         res.send(alumno);
                     });
-                });
+               /* });*/
 
             });
-        
+
+        });
 
     })
 

@@ -41,3 +41,14 @@ background: purple; color: #fff; }
 
 .panel-default > .panel-heading-gray {
 background: gray; color: #fff; }
+
+#exTab1 .nav-pills > li > a {
+  border-radius: 4px 4px 0 0 ;
+  background-color: #337ab7;
+}
+
+#exTab1 .tab-content {
+  color : white;
+  background-color: #337ab7;
+  padding : 15px 50px;
+}

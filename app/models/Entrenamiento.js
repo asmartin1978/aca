@@ -12,6 +12,7 @@ var EntrenamientoSchema   = new Schema({
     profesor: String,
     inicio: String,
     fin: String,
+    academia: { type: String, ref: 'Academia' },
     alumnos : [   	
 		{    		
     		alum: {type: Schema.Types.ObjectId, ref: 'Alumno'},
