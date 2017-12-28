@@ -1,11 +1,8 @@
-// app/models/alumno.js
-
 var mongoose     = require('mongoose');
 var Schema       = mongoose.Schema;
 
-var EventSchema   = new Schema({
+var MaestroEventoSchema   = new Schema({
      
-    _dia: String,
     title: String,
     start: String,
     description: String,
@@ -17,4 +14,4 @@ var EventSchema   = new Schema({
     color: String
 });
 
-module.exports = mongoose.model('Evento', EventSchema);
+module.exports = mongoose.model('maestroevento', MaestroEventoSchema);

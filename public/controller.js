@@ -58,9 +58,9 @@ myApp.controller('mainController', function ($window, $scope, $http ) {
   $http.get('/api/academias')
     .success(function(data) {
       $scope.academias = data;
-      if($scope.academias.length==1){
+      /*if($scope.academias.length==1){
         $scope.loadSesionesAcademia($scope.academias[0]._id);
-      }
+      }*/
       
     })
     .error(function(data,status) {
@@ -70,16 +70,39 @@ myApp.controller('mainController', function ($window, $scope, $http ) {
 
     $scope.loadSesionesAcademia=function(id){        
         
-        
+        var diaSel = $('#calendar').fullCalendar('getDate').format('YYYY-MM-DD');
+
         $http.get('/api/academias/'+id)
           .success(function(data,status) {
             $scope.detalleacademia = data;
 
-            $('#calendar').fullCalendar('removeEvents')
+            $('#calendar').fullCalendar('removeEvents') ;          
             
-            //TODO: Buscar los eventos de la academia seleccionada
-            $('#calendar').fullCalendar('addEventSource','/api/eventos/'+id);            
+            //$('#calendar').fullCalendar('addEventSource' , '/api/eventos/'+id);
+            /*$('#calendar').fullCalendar('addEventSource' , $http.get('/api/eventos/'+id)
+                        .success(function(data,status) {
+                                $('#calendar').fullCalendar('addEventSource' , data);
+                               //return data;
+                        })
+                        .error(function(data){console.log("Error:"+data);}))*/
+            
+            $http.get('/api/eventosinstalados/'+id +'/' + diaSel)
+                        .success(function(data,status) {
+                              if(data.length > 0){
+                                    $('#calendar').fullCalendar('addEventSource' , data);
+                              }else{
+                                console.log("instalar las sesiones de los dias");
+                                $http.get('/api/instalarsesiones/'+id +'/' + diaSel)
+                                        .success(function(data,status) {
+                                             console.log("Sesiones instaladas!") ;
+                                             $scope.loadSesionesAcademia(id);
+                                        })
+                                        .error(function(data){console.log("Error:"+data);})
+                              }      
 
+                        })
+                        .error(function(data){console.log("Error:"+data);})
+           
        })
         .error(function(data,status) {
           console.log('Error: ' + data + status);

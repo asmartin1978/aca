@@ -82,8 +82,8 @@ var eventoroute = require('./app/routes/eventos');
 
 // all of our routes will be prefixed with /api
 //TODO: La ruta de eventos esta desprotegida para escritura ...
-app.use('/api' , eventoroute);
 app.use('/api', router);
+app.use('/api' , eventoroute);
 app.use('/api', alumnosroute);
 app.use('/api', academiaroute);
 app.use('/api', entrenamientoroute);

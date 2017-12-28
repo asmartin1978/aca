@@ -23,7 +23,9 @@ router.route('/entrenamientos')
         entrenamiento.fecha = req.body.fecha;
         entrenamiento.inicio = req.body.inicio;
         entrenamiento.fin = req.body.fin;
-        
+        entrenamiento.propietario = req.user.id;    
+
+
         Alumno.find(function(err, alumnos) {
                 if (err){
                     console.log('Error:' + err);
@@ -45,8 +47,8 @@ router.route('/entrenamientos')
     })
 
     .get(function(req, res) {
-        
-        Entrenamiento.find(function(err, entrenamientos) {
+        //console.log(req.user.id);
+        Entrenamiento.find({propietario: req.user.id}, function(err, entrenamientos) {
             if (err)
                 res.send(err);
 
@@ -61,7 +63,7 @@ router.route('/entrenamientos/:entrenamiento_id')
     
     .get(function(req, res) {
         
-        Entrenamiento.findById(req.params.entrenamiento_id, function(err, entrenamiento) {
+        Entrenamiento.findOne({_id:req.params.entrenamiento_id,propietario:req.user.id}, function(err, entrenamiento) {
             if (err)
                 res.send(err);
             res.json(entrenamiento);
@@ -71,7 +73,7 @@ router.route('/entrenamientos/:entrenamiento_id')
     .put(function(req, res) {
        
         // use our bear model to find the bear we want
-        Entrenamiento.findById(req.params.entrenamiento_id, function(err, entrenamiento) {
+        Entrenamiento.findOne({_id:req.params.entrenamiento_id,propietario:req.user.id}, function(err, entrenamiento) {
 
             if (err){
                 res.send(err);
@@ -105,7 +107,7 @@ router.route('/entrenamientos/:entrenamiento_id')
     // delete the bear with this id (accessed at DELETE http://localhost:8080/api/bears/:bear_id)
     .delete(function(req, res) {
         Entrenamiento.remove({
-            _id: req.params.entrenamiento_id
+            _id: req.params.entrenamiento_id , propietario:req.user.id
         }, function(err, entrenamiento_id) {
             if (err)
                 res.send(err);

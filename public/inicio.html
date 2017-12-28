@@ -26,7 +26,7 @@
         allDaySlot: false,
         editable: true,
         minTime: '11:00:00',
-        maxTime: '22:00:00',
+        maxTime: '23:00:00',
         slotDuration : '00:30:00',
         slotLabelFormat: 'HH:mm',
         slotEventOverlap: false,
@@ -38,9 +38,7 @@
             
             //TODO: Mejorar para que todo esto se haga en el Angular Controller
             $.ajax({
-                  url: "api/entrenamientos/"+$('#calendar').fullCalendar('getDate').format('YYYYMMDD')+event.id,
-                  
-
+                  url: "api/entrenamientos/"+$('#calendar').fullCalendar('getDate').format('YYYY-MM-DD')+event._id,
                   headers: {
                     'Authorization' :'JWT ' + sessionStorage.getItem('token')
                   }
@@ -48,19 +46,15 @@
                     if(data!=null){
                         
                         var scope = angular.element($('#fullCalModal')).scope();
-                        scope.loadEntrenamiento($('#calendar').fullCalendar('getDate').format('YYYYMMDD')+event.id);
+                        scope.loadEntrenamiento($('#calendar').fullCalendar('getDate').format('YYYY-MM-DD')+event._id);
 
                     }else{
-                      
-                      console.log($('#calendar').fullCalendar('getDate').format('YYYY/MM/DD'));
-                      /*console.log(event.start.hour());
-                      console.log(event.end.hour());*/
 
                       $.ajax({
                             url: 'api/entrenamientos',
                             type: 'post',
                             data: {
-                                _id: $('#calendar').fullCalendar('getDate').format('YYYYMMDD')+event.id , 
+                                _id: $('#calendar').fullCalendar('getDate').format('YYYY-MM-DD')+event._id , 
                                 profesor: sessionStorage.getItem('nombre') , 
                                 nombre: event.title,
                                 inicio: event.start.hour()+":"+event.start.minute(),
@@ -75,7 +69,7 @@
                             success: function(result){
 
                             var scope = angular.element($('#fullCalModal')).scope();
-                            scope.loadEntrenamiento($('#calendar').fullCalendar('getDate').format('YYYYMMDD')+event.id);
+                            scope.loadEntrenamiento($('#calendar').fullCalendar('getDate').format('YYYY-MM-DD')+event._id);
                       }});
                    
                     } 
@@ -133,7 +127,7 @@
             <td>
 
               <div class="form-group">
-                  <button type="submit" class="btn btn-primary" ng-click="loadSesionesAcademia(academia._id)">Seleccionar</button>
+                  <button type="submit" class="btn btn-primary" ng-click="loadSesionesAcademia(academia._id)">Cargar entrenamientos</button>
                 </div>
 
           </tr>
