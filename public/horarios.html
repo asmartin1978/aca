@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="angularTodo">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="nav.css">
+
+
+</head>
+<body ng-controller="horariosController">
+
+
+<div ng-include="'navbar.html'"></div>
+
+
+<div class="container">
+        
+      <div class="panel panel-default">
+        <div class="panel-heading">Horario de las clases        
+        </div>
+
+      <table class="table table-hover">
+        <thead>
+            <tr>
+              <th>Titulo</th>
+              <th>Descripcion</th>
+              <th>color</th>			
+              <th>Inicio</th>          
+              <th>Fin</th>
+            </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="hora in horarios">
+          	<td>{{ hora.title }}</td>
+          	<td>{{ hora.description }}</td>
+          	<td>{{ hora.color }}</td>
+            <td>{{ hora.start }}</td>
+            <td>{{ hora.end }}</td>
+          </tr>
+        </tbody>
+      </table>
+
+  </div>
+  </div>
+
+
+
+      
+
+</div>
+
+   <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.5.1/moment.min.js"></script>
+    <script src="angular-momentjs/angular-momentjs.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="controller.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.6/Chart.min.js'></script>
+    <script src='http://cdn.jsdelivr.net/angular.chartjs/latest/angular-chart.min.js'></script>
+        
+</body>
+</html>

@@ -52,7 +52,7 @@ router.route('/instalarsesiones/:academia_id/:dia')
     .get(function(req, res) {
 
         
-        MaestroEvento.find(function(error, maestro){            
+        MaestroEvento.find({academia:req.params.academia_id , propietario: req.user.id},function(error, maestro){            
             if(error){
                 res.status(500).json({message: 'error al acceder al maestro eventos'});
             }
@@ -79,6 +79,20 @@ router.route('/instalarsesiones/:academia_id/:dia')
             });
             res.status(200).json({message: 'Todo ok'});
 
+        })
+        
+    });
+
+
+router.route('/maestroeventos/:academia_id')    
+
+    .get(function(req, res) {
+
+        MaestroEvento.find({academia:req.params.academia_id , propietario: req.user.id}, function(error, eventos){
+            if(error){
+                res.status(500).json({message: 'error al acceder a los eventos'});
+            }
+            res.json(eventos);
         })
         
     });

@@ -51,6 +51,22 @@ myApp.controller('academiasController', function ($window, $scope, $http ) {
 });
 
 
+
+myApp.controller('horariosController', function ($window, $scope, $http ) {
+  
+  // Cuando se cargue la página, pide del API todos los TODOs
+  $http.get('/api/maestroeventos/59e0b6aa63a63f181a2d2115')
+    .success(function(data) {
+      $scope.horarios = data;
+    })
+    .error(function(data,status) {
+          console.log('Error: ' + data );
+    });
+
+});
+
+
+
 myApp.controller('mainController', function ($window, $scope, $http ) {
   $scope.formData = {};
   
