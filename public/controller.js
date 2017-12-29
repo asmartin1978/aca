@@ -34,8 +34,7 @@ myApp.controller('academiasController', function ($window, $scope, $http ) {
           console.log('Error: ' + data );
     });
 
-    // Cuando se hace submit (alta de alumno)
-  $scope.submitForm = function() {
+  /*$scope.submitForm = function() {
 
       $http.post('/api/academias', $scope.formData)
           .success(function(data) {
@@ -46,6 +45,69 @@ myApp.controller('academiasController', function ($window, $scope, $http ) {
             console.log('Error:' + data);
           });
       
+  };*/
+
+  $scope.cargarInformeAcademia = function(_idaca){
+      console.log("Cargar el informe de la academia:" + _idaca);
+
+       
+      //chart de cinturones de la academia
+       $scope.labelsCinturones = ["Cinturones Blanco", "Cinturones Azul", "Cinturones Morado"
+       , "Cinturones Marron", "Cinturones Negro"];
+
+       //$scope.dataCinturones = [1, 2, 3, 5, 5];
+
+       //chart de clases por tipo
+       $scope.labelsClases = ["Brazilian Jiu Jitsu", "Grappling"];
+       
+       $http.get('/api/alumnos/')
+          .success(function(alumnos) {
+              //TODO: Sacar estadisticas de los alumnos.
+              
+              $scope.dataCinturones = [
+                  alumnos.filter(function(elem){
+                      return elem.cinturon == 'blanco';
+                  }).length, 
+                  alumnos.filter(function(elem){
+                      return elem.cinturon == 'azul';
+                  }).length, 
+                  alumnos.filter(function(elem){
+                      return elem.cinturon == 'morado';
+                  }).length, 
+                  alumnos.filter(function(elem){
+                      return elem.cinturon == 'marron';
+                  }).length, 
+                  alumnos.filter(function(elem){
+                      return elem.cinturon == 'negro';
+                  }).length];
+
+
+              $http.get('/api/entrenamientos/')
+                  .success(function(entrenamientos) {
+                      console.log(entrenamientos);
+                    
+                      $scope.dataClases = [
+                          entrenamientos.filter(function(elem){
+                                return elem.nombre == 'Brazilian Jiu Jitsu';
+                          }).length,
+                          entrenamientos.filter(function(elem){
+                                return elem.nombre == 'Grappling';
+                          }).length
+
+                      ];
+
+
+                  })
+                  .error(function(data,status) {
+                        console.log('Error: ' + data );
+                  });              
+
+          })
+          .error(function(data,status) {
+                console.log('Error: ' + data );
+          });
+
+
   };
 
 });
@@ -54,14 +116,28 @@ myApp.controller('academiasController', function ($window, $scope, $http ) {
 
 myApp.controller('horariosController', function ($window, $scope, $http ) {
   
-  // Cuando se cargue la página, pide del API todos los TODOs
-  $http.get('/api/maestroeventos/59e0b6aa63a63f181a2d2115')
+  $http.get('/api/academias')
     .success(function(data) {
-      $scope.horarios = data;
+      $scope.academias = data;
     })
     .error(function(data,status) {
           console.log('Error: ' + data );
     });
+
+  $scope.mostrar = false;
+
+  
+  $scope.cargarHorarios = function(aca){
+         $http.get('/api/maestroeventos/' + aca)
+        .success(function(data) {
+          $scope.horarios = data;
+          $scope.mostrar = true;
+        })
+        .error(function(data,status) {
+              console.log('Error: ' + data );
+        });
+
+  }
 
 });
 

@@ -19,46 +19,25 @@
         <thead>
             <tr>
               <th>Nombre</th>
-              <th>Direccion</th>
-              <th>Historia</th>
+              <th>Opciones</th>
             </tr>
         </thead>
         <tbody>
           <tr ng-repeat="academia in academias">
             <td>{{ academia.nombre }}</td>
-            <td>{{ academia.direccion }}</td>
-            <td>{{ academia.historia }}</td>
+            <td><button type="button" ng-click="cargarInformeAcademia(academia._id)" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Generar Informe de la Academia</button></td>
           </tr>
         </tbody>
       </table>
 
-
-      <form name="userForm" ng-submit="submitForm()" novalidate> <!-- novalidate prevents HTML5 validation since we will be validating ourselves -->
-
-        <!-- NAME -->
-        <div class="form-group">
-            <label>Nombre</label>
-            <input type="text" name="nombre" placeholder = "Nombre de la academia" class="form-control" ng-model="formData.nombre">
-        </div>
-
-        <!-- USERNAME -->
-        <div class="form-group">
-            <label>Direccion</label>
-            <input type="text" name="direccion" placeholder = "Direccion de la academia" ng-model="formData.direccion" class="form-control">
-        </div>
-
-        <div class="form-group">
-            <label>Historia</label>
-            <input type="text" name="historia" placeholder = "Breve historia" ng-model="formData.historia" class="form-control">
-        </div>
+      <canvas height="50"  class="chart chart-bar" chart-data="dataCinturones" chart-labels="labelsCinturones" 
+                         ></canvas>
 
 
-        <!-- SUBMIT BUTTON -->
-        <div class="form-group">
-          <button type="submit" class="btn btn-primary">Crear</button>
-        </div>
+      <canvas height=50 id="pie" class="chart chart-pie"
+              chart-data="dataClases" chart-labels="labelsClases" chart-options="optionClases">
+      </canvas> 
 
-    </form>
 
 </div>
 
