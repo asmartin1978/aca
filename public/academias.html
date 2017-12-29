@@ -30,13 +30,20 @@
         </tbody>
       </table>
 
-      <canvas height="50"  class="chart chart-bar" chart-data="dataCinturones" chart-labels="labelsCinturones" 
-                         ></canvas>
 
-
-      <canvas height=50 id="pie" class="chart chart-pie"
-              chart-data="dataClases" chart-labels="labelsClases" chart-options="optionClases">
-      </canvas> 
+      <div class="row">
+          <div class="col-sm-6">
+              <span class="label label-info">Numero de cinturones por colores</span>
+            <canvas  class="chart chart-bar" chart-data="dataCinturones" chart-labels="labelsCinturones" 
+                                 ></canvas>
+          </div>
+          <div class="col-sm-6">
+              <span align=center class="label label-info">Numero de clases por tipo</span>
+              <canvas id="pie" class="chart chart-pie"
+                      chart-data="dataClases" chart-labels="labelsClases" chart-options="optionClases">
+              </canvas>
+          </div>
+      </div>
 
 
 </div>
