@@ -24,44 +24,64 @@
                 <p type="text"><strong>Graduacion de cinturon marron:</strong> {{formData.graduaciones.marron.desde | date }}</p>
                 <p type="text"><strong>Graduacion de cinturon negro:</strong> {{formData.graduaciones.negro.desde | date }}</p>
 
-                
-                <canvas class="chart chart-horizontal-bar" chart-data="data" chart-labels="labels" 
+
+
+
+
+                <div class="row">
+                  <div class="col-sm-12">
+                                      <canvas class="chart chart-horizontal-bar" chart-data="data" chart-labels="labels" 
+                                   ></canvas> 
+                          
+                          <p class="bg-info"><strong>ASISTENCIA A CLASES POR MESES Y AÑO</strong></p>
+                          <p>
+                            <select name="show-filter" ng-model="selectedYear" ng-change="changeYear(selectedYear)"> 
+                                  <option ng-repeat="a in anyos" ng-value="a.id">{{a.value}} </option>
+                            </select>
+                          </p>
+                  </div>
+                  
+
+                  <div class="row">
+                      <div class="col-sm-6">
+                               <p><strong>Año seleccionado: {{selectedYear}}</strong></p>
+
+                          <table class="table table-hover">
+                              <thead>
+                                  <tr>
+                                    <th>Fecha</th>
+                                    <th>Clase</th>
+                                    <th>Profesor</th>
+                                    <th>Inicio</th>
+                                    <th>Fin</th>
+                                  </tr>
+                              </thead>
+                              <tbody>  
+                                <tr ng-repeat="ent in entrenamientos | orderBy:'-fecha' | filter:selectedYear:false:ent.entrenamiento.fecha" >                          
+                                    <td>{{ ent.fecha }}</td>
+                                    <td>{{ ent.nombre }}</td>
+                                    <td>{{ ent.profesor }}</td>
+                                    <td>{{ ent.inicio }}</td>
+                                    <td>{{ ent.fin }}</td>                          
+                                </tr>
+                              </tbody>
+                          </table>
+                      </div>
+                      <div class="col-sm-6">
+                      
+
+                              <canvas class="chart chart-bar" chart-data="datapormes" chart-labels="labelsmes" 
                          ></canvas> 
                 
-                <p class="bg-info"><strong>ASISTENCIA A CLASES POR MESES Y AÑO</strong></p>
-                <p>
-                  <select name="show-filter" ng-model="selectedYear" ng-change="changeYear(selectedYear)"> 
-                        <option ng-repeat="a in anyos" ng-value="a.id">{{a.value}} </option>
-                  </select>
-                </p>
 
-                 
-                <canvas class="chart chart-bar" chart-data="datapormes" chart-labels="labelsmes" 
-                         ></canvas> 
-                
+                  </div>
+                  </div>
 
-                <p><strong>Año seleccionado: {{selectedYear}}</strong></p>
 
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                          <th>Fecha</th>
-                          <th>Clase</th>
-                          <th>Profesor</th>
-                          <th>Inicio</th>
-                          <th>Fin</th>
-                        </tr>
-                    </thead>
-                    <tbody>  
-                      <tr ng-repeat="ent in entrenamientos | orderBy:'-fecha' | filter:selectedYear:false:ent.entrenamiento.fecha" >                          
-                          <td>{{ ent.fecha }}</td>
-                          <td>{{ ent.nombre }}</td>
-                          <td>{{ ent.profesor }}</td>
-                          <td>{{ ent.inicio }}</td>
-                          <td>{{ ent.fin }}</td>                          
-                      </tr>
-                    </tbody>
-                </table>
+
+              </div>
+
+             
 
                 <div class="form-group">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
