@@ -131,12 +131,40 @@ myApp.controller('horariosController', function ($window, $scope, $http ) {
          $http.get('/api/maestroeventos/' + aca)
         .success(function(data) {
           $scope.horarios = data;
+          $scope.academiaId=aca;
           $scope.mostrar = true;
         })
         .error(function(data,status) {
               console.log('Error: ' + data );
         });
 
+  }
+
+  $scope.deleteHorario = function(horario, academia){
+    
+    console.log(horario + ' ' + academia);
+    $http.delete('/api/maestroeventos/' + academia +'/' + horario)
+      .success(function(clase) {
+          $scope.cargarHorarios(academia);  
+      })
+      .error(function(clase) {
+            console.log('Error:' + clase);
+          });
+
+  }
+
+
+
+  $scope.creaHorario = function(aca){
+          
+          $http.post('/api/maestroeventos/' + aca, $scope.clase)
+          .success(function(clase) {
+            $scope.clase = {};
+            $scope.horarios.push(clase);
+          })
+          .error(function(clase) {
+            console.log('Error:' + clase);
+          });
   }
 
 });
@@ -619,19 +647,102 @@ myApp.controller('UserCtrl', function ($scope, $http, $window, $rootScope, $loca
   $scope.isAuthenticated = false;
   $scope.welcome = '';
   $scope.message = '';
+  $scope.messageregister = '¿Ya esta registrado?. Pulse ';
+
+  $scope.showAcademy=false;
+  $scope.newUser = false;
+
+  $scope.switchNewUser = function(){
+    $scope.newUser = !$scope.newUser;
+
+    if($scope.newUser){
+        $scope.messageregister='¿Ya esta registrado?. Pulse ';
+    }else{
+        $scope.messageregister='¿Aun no está registrado como usuario? Pulse ';
+    }
+  }
+
+
+  $scope.crearAcademia = function(){
+
+     $http.post('/api/academias', $scope.academia)
+          .success(function(data) {
+            //Cuando se crea la academia me lleva a la página de inicio
+            $window.location.href = '/inicio.html'
+          })
+          .error(function(data) {
+            console.log('Error:' + data);
+          });
+  }
+
 
   $scope.submit = function () {
     $http
-      .post('/autenticacion/login', $scope.user)
+      .post('/autenticacion/signin', $scope.user)
       .success(function (data, status, headers, config) {
         $window.sessionStorage.token = data.token;
         $scope.isAuthenticated = true;
+        
+        
+        //Se abre la sesion
         var encodedProfile = data.token.split('.')[1];
         var profile = JSON.parse(url_base64_decode(encodedProfile));
+        
         $scope.welcome = 'Welcome ' + profile.first_name + ' ' + profile.last_name;
         $window.sessionStorage.nombre = profile.first_name + ' ' + profile.last_name;
-        $window.location.href = '/inicio.html'
+        //Se consulta si se ha creado ya una academia
 
+        $http.get('/api/academias')
+            .success(function(data) {
+              if(data=='' || data==null){
+                //Significa que todavia no ha creado la academia. Le presentamos el formulario
+                $scope.showAcademy=true;
+              } else{
+                //Ya esta creada la academia. Entramos en la aplicación
+                $window.location.href = '/inicio.html'
+              }
+
+            })
+            .error(function(data,status) {
+              console.log('Error: ' + data );
+            });
+
+        //$window.location.href = '/inicio.html'
+
+      })
+      .error(function (data, status, headers, config) {
+
+        // Erase the token if the user fails to log in
+        delete $window.sessionStorage.token;
+        delete $window.sessionStorage.nombre;
+        $scope.isAuthenticated = false;
+
+        $rootScope.isAutenticated = false;
+        $rootScope.nombreus = '';
+        // Handle login errors here
+        $scope.error = 'Error: Invalid user or password';
+        $scope.welcome = '';
+      });
+  };
+
+
+   $scope.signup = function () {
+    $http
+      .post('/autenticacion/signup', $scope.user)
+      .success(function (data, status, headers, config) {
+        $window.sessionStorage.token = data.token;
+        $scope.isAuthenticated = true;
+
+        $scope.registerAcademy = true;
+
+        console.log(data);
+
+        var encodedProfile = data.token.split('.')[1];
+        var profile = JSON.parse(url_base64_decode(encodedProfile));
+
+        $scope.welcome = 'Welcome ' + profile.first_name + ' ' + profile.last_name;
+        $window.sessionStorage.nombre = profile.first_name + ' ' + profile.last_name;
+        //$window.location.href = '/inicio.html'
 
       })
       .error(function (data, status, headers, config) {
@@ -647,6 +758,8 @@ myApp.controller('UserCtrl', function ($scope, $http, $window, $rootScope, $loca
         $scope.welcome = '';
       });
   };
+
+
 
   $scope.logout = function () {
     $scope.welcome = '';
@@ -667,9 +780,8 @@ myApp.factory('authInterceptor', function ($rootScope, $q, $window) {
     request: function (config) {
       config.headers = config.headers || {};
       if ($window.sessionStorage.token) {
-        config.headers.Authorization = 'JWT ' + $window.sessionStorage.token;
-        //$rootScope.prueba = 'yeahh';
-
+        config.headers.Authorization = $window.sessionStorage.token;
+        
         var encodedProfile = $window.sessionStorage.token.split('.')[1];
         var profile = JSON.parse(url_base64_decode(encodedProfile));
 
@@ -682,10 +794,10 @@ myApp.factory('authInterceptor', function ($rootScope, $q, $window) {
     responseError: function (rejection) {
       if (rejection.status === 401) {
         // handle the case where the user is not authenticated
-        
+
         $rootScope.isAutenticated = false;
         $rootScope.nombreus = '';
-        $window.location.href = '/login.html'
+        //$window.location.href = '/login.html'
 
       }
       return $q.reject(rejection);

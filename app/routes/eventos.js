@@ -95,8 +95,54 @@ router.route('/maestroeventos/:academia_id')
             res.json(eventos);
         })
         
+    })
+
+
+    .post(function(req, res) {
+
+        var maestro = new MaestroEvento();
+
+        maestro.title = req.body.title;
+        maestro.start = req.body.start;
+        maestro.description = req.body.description;
+        maestro.end = req.body.end;
+        maestro.editable = true;
+        maestro.propietario = req.user.id;
+        maestro.color = req.body.color;
+        maestro.academia = req.params.academia_id;
+
+        maestro.save(function(err) {                                         
+                                if (err){
+                                    console.log("Error registrando el horario");
+                                    res.status(500).json({message: 'Error registrando el horario'});
+                                }
+                                res.json(maestro);
+                        });
+
+        
+    })
+
+    ;
+
+
+router.route('/maestroeventos/:academia_id/:horario_id')    
+
+    // delete the bear with this id (accessed at DELETE http://localhost:8080/api/bears/:bear_id)
+    .delete(function(req, res) {
+
+        //console.log("Entra");
+        MaestroEvento.remove({
+            _id: req.params.horario_id , academia: req.params.academia_id ,
+            propietario: req.user.id
+        }, function(err, horario) {
+            if (err)
+                res.send(err);
+
+            res.json({ message: 'Successfully deleted' });
+        });
     });
 
+    ;
 
 
 router.route('/eventos/:academia_id')    

@@ -14,7 +14,7 @@
   <script src="angular-momentjs/angular-momentjs.js"></script>
   <script src="controller.js"></script>
   <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.6/Chart.min.js'></script>
-    <script src='http://cdn.jsdelivr.net/angular.chartjs/latest/angular-chart.min.js'></script>
+  <script src='http://cdn.jsdelivr.net/angular.chartjs/latest/angular-chart.min.js'></script>
 
 </head>
 <body ng-app="angularTodo" ng-cloack>
@@ -25,7 +25,9 @@
     
      <div class="container">
 
-      <form class="form-signin" ng-show="!isAuthenticated" ng-submit="submit()">
+      <div> {{messageregister}}<span ng-click = "switchNewUser()">Aqui</span></div>
+
+      <form class="form-signin" ng-show="!isAuthenticated && !newUser" ng-submit="submit()">
         <h2 class="form-signin-heading">Acceso al sistema</h2>
         <label for="inputEmail" class="sr-only">Nombre de usuario</label>
         
@@ -35,7 +37,57 @@
         <input ng-model="user.password" class="form-control" type="password" name="pass" placeholder="Introduzca la contraseña" />
         <button class="btn btn-lg btn-primary btn-block" type="submit">Acceder</button>
       </form>
+
+
+      <form class="form-signin" ng-show="!isAuthenticated && newUser &&!showAcademy" ng-submit="signup()">
+        <h2 class="form-signin-heading">Registro (Paso 1: Datos del usuario)</h2>
+        <label>Identificador del usuario (*)</label>
+        
+        <input ng-model="user.name" class="form-control" type="text" name="user" placeholder="Introduzca el identificador de usuario" />
+
+        <label>Nombre del usuario (*)</label>
+        
+        <input ng-model="user.first_name" class="form-control" type="text" name="nombre" placeholder="Introduzca un nombre de usuario" />
+
+        <label>Apellidos (*)</label>
+        
+        <input ng-model="user.last_name" class="form-control" type="text" name="apellidos" placeholder="Introduzca los apellidos del usuario" />
+
+        <label>Contraseña (*)</label>
+        
+        <input ng-model="user.password" class="form-control" type="password" name="pass" placeholder="Introduzca la contraseña" />
+
+        <label>Mail (*)</label>
+        
+        <input ng-model="user.email" class="form-control" type="text" name="email" placeholder="Introduzca un email de contacto" />
+
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Registrar Usuario</button>
+      </form>
+
+
+      <form class="form-signin" ng-show="isAuthenticated && showAcademy" ng-submit="crearAcademia()">
+        <h2 class="form-signin-heading">Registro (Paso 2: Datos de la academia)</h2>
+       
+        <label>Nombre de la academia (*)</label>
+        
+        <input ng-model="academia.nombre" class="form-control" type="text" name="nombre" placeholder="Introduzca un nombre para la academia" />
+
+        <label>Direccion (*)</label>
+        
+        <input ng-model="academia.direccion" class="form-control" type="text" name="direccion" placeholder="Introduzca la direccion de la academia" />
+
+        <label>Breve historia de la academia (*)</label>
+        
+        <input ng-model="academia.historia" class="form-control" type="text" name="historia" placeholder="Breve historia de la academia ..." />
+
+
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Crear la academia</button>
+      </form>
+
+
+
       <div>{{error}}</div>
+      <div>{{welcome}}</div>
     </div> <!-- /container -->
 
 

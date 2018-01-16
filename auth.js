@@ -26,6 +26,8 @@ var users = [
 ];
 
 
+
+
 //Configuracion de la estrategia --------------------------------------
 
 var passportJWT = require("passport-jwt");
@@ -36,6 +38,7 @@ var JwtStrategy = passportJWT.Strategy;
 
 var jwt = require('jsonwebtoken');
 
+var Users     = require('./app/models/user'); // Importacion de la clase  
 
 var jwtOptions = {}
 jwtOptions.jwtFromRequest = ExtractJwt.fromAuthHeader();
@@ -43,23 +46,32 @@ jwtOptions.secretOrKey = 'tasmanianDevil';
 
 var strategy = new JwtStrategy(jwtOptions, function(jwt_payload, next) {
   // usually this would be a database call:
-  var user = users[_.findIndex(users, {id: jwt_payload.id})];
-  
-  if (user) {
+
+  //console.log(jwt_payload);
+
+  Users.findOne({_id: jwt_payload.id}, function(error, user){
+    //console.log(user);
+    if (user) {
     next(null, user);
-  } else {
-    next(null, false);
-  }
+    } else {
+      next(null, false);
+    }
+
+  });
+
+  //var user = users[_.findIndex(users, {id: jwt_payload.id})];
+  
+  
 });
 
-function getToken(payload){
+/*function getToken(payload){
   return jwt.sign(payload, jwtOptions.secretOrKey);
-}
+}*/
 
 // FIN Configuracion de la estrategia --------------------------------------
 
 
-function autenticar(name, password, res){
+/*function autenticar(name, password, res){
   // usually this would be a database call:
   var user = users[_.findIndex(users, {name: name})];
   if( ! user ){
@@ -76,7 +88,7 @@ function autenticar(name, password, res){
     return res.status(401).json({message:"Password incorrecta"});
   }
 
-}
+}*/
 
 exports.strategy = strategy;
-exports.autenticar = autenticar;
+//exports.autenticar = autenticar;

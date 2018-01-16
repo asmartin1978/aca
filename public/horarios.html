@@ -16,57 +16,91 @@
 
 
 <div class="container">
-        
-      <div class="panel panel-default">
-        <div class="panel-heading">Horario de las clases        
+        <div class="row">
+              <div class="col-sm-12">
+                    <table class="table table-hover">
+                    <thead>
+                        <tr>
+                          <th>Nombre</th>
+                          <th>Opciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                      <tr ng-repeat="academia in academias">
+                        <td>{{ academia.nombre }}</td>
+                        <td><button type="button" ng-click="cargarHorarios(academia._id)" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Cargar los horarios de la academia</button></td>
+                      </tr>
+                    </tbody>
+                  </table>
+              </div>
         </div>
 
 
-       <table class="table table-hover">
-        <thead>
-            <tr>
-              <th>Nombre</th>
-              <th>Opciones</th>
-            </tr>
-        </thead>
-        <tbody>
-          <tr ng-repeat="academia in academias">
-            <td>{{ academia.nombre }}</td>
-            <td><button type="button" ng-click="cargarHorarios(academia._id)" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Cargar los horarios de la academia</button></td>
-          </tr>
-        </tbody>
-      </table>
+        <div ng-show="mostrar">
 
+        <div class="row">
+                      <div class="col-sm-6">
+                            <form ng-submit="creaHorario(academiaId)">
+                                  <label>Disciplina <span style="color:red;">*</span></label>
+                                  <select ng-model="clase.title" class="form-control" name="title">
+                                           <option value="Brazilian Jiu Jitsu">Brazilian Jiu Jitsu</option>
+                                           <option value="Grappling">Grappling</option>
+                                  </select>
 
-      <div ng-show="mostrar">
-	      <table class="table table-hover">
-	        <thead>
-	            <tr>
-	              <th>Titulo</th>
-	              <th>Descripcion</th>
-	              <th>color</th>			
-	              <th>Inicio</th>          
-	              <th>Fin</th>
-	            </tr>
-	        </thead>
-	        <tbody>
-	          <tr ng-repeat="hora in horarios">
-	          	<td>{{ hora.title }}</td>
-	          	<td>{{ hora.description }}</td>
-	          	<td>{{ hora.color }}</td>
-	            <td>{{ hora.start }}</td>
-	            <td>{{ hora.end }}</td>
-	          </tr>
-	        </tbody>
-	      </table>
-      </div>
+                                  <label>Descripcion <span style="color:red;">*</span></label> 
+                                    <input ng-model="clase.description" class="form-control" type="text" name="description" />
 
-  </div>
-  </div>
+                                   <label>Hora de comienzo <span style="color:red;">*</span></label>
+                                    <input ng-model="clase.start" class="form-control" type="text" name="start" 
 
+                                    placeholder="HH:mm" />
+                                    
+                                    <label>Hora de fin <span style="color:red;">*</span></label>
+                                    <input ng-model="clase.end" class="form-control" type="text" name="end" placeholder="HH:mm"/>
 
+                                  <label>Color para la visualización en la agenda <span style="color:red;">*</span></label>
+                                  <select ng-model="clase.color" class="form-control" name="color">
+                                      <option value="RED">Rojo</option>
+                                      <option value="GREEN">Verde</option>
+                                      <option value="BLUE">Azul</option>
+                                      <option value="ORANGE">Naranja</option>
+                                      <option value="BROWN">Marron</option>
+                                  </select>
 
-      
+                                   <button class="btn btn-lg btn-primary btn-block" type="submit">Crear horario</button>  
+
+                            </form>
+                      </div>
+                      <div class="col-sm-6">
+                                  <table class="table table-hover">
+                                  <thead>
+                                      <tr>
+                                        <th>Titulo</th>
+                                        <th>Descripcion</th>
+                                        <th>color</th>      
+                                        <th>Inicio</th>          
+                                        <th>Fin</th>
+                                        <th>Opciones</th>
+                                      </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr ng-repeat="hora in horarios">
+                                      <td>{{ hora.title }}</td>
+                                      <td>{{ hora.description }}</td>
+                                      <td>{{ hora.color }}</td>
+                                      <td>{{ hora.start }}</td>
+                                      <td>{{ hora.end }}</td>
+                                      <td><button ng-click="deleteHorario(hora._id,academiaId)" type="button" ng-click="" class="btn btn-primary">Borrar</button></td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+
+                      </div>
+        
+
+         </div> 
+
+     
 
 </div>
 

@@ -3,6 +3,7 @@
   "main": "server.js",
   "dependencies": {
     "angular-momentjs": "^0.2.2",
+    "bcrypt-nodejs": "0.0.3",
     "body-parser": "~1.0.1",
     "express": "~4.0.0",
     "fullcalendar": "^3.5.1",
