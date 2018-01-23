@@ -19,10 +19,9 @@
 </head>
 <body ng-app="angularTodo" ng-cloack>
 
+
   <div ng-controller="UserCtrl">
 
-    <page-loader flag="isLoading"></page-loader>
-    
      <div class="container">
 
       <div> {{messageregister}}<span ng-click = "switchNewUser()">Aqui</span></div>
@@ -39,55 +38,64 @@
       </form>
 
 
-      <form class="form-signin" ng-show="!isAuthenticated && newUser &&!showAcademy" ng-submit="signup()">
+      <form class="form-signin" name="userForm" ng-show="!isAuthenticated && newUser &&!showAcademy" ng-submit="signup()">
         <h2 class="form-signin-heading">Registro (Paso 1: Datos del usuario)</h2>
-        <label>Identificador del usuario (*)</label>
         
-        <input ng-model="user.name" class="form-control" type="text" name="user" placeholder="Introduzca el identificador de usuario" />
-
-        <label>Nombre del usuario (*)</label>
+        <div ng-show="userForm.$invalid" class="alert alert-warning">
+            Por favor rellene todos los campos obligatorios
+        </div>    
+                
+        <label>Identificador del usuario <span style="color:red;">*</span></label>
         
-        <input ng-model="user.first_name" class="form-control" type="text" name="nombre" placeholder="Introduzca un nombre de usuario" />
+        <input ng-model="user.name" class="form-control" type="text" name="user" placeholder="Introduzca el identificador de usuario" required="true"/>
 
-        <label>Apellidos (*)</label>
+        <label>Nombre del usuario <span style="color:red;">*</span></label> 
         
-        <input ng-model="user.last_name" class="form-control" type="text" name="apellidos" placeholder="Introduzca los apellidos del usuario" />
+        <input ng-model="user.first_name" class="form-control" type="text" name="nombre" placeholder="Introduzca un nombre de usuario" required="true"/>
 
-        <label>Contraseña (*)</label>
+        <label>Apellidos <span style="color:red;">*</span></label>
         
-        <input ng-model="user.password" class="form-control" type="password" name="pass" placeholder="Introduzca la contraseña" />
+        <input ng-model="user.last_name" class="form-control" type="text" name="apellidos" placeholder="Introduzca los apellidos del usuario" required="true"/>
 
-        <label>Mail (*)</label>
+        <label>Contraseña <span style="color:red;">*</span></label>
         
-        <input ng-model="user.email" class="form-control" type="text" name="email" placeholder="Introduzca un email de contacto" />
+        <input ng-model="user.password" class="form-control" type="password" name="pass" placeholder="Introduzca la contraseña" required="true"/>
 
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Registrar Usuario</button>
+        <label>Mail <span style="color:red;">*</span></label>
+        
+        <input ng-model="user.email" class="form-control" type="text" name="email" placeholder="Introduzca un email de contacto" required="true"/>
+
+        <button class="btn btn-lg btn-primary btn-block" ng-disabled="userForm.$invalid" type="submit">Registrar Usuario</button>
       </form>
 
 
-      <form class="form-signin" ng-show="isAuthenticated && showAcademy" ng-submit="crearAcademia()">
+      <form class="form-signin" name="acaform" ng-show="isAuthenticated && showAcademy" ng-submit="crearAcademia()">
         <h2 class="form-signin-heading">Registro (Paso 2: Datos de la academia)</h2>
-       
-        <label>Nombre de la academia (*)</label>
+      
+
+        <div ng-show="acaform.$invalid" class="alert alert-warning">
+            Por favor rellene todos los campos obligatorios
+        </div>
         
-        <input ng-model="academia.nombre" class="form-control" type="text" name="nombre" placeholder="Introduzca un nombre para la academia" />
 
-        <label>Direccion (*)</label>
+        <label>Nombre de la academia <span style="color:red;">*</span></label>
         
-        <input ng-model="academia.direccion" class="form-control" type="text" name="direccion" placeholder="Introduzca la direccion de la academia" />
+        <input ng-model="academia.nombre" class="form-control" type="text" name="nombre" placeholder="Introduzca un nombre para la academia" required="true"/>
 
-        <label>Breve historia de la academia (*)</label>
+        <label>Direccion <span style="color:red;">*</span></label>
         
-        <input ng-model="academia.historia" class="form-control" type="text" name="historia" placeholder="Breve historia de la academia ..." />
+        <input ng-model="academia.direccion" class="form-control" type="text" name="direccion" placeholder="Introduzca la direccion de la academia" required="true"/>
 
+        <label>Breve historia de la academia <span style="color:red;">*</span></label>
+        
+        <input ng-model="academia.historia" class="form-control" type="text" name="historia" placeholder="Breve historia de la academia ..." required="true"/>
 
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Crear la academia</button>
+        <button class="btn btn-lg btn-primary btn-block" ng-disabled="acaform.$invalid" type="submit">Crear la academia</button>
       </form>
 
 
 
       <div>{{error}}</div>
-      <div>{{welcome}}</div>
     </div> <!-- /container -->
 
 

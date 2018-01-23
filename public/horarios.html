@@ -40,26 +40,26 @@
 
         <div class="row">
                       <div class="col-sm-6">
-                            <form ng-submit="creaHorario(academiaId)">
+                            <form ng-submit="creaHorario(academiaId)" name="horarioForm">
                                   <label>Disciplina <span style="color:red;">*</span></label>
-                                  <select ng-model="clase.title" class="form-control" name="title">
+                                  <select ng-model="clase.title" class="form-control" name="title" required="true">
                                            <option value="Brazilian Jiu Jitsu">Brazilian Jiu Jitsu</option>
                                            <option value="Grappling">Grappling</option>
                                   </select>
 
                                   <label>Descripcion <span style="color:red;">*</span></label> 
-                                    <input ng-model="clase.description" class="form-control" type="text" name="description" />
+                                    <input ng-model="clase.description" class="form-control" required="true" type="text" name="description" />
 
                                    <label>Hora de comienzo <span style="color:red;">*</span></label>
-                                    <input ng-model="clase.start" class="form-control" type="text" name="start" 
+                                    <input required="true" ng-model="clase.start" class="form-control" type="text" name="start" 
 
                                     placeholder="HH:mm" />
                                     
                                     <label>Hora de fin <span style="color:red;">*</span></label>
-                                    <input ng-model="clase.end" class="form-control" type="text" name="end" placeholder="HH:mm"/>
+                                    <input required="true" ng-model="clase.end" class="form-control" type="text" name="end" placeholder="HH:mm"/>
 
                                   <label>Color para la visualización en la agenda <span style="color:red;">*</span></label>
-                                  <select ng-model="clase.color" class="form-control" name="color">
+                                  <select required="true" ng-model="clase.color" class="form-control" name="color">
                                       <option value="RED">Rojo</option>
                                       <option value="GREEN">Verde</option>
                                       <option value="BLUE">Azul</option>
@@ -67,7 +67,7 @@
                                       <option value="BROWN">Marron</option>
                                   </select>
 
-                                   <button class="btn btn-lg btn-primary btn-block" type="submit">Crear horario</button>  
+                                   <button class="btn btn-lg btn-primary btn-block" ng-disabled="horarioForm.$invalid" type="submit">Crear horario</button>  
 
                             </form>
                       </div>

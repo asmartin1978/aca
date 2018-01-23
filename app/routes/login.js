@@ -3,7 +3,7 @@ var router = express.Router();
 var User = require("../models/user");
 var auth     = require('../../auth');
 var jwt = require('jsonwebtoken');
-
+var Academia = require("../models/academia");
 
 //Ruta de logado
 /*router.route('/login')
@@ -52,9 +52,6 @@ router.post('/signup', function(req, res) {
                   // if user is found and password is right create a token
                   
                   var payload = {id: user.id , first_name: user.first_name, last_name: user.last_name };
-
-                  //console.log(payload);
-
                   var token = jwt.sign(payload, 'tasmanianDevil');
                   // return the information including token as JSON
                   res.json({success: true, token: 'JWT ' + token});
@@ -72,10 +69,8 @@ router.post('/signup', function(req, res) {
 });
 
 
-
 router.post('/signin', function(req, res) {
-  
-	
+  	
   User.findOne({
     username: req.body.name
   }, function(err, user) {
@@ -87,15 +82,15 @@ router.post('/signin', function(req, res) {
       // check if password matches
       user.comparePassword(req.body.password, function (err, isMatch) {
         if (isMatch && !err) {
-          // if user is found and password is right create a token
+          // Autenticacion correcta.
+          //Consultamos si tiene ya creada la academia correspondiente y generamos el token
           
-          var payload = {id: user.id , first_name: user.first_name, last_name: user.last_name };
+           var payload = {id: user.id , first_name: user.first_name, last_name: user.last_name};
+            //console.log(payload);
+           var token = jwt.sign(payload, 'tasmanianDevil');
+                // return the information including token as JSON
+           res.json({success: true, token: 'JWT ' + token});
 
-          //console.log(payload);
-
-          var token = jwt.sign(payload, 'tasmanianDevil');
-          // return the information including token as JSON
-          res.json({success: true, token: 'JWT ' + token});
         } else {
           res.status(401).send({success: false, msg: 'Authentication failed. Wrong password.'});
         }

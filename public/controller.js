@@ -640,14 +640,12 @@ $http.get('/api/academias')
 } );
 
 
-
-
 myApp.controller('UserCtrl', function ($scope, $http, $window, $rootScope, $location) {
   $scope.user = {name: '', password: ''};
   $scope.isAuthenticated = false;
   $scope.welcome = '';
   $scope.message = '';
-  $scope.messageregister = '¿Ya esta registrado?. Pulse ';
+  $scope.messageregister = '¿Aun no está registrado como usuario? Pulse ';
 
   $scope.showAcademy=false;
   $scope.newUser = false;
@@ -732,11 +730,8 @@ myApp.controller('UserCtrl', function ($scope, $http, $window, $rootScope, $loca
       .success(function (data, status, headers, config) {
         $window.sessionStorage.token = data.token;
         $scope.isAuthenticated = true;
-
-        $scope.registerAcademy = true;
-
-        console.log(data);
-
+        $scope.showAcademy = true;
+        //console.log(data);
         var encodedProfile = data.token.split('.')[1];
         var profile = JSON.parse(url_base64_decode(encodedProfile));
 
@@ -758,8 +753,6 @@ myApp.controller('UserCtrl', function ($scope, $http, $window, $rootScope, $loca
         $scope.welcome = '';
       });
   };
-
-
 
   $scope.logout = function () {
     $scope.welcome = '';
@@ -797,7 +790,7 @@ myApp.factory('authInterceptor', function ($rootScope, $q, $window) {
 
         $rootScope.isAutenticated = false;
         $rootScope.nombreus = '';
-        //$window.location.href = '/login.html'
+        $window.location.href = '/login.html'
 
       }
       return $q.reject(rejection);
