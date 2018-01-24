@@ -317,6 +317,24 @@ myApp.controller('alumnosController', function ($scope, $http , $moment ) {
           if($scope.formData.graduaciones.blanco.hasta!=null){
             $scope.formData.graduaciones.blanco.hasta = new Date($scope.formData.graduaciones.blanco.hasta);
           }
+
+          if($scope.formData.graduaciones.blanco.grado1!=null){
+            $scope.formData.graduaciones.blanco.grado1 = new Date($scope.formData.graduaciones.blanco.grado1);
+          }
+
+          if($scope.formData.graduaciones.blanco.grado2!=null){
+            $scope.formData.graduaciones.blanco.grado2 = new Date($scope.formData.graduaciones.blanco.grado2);
+          }
+
+          if($scope.formData.graduaciones.blanco.grado3!=null){
+            $scope.formData.graduaciones.blanco.grado3 = new Date($scope.formData.graduaciones.blanco.grado3);
+          }
+
+          if($scope.formData.graduaciones.blanco.grado4!=null){
+            $scope.formData.graduaciones.blanco.grado4 = new Date($scope.formData.graduaciones.blanco.grado4);
+          }
+
+
         }
         if($scope.formData.graduaciones.azul!=null){
           if($scope.formData.graduaciones.azul.desde!=null){  
@@ -325,6 +343,24 @@ myApp.controller('alumnosController', function ($scope, $http , $moment ) {
           if($scope.formData.graduaciones.azul.hasta!=null){
             $scope.formData.graduaciones.azul.hasta = new Date($scope.formData.graduaciones.azul.hasta);
           }
+
+           if($scope.formData.graduaciones.azul.grado1!=null){
+            $scope.formData.graduaciones.azul.grado1 = new Date($scope.formData.graduaciones.azul.grado1);
+          }
+
+          if($scope.formData.graduaciones.azul.grado2!=null){
+            $scope.formData.graduaciones.azul.grado2 = new Date($scope.formData.graduaciones.azul.grado2);
+          }
+
+          if($scope.formData.graduaciones.azul.grado3!=null){
+            $scope.formData.graduaciones.azul.grado3 = new Date($scope.formData.graduaciones.azul.grado3);
+          }
+
+          if($scope.formData.graduaciones.azul.grado4!=null){
+            $scope.formData.graduaciones.azul.grado4 = new Date($scope.formData.graduaciones.azul.grado4);
+          }
+
+
         }
         if($scope.formData.graduaciones.morado!=null){
           if($scope.formData.graduaciones.morado.desde !=null){
@@ -333,6 +369,24 @@ myApp.controller('alumnosController', function ($scope, $http , $moment ) {
           if($scope.formData.graduaciones.morado.hasta){
             $scope.formData.graduaciones.morado.hasta = new Date($scope.formData.graduaciones.morado.hasta);
           }
+
+          if($scope.formData.graduaciones.morado.grado1!=null){
+            $scope.formData.graduaciones.morado.grado1 = new Date($scope.formData.graduaciones.morado.grado1);
+          }
+
+          if($scope.formData.graduaciones.morado.grado2!=null){
+            $scope.formData.graduaciones.morado.grado2 = new Date($scope.formData.graduaciones.morado.grado2);
+          }
+
+          if($scope.formData.graduaciones.morado.grado3!=null){
+            $scope.formData.graduaciones.morado.grado3 = new Date($scope.formData.graduaciones.morado.grado3);
+          }
+
+          if($scope.formData.graduaciones.morado.grado4!=null){
+            $scope.formData.graduaciones.morado.grado4 = new Date($scope.formData.graduaciones.morado.grado4);
+          }
+
+
         }
         if($scope.formData.graduaciones.marron!=null){
           if($scope.formData.graduaciones.marron.desde){
@@ -341,6 +395,24 @@ myApp.controller('alumnosController', function ($scope, $http , $moment ) {
           if($scope.formData.graduaciones.marron.hasta){
             $scope.formData.graduaciones.marron.hasta = new Date($scope.formData.graduaciones.marron.hasta);
           }
+
+          if($scope.formData.graduaciones.marron.grado1!=null){
+            $scope.formData.graduaciones.marron.grado1 = new Date($scope.formData.graduaciones.marron.grado1);
+          }
+
+          if($scope.formData.graduaciones.marron.grado2!=null){
+            $scope.formData.graduaciones.marron.grado2 = new Date($scope.formData.graduaciones.marron.grado2);
+          }
+
+          if($scope.formData.graduaciones.marron.grado3!=null){
+            $scope.formData.graduaciones.marron.grado3 = new Date($scope.formData.graduaciones.marron.grado3);
+          }
+
+          if($scope.formData.graduaciones.marron.grado4!=null){
+            $scope.formData.graduaciones.marron.grado4 = new Date($scope.formData.graduaciones.marron.grado4);
+          }
+
+
         }
         if($scope.formData.graduaciones.negro!=null){
           if($scope.formData.graduaciones.negro.desde){
@@ -349,6 +421,23 @@ myApp.controller('alumnosController', function ($scope, $http , $moment ) {
           if($scope.formData.graduaciones.negro.hasta){
             $scope.formData.graduaciones.negro.hasta = new Date($scope.formData.graduaciones.negro.hasta);
           }
+
+          if($scope.formData.graduaciones.negro.grado1!=null){
+            $scope.formData.graduaciones.negro.grado1 = new Date($scope.formData.graduaciones.negro.grado1);
+          }
+
+          if($scope.formData.graduaciones.negro.grado2!=null){
+            $scope.formData.graduaciones.negro.grado2 = new Date($scope.formData.graduaciones.negro.grado2);
+          }
+
+          if($scope.formData.graduaciones.negro.grado3!=null){
+            $scope.formData.graduaciones.negro.grado3 = new Date($scope.formData.graduaciones.negro.grado3);
+          }
+
+          if($scope.formData.graduaciones.negro.grado4!=null){
+            $scope.formData.graduaciones.negro.grado4 = new Date($scope.formData.graduaciones.negro.grado4);
+          }
+          
         }
 
 
@@ -614,8 +703,8 @@ myApp.controller('alumnosController', function ($scope, $http , $moment ) {
         } else {
              $http.put('/api/alumnos/'+ $scope.formData._id, $scope.formData)
               .success(function(data) {
-                $scope.formData = {};
-                $scope.alumnos.push(data);
+                //$scope.formData = {};
+                //$scope.alumnos.push(data);
                 $scope.mostrarFormulario = false;
               })
               .error(function(data) {

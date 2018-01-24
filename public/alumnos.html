@@ -44,41 +44,62 @@
 
                     <input type="hidden" name="_id" placeholder = "Nombre del alumno" class="form-control" ng-model="formData._id">
 
-                    <div class="form-group">
-                        <label>Nombre <span style="color:red;">*</span></label> 
-                        <input type="text" name="nombre" placeholder = "Nombre del alumno" class="form-control" ng-model="formData.nombre" required="true">
-                        <small id="help" class="form-text text-muted">Nombre del alumno</small>
-                        
+                    <div ng-show="userForm.$invalid" class="alert alert-warning">
+                        Por favor rellene todos los campos obligatorios para crear un alumno
                     </div>
 
-                    <!-- USERNAME -->
-                    <div class="form-group">
-                        <label>Apellidos <span style="color:red;">*</span></label>
-                        <input type="text" name="apellidos" placeholder = "Apellidos del alumno" ng-model="formData.apellidos" class="form-control" required="true">
-                        <small id="help" class="form-text text-muted">Apellidos del alumno</small>
 
-                    </div>
+                    <div class="row">
+                        <div class="col-sm-3">
+                              <div class="form-group">
+                                  <label>Nombre <span style="color:red;">*</span></label> 
+                                  <input type="text" name="nombre" placeholder = "Nombre del alumno" class="form-control" ng-model="formData.nombre" required="true">
+                                  <small id="help" class="form-text text-muted">Nombre del alumno</small>
+                                  
+                              </div>
 
-                    <div class="form-group">  
-                      <label>Cinturon <span style="color:red;">*</span></label>
-                      <select name="cinturon" ng-model="formData.cinturon" class="form-control" placeholder = "Graduacion" required="true">
-                        <option value="blanco">Blanco</option>
-                        <option value="azul">Azul</option>
-                        <option value="morado">Morado</option>
-                        <option value="marron">Marron</option>
-                        <option value="negro">Negro</option>
-                      </select>
-                      <small id="help" class="form-text text-muted">Graduacion actual del alumno</small>
-                    </div>
+                        </div>
+                        <div class="col-sm-3">
+                                
+                              <div class="form-group">
+                                  <label>Apellidos <span style="color:red;">*</span></label>
+                                  <input type="text" name="apellidos" placeholder = "Apellidos del alumno" ng-model="formData.apellidos" class="form-control" required="true">
+                                  <small id="help" class="form-text text-muted">Apellidos del alumno</small>
 
-                    <div class="form-group">
-                        <label>Academia <span style="color:red;">*</span></label>
-                        <select name="theaca" ng-model="formData.id_academia"class="form-control" required="true">                         
-                              <option ng-selected = "formData.id_academia == item._id" ng-repeat="item in academias" ng-value="item._id">{{item.nombre}}</option>
+                              </div>
 
-                        </select>
-                        <small id="help" class="form-text text-muted">Academia a la que pertenece el alumno</small>
-                    </div>
+                        </div>
+
+                        <div class="col-sm-3">
+                                <div class="form-group">  
+                                  <label>Cinturon <span style="color:red;">*</span></label>
+                                  <select name="cinturon" ng-model="formData.cinturon" class="form-control" placeholder = "Graduacion" required="true">
+                                    <option value="blanco">Blanco</option>
+                                    <option value="azul">Azul</option>
+                                    <option value="morado">Morado</option>
+                                    <option value="marron">Marron</option>
+                                    <option value="negro">Negro</option>
+                                  </select>
+                                  <small id="help" class="form-text text-muted">Graduacion actual del alumno</small>
+                                </div>
+                        </div>
+
+                        <div class="col-sm-3">
+
+                                  <div class="form-group">
+                                      <label>Academia <span style="color:red;">*</span></label>
+                                      <select name="theaca" ng-model="formData.id_academia"class="form-control" required="true">                         
+                                            <option ng-selected = "formData.id_academia == item._id" ng-repeat="item in academias" ng-value="item._id">{{item.nombre}}</option>
+
+                                      </select>
+                                      <small id="help" class="form-text text-muted">Academia a la que pertenece el alumno</small>
+                                  </div>
+                        </div>
+
+
+                     </div>   
+
+                   
 
                      <div class="form-group">
                         <label>Descripcion</label>
@@ -196,20 +217,7 @@
 
                   </div>
 
-                    <div ng-show="userForm.nombre.$invalid" class="alert alert-warning">
-                        Falta rellenar el campo nombre del alumno
-                    </div>
-                    <div ng-show="userForm.apellidos.$invalid" class="alert alert-warning">
-                        Falta por rellenar el campo apellido
-                    </div>
-                    <div ng-show="userForm.cinturon.$invalid" class="alert alert-warning">
-                        Falta indicar el cinturon actual del alumno
-                    </div>
-                    <div ng-show="userForm.theaca.$invalid" class="alert alert-warning">
-                        Falta indicar la academia
-                    </div>
-
-
+                    
                     <br/>
 
                     <!-- SUBMIT BUTTON -->

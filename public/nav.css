@@ -52,3 +52,8 @@ background: gray; color: #fff; }
   background-color: #337ab7;
   padding : 15px 50px;
 }
+
+.nav-tabs>li.active>a  , .nav-tabs>li.active>a:focus {
+  background-color: #337ab7;
+  color : white;
+}

@@ -21,24 +21,51 @@ router.route('/alumnos')
         if(req.body.graduaciones.blanco!=null){
             alumno.graduaciones.blanco.desde = req.body.graduaciones.blanco.desde;
             alumno.graduaciones.blanco.hasta = req.body.graduaciones.blanco.hasta;
+
+            alumno.graduaciones.blanco.grado1 = req.body.graduaciones.blanco.grado1;
+            alumno.graduaciones.blanco.grado2 = req.body.graduaciones.blanco.grado2;
+            alumno.graduaciones.blanco.grado3 = req.body.graduaciones.blanco.grado3;
+            alumno.graduaciones.blanco.grado4 = req.body.graduaciones.blanco.grado4;
+
         }
         if(req.body.graduaciones.azul!=null){
             alumno.graduaciones.azul.desde = req.body.graduaciones.azul.desde;
             alumno.graduaciones.azul.hasta = req.body.graduaciones.azul.hasta;
+
+            alumno.graduaciones.azul.grado1 = req.body.graduaciones.azul.grado1;
+            alumno.graduaciones.azul.grado2 = req.body.graduaciones.azul.grado2;
+            alumno.graduaciones.azul.grado3 = req.body.graduaciones.azul.grado3;
+            alumno.graduaciones.azul.grado4 = req.body.graduaciones.azul.grado4;
         }
         if(req.body.graduaciones.morado!=null){
             alumno.graduaciones.morado.desde = req.body.graduaciones.morado.desde;
             alumno.graduaciones.morado.hasta = req.body.graduaciones.morado.hasta;
+
+            alumno.graduaciones.morado.grado1 = req.body.graduaciones.morado.grado1;
+            alumno.graduaciones.morado.grado2 = req.body.graduaciones.morado.grado2;
+            alumno.graduaciones.morado.grado3 = req.body.graduaciones.morado.grado3;
+            alumno.graduaciones.morado.grado4 = req.body.graduaciones.morado.grado4;
         }
         if(req.body.graduaciones.marron!=null){
             alumno.graduaciones.marron.desde = req.body.graduaciones.marron.desde;
             alumno.graduaciones.marron.hasta = req.body.graduaciones.marron.hasta;
+
+            alumno.graduaciones.marron.grado1 = req.body.graduaciones.marron.grado1;
+            alumno.graduaciones.marron.grado2 = req.body.graduaciones.marron.grado2;
+            alumno.graduaciones.marron.grado3 = req.body.graduaciones.marron.grado3;
+            alumno.graduaciones.marron.grado4 = req.body.graduaciones.marron.grado4;
         }
         if(req.body.graduaciones.negro!=null){
-            alumno.graduaciones.negro.desde = req.body.graduaciones.negro.desde;           
+            alumno.graduaciones.negro.desde = req.body.graduaciones.negro.desde;
+
+            alumno.graduaciones.negro.grado1 = req.body.graduaciones.negro.grado1;
+            alumno.graduaciones.negro.grado2 = req.body.graduaciones.negro.grado2;
+            alumno.graduaciones.negro.grado3 = req.body.graduaciones.negro.grado3;
+            alumno.graduaciones.negro.grado4 = req.body.graduaciones.negro.grado4;
+
         }
 
-        console.log(req.body.id_academia);
+        //console.log(req.body.id_academia);
         //console.log(JSON.stringify(req.body));
         
         //Se comprueba que el usuario conectado es propietario de la academia donde se esta insertando
@@ -74,8 +101,6 @@ router.route('/alumnos')
 
     .get(function(req, res) {
         
-
-
         Academia.find({propietario: req.user.id},{_id:1}, function(err, academias) {
             if (err){
                 res.send(err);
@@ -118,31 +143,62 @@ router.route('/alumnos/:alumno_id')
 
             if (err)
                 res.send(err);
-
+            //console.log(alumno);
             alumno.nombre = req.body.nombre;
             alumno.apellidos = req.body.apellidos;  
             alumno.cinturon = req.body.cinturon;  
             alumno.descripcion = req.body.descripcion;  // update the bears info
 
 
-            if(req.body.graduaciones.blanco!=null)
-            alumno.graduaciones.blanco.desde = req.body.graduaciones.blanco.desde;
-            if(req.body.graduaciones.blanco!=null)
+            if(req.body.graduaciones.blanco!=null){
+                alumno.graduaciones.blanco.desde = req.body.graduaciones.blanco.desde;
                 alumno.graduaciones.blanco.hasta = req.body.graduaciones.blanco.hasta;
-            if(req.body.graduaciones.azul!=null)
+
+                alumno.graduaciones.blanco.grado1 = req.body.graduaciones.blanco.grado1;
+                alumno.graduaciones.blanco.grado2 = req.body.graduaciones.blanco.grado2;
+                alumno.graduaciones.blanco.grado3 = req.body.graduaciones.blanco.grado3;
+                alumno.graduaciones.blanco.grado4 = req.body.graduaciones.blanco.grado4;
+
+            }
+            if(req.body.graduaciones.azul!=null){
                 alumno.graduaciones.azul.desde = req.body.graduaciones.azul.desde;
-            if(req.body.graduaciones.azul!=null)
                 alumno.graduaciones.azul.hasta = req.body.graduaciones.azul.hasta;
-            if(req.body.graduaciones.morado!=null)
+
+                alumno.graduaciones.azul.grado1 = req.body.graduaciones.azul.grado1;
+                alumno.graduaciones.azul.grado2 = req.body.graduaciones.azul.grado2;
+                alumno.graduaciones.azul.grado3 = req.body.graduaciones.azul.grado3;
+                alumno.graduaciones.azul.grado4 = req.body.graduaciones.azul.grado4;
+            }
+            if(req.body.graduaciones.morado!=null){
                 alumno.graduaciones.morado.desde = req.body.graduaciones.morado.desde;
-            if(req.body.graduaciones.morado!=null)
                 alumno.graduaciones.morado.hasta = req.body.graduaciones.morado.hasta;
-            if(req.body.graduaciones.marron!=null)
+
+                alumno.graduaciones.morado.grado1 = req.body.graduaciones.morado.grado1;
+                alumno.graduaciones.morado.grado2 = req.body.graduaciones.morado.grado2;
+                alumno.graduaciones.morado.grado3 = req.body.graduaciones.morado.grado3;
+                alumno.graduaciones.morado.grado4 = req.body.graduaciones.morado.grado4;
+            }
+            if(req.body.graduaciones.marron!=null){
                 alumno.graduaciones.marron.desde = req.body.graduaciones.marron.desde;
-            if(req.body.graduaciones.marron!=null)
                 alumno.graduaciones.marron.hasta = req.body.graduaciones.marron.hasta;
-            if(req.body.graduaciones.negro!=null)
+
+                alumno.graduaciones.marron.grado1 = req.body.graduaciones.marron.grado1;
+                alumno.graduaciones.marron.grado2 = req.body.graduaciones.marron.grado2;
+                alumno.graduaciones.marron.grado3 = req.body.graduaciones.marron.grado3;
+                alumno.graduaciones.marron.grado4 = req.body.graduaciones.marron.grado4;
+            }
+            if(req.body.graduaciones.negro!=null){
                 alumno.graduaciones.negro.desde = req.body.graduaciones.negro.desde;
+
+                alumno.graduaciones.negro.grado1 = req.body.graduaciones.negro.grado1;
+                alumno.graduaciones.negro.grado2 = req.body.graduaciones.negro.grado2;
+                alumno.graduaciones.negro.grado3 = req.body.graduaciones.negro.grado3;
+                alumno.graduaciones.negro.grado4 = req.body.graduaciones.negro.grado4;
+
+            }
+
+
+
 
 
             // save the bear

@@ -40,7 +40,7 @@
             $.ajax({
                   url: "api/entrenamientos/"+$('#calendar').fullCalendar('getDate').format('YYYY-MM-DD')+event._id,
                   headers: {
-                    'Authorization' :'JWT ' + sessionStorage.getItem('token')
+                    'Authorization' : sessionStorage.getItem('token')
                   }
               }).then(function(data) {
                     if(data!=null){
@@ -63,7 +63,7 @@
 
                             },
                             headers: {
-                                'Authorization' :'JWT ' + sessionStorage.getItem('token')
+                                'Authorization' : sessionStorage.getItem('token')
                             },
                             dataType: 'json',
                             success: function(result){

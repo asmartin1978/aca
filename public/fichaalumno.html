@@ -18,20 +18,31 @@
                 
                 
                 <p class="bg-info"><strong>GRADUACION Y MESES EN CADA CINTURON </strong></p>
-                <p type="text"><strong>Graduacion de cinturon blanco:</strong> {{formData.graduaciones.blanco.desde | date }}</p>
-                <p type="text"><strong>Graduacion de cinturon azul:</strong> {{formData.graduaciones.azul.desde | date }}</p>
-                <p type="text"><strong>Graduacion de cinturon morado:</strong> {{formData.graduaciones.morado.desde | date }}</p>
-                <p type="text"><strong>Graduacion de cinturon marron:</strong> {{formData.graduaciones.marron.desde | date }}</p>
-                <p type="text"><strong>Graduacion de cinturon negro:</strong> {{formData.graduaciones.negro.desde | date }}</p>
+                
 
 
+                <div class="row">
+                  <div class="col-sm-6">
+                      <p type="text"><strong>Graduacion de cinturon blanco:</strong> {{formData.graduaciones.blanco.desde | date }}</p>
+                      <p type="text"><strong>Graduacion de cinturon azul:</strong> {{formData.graduaciones.azul.desde | date }}</p>
+                      <p type="text"><strong>Graduacion de cinturon morado:</strong> {{formData.graduaciones.morado.desde | date }}</p>
+                      <p type="text"><strong>Graduacion de cinturon marron:</strong> {{formData.graduaciones.marron.desde | date }}</p>
+                      <p type="text"><strong>Graduacion de cinturon negro:</strong> {{formData.graduaciones.negro.desde | date }}</p>
+                  </div>
+                  <div class="col-sm-6">
+                      <canvas class="chart chart-horizontal-bar" chart-data="data" chart-labels="labels" 
+                                   ></canvas>
+                  </div>
+                </div>
+
+
+                 
 
 
 
                 <div class="row">
                   <div class="col-sm-12">
-                                      <canvas class="chart chart-horizontal-bar" chart-data="data" chart-labels="labels" 
-                                   ></canvas> 
+                                      
                           
                           <p class="bg-info"><strong>ASISTENCIA A CLASES POR MESES Y AÑO</strong></p>
                           <p>
