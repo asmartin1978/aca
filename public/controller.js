@@ -24,11 +24,16 @@ function url_base64_decode(str) {
 
 myApp.controller('academiasController', function ($window, $scope, $http ) {
   $scope.formData = {};
-  
+  $scope.showAcademyList=true;
+
   // Cuando se cargue la página, pide del API todos los TODOs
   $http.get('/api/academias')
     .success(function(data) {
       $scope.academias = data;
+      if(data.length==1){
+        $scope.cargarInformeAcademia(data[0]._id);
+        $scope.showAcademyList=false;
+      }
     })
     .error(function(data,status) {
           console.log('Error: ' + data );
@@ -48,7 +53,7 @@ myApp.controller('academiasController', function ($window, $scope, $http ) {
   };*/
 
   $scope.cargarInformeAcademia = function(_idaca){
-      console.log("Cargar el informe de la academia:" + _idaca);
+      //console.log("Cargar el informe de la academia:" + _idaca);
 
        
       //chart de cinturones de la academia
@@ -58,44 +63,72 @@ myApp.controller('academiasController', function ($window, $scope, $http ) {
        //$scope.dataCinturones = [1, 2, 3, 5, 5];
 
        //chart de clases por tipo
-       $scope.labelsClases = ["Brazilian Jiu Jitsu", "Grappling"];
+       $scope.labelsClases = ["Brazilian Jiu Jitsu", "Grappling" , "MMA" , "Boxeo" , "Muay Thai" , "Wrestling"];
        
        $http.get('/api/alumnos/')
           .success(function(alumnos) {
               //TODO: Sacar estadisticas de los alumnos.
               
-              $scope.dataCinturones = [
-                  alumnos.filter(function(elem){
+              $scope.cintosBlancos = alumnos.filter(function(elem){
                       return elem.cinturon == 'blanco';
-                  }).length, 
-                  alumnos.filter(function(elem){
+                  }).length; 
+
+              $scope.cintosAzules = alumnos.filter(function(elem){
                       return elem.cinturon == 'azul';
-                  }).length, 
-                  alumnos.filter(function(elem){
+                  }).length;
+
+              $scope.cintosMorados = alumnos.filter(function(elem){
                       return elem.cinturon == 'morado';
-                  }).length, 
-                  alumnos.filter(function(elem){
+                  }).length;
+
+              $scope.cintosMarrones = alumnos.filter(function(elem){
                       return elem.cinturon == 'marron';
-                  }).length, 
-                  alumnos.filter(function(elem){
+                  }).length;
+
+              $scope.cintosNegros = alumnos.filter(function(elem){
                       return elem.cinturon == 'negro';
-                  }).length];
+                  }).length;
+
+
+
+              $scope.dataCinturones = [$scope.cintosBlancos,$scope.cintosAzules,$scope.cintosMorados,
+                      $scope.cintosMarrones,$scope.cintosNegros];
 
 
               $http.get('/api/entrenamientos/')
                   .success(function(entrenamientos) {
-                      console.log(entrenamientos);
+                      //console.log(entrenamientos);
                     
-                      $scope.dataClases = [
-                          entrenamientos.filter(function(elem){
+                          $scope.numclasesBJJ = entrenamientos.filter(function(elem){
                                 return elem.nombre == 'Brazilian Jiu Jitsu';
-                          }).length,
-                          entrenamientos.filter(function(elem){
+                          }).length;
+                          $scope.numclasesGRA = entrenamientos.filter(function(elem){
                                 return elem.nombre == 'Grappling';
-                          }).length
+                          }).length ;
+                          $scope.numclasesMMA = entrenamientos.filter(function(elem){
+                                return elem.nombre == 'MMA';
+                          }).length ; 
+                          $scope.numclasesBOX = entrenamientos.filter(function(elem){
+                                return elem.nombre == 'Boxeo';
+                          }).length ; 
+                          $scope.numclasesMTH = entrenamientos.filter(function(elem){
+                                return elem.nombre == 'Muay Thai';
+                          }).length ; 
+
+                          $scope.numclasesWRE = entrenamientos.filter(function(elem){
+                                return elem.nombre == 'Wrestling';
+                          }).length ;
+
+
+                      $scope.dataClases = [
+                          $scope.numclasesBJJ ,
+                          $scope.numclasesGRA,
+                          $scope.numclasesMMA,
+                          $scope.numclasesBOX,
+                          $scope.numclasesMTH,
+                          $scope.numclasesWRE
 
                       ];
-
 
                   })
                   .error(function(data,status) {
@@ -119,6 +152,11 @@ myApp.controller('horariosController', function ($window, $scope, $http ) {
   $http.get('/api/academias')
     .success(function(data) {
       $scope.academias = data;
+      //Si solo hay 1 academia registrada la cargo
+      if (data.length == 1) {
+        $scope.cargarHorarios(data[0]._id);
+        $scope.cargarInstructores(data[0]._id);
+      }
     })
     .error(function(data,status) {
           console.log('Error: ' + data );
@@ -140,9 +178,22 @@ myApp.controller('horariosController', function ($window, $scope, $http ) {
 
   }
 
+  $scope.cargarInstructores = function(aca){
+         $http.get('/api/instructores/' + aca)
+        .success(function(data) {
+          $scope.instructores = data;
+          $scope.academiaId=aca;
+          $scope.mostrar = true;
+        })
+        .error(function(data,status) {
+              console.log('Error: ' + data );
+        });
+
+  }
+
   $scope.deleteHorario = function(horario, academia){
     
-    console.log(horario + ' ' + academia);
+    
     $http.delete('/api/maestroeventos/' + academia +'/' + horario)
       .success(function(clase) {
           $scope.cargarHorarios(academia);  
@@ -153,6 +204,18 @@ myApp.controller('horariosController', function ($window, $scope, $http ) {
 
   }
 
+
+  $scope.creaInstructor = function(aca){
+          
+          $http.post('/api/instructores/' + aca, $scope.instructor)
+          .success(function(ins) {
+            $scope.instructor = {};
+            $scope.instructores.push(ins);
+          })
+          .error(function(ins) {
+            console.log('Error:' + ins);
+          });
+  }
 
 
   $scope.creaHorario = function(aca){

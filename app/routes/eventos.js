@@ -66,7 +66,7 @@ router.route('/instalarsesiones/:academia_id/:dia')
                     evento.end = req.params.dia+" " + element.end;;
                     evento.editable = false;
                     //evento.dow = req.body.dow;
-                    evento.title = element.description;
+                    evento.title = element.title;
                     evento.academia = element.academia;
                     evento.propietario = element.propietario;
                     evento.color = element.color;  
@@ -93,7 +93,7 @@ router.route('/maestroeventos/:academia_id')
                 res.status(500).json({message: 'error al acceder a los eventos'});
             }
             res.json(eventos);
-        })
+        }).populate('instructor');
         
     })
 
@@ -110,6 +110,9 @@ router.route('/maestroeventos/:academia_id')
         maestro.propietario = req.user.id;
         maestro.color = req.body.color;
         maestro.academia = req.params.academia_id;
+        maestro.instructor = req.body.instructor;
+
+        console.log(req.params.instructor);
 
         maestro.save(function(err) {                                         
                                 if (err){

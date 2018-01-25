@@ -57,3 +57,8 @@ background: gray; color: #fff; }
   background-color: #337ab7;
   color : white;
 }
+
+
+#exTabHora .tab-content {
+  padding : 15px 50px;
+}

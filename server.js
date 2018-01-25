@@ -76,6 +76,7 @@ var alumnosroute = require('./app/routes/alumnos');
 var academiaroute = require('./app/routes/academias');
 var entrenamientoroute = require('./app/routes/entrenamientos');
 var eventoroute = require('./app/routes/eventos');
+var instructorroute = require('./app/routes/instructores');
 
 // REGISTER OUR ROUTES -------------------------------
 
@@ -87,6 +88,7 @@ app.use('/api' , eventoroute);
 app.use('/api', alumnosroute);
 app.use('/api', academiaroute);
 app.use('/api', entrenamientoroute);
+app.use('/api', instructorroute);
 app.use('/autenticacion' , loginroute);
 
 

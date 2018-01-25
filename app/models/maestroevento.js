@@ -11,6 +11,7 @@ var MaestroEventoSchema   = new Schema({
     academia: { type: String, ref: 'Academia' },
     //dow: [Number],
     propietario: String,
+    instructor: { type: String, ref: 'Instructor' },
     color: String
 });
 

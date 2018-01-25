@@ -38,67 +38,158 @@
 
         <div ng-show="mostrar">
 
-        <div class="row">
-                      <div class="col-sm-6">
-                            <form ng-submit="creaHorario(academiaId)" name="horarioForm">
-                                  <label>Disciplina <span style="color:red;">*</span></label>
-                                  <select ng-model="clase.title" class="form-control" name="title" required="true">
-                                           <option value="Brazilian Jiu Jitsu">Brazilian Jiu Jitsu</option>
-                                           <option value="Grappling">Grappling</option>
-                                  </select>
+         
 
-                                  <label>Descripcion <span style="color:red;">*</span></label> 
-                                    <input ng-model="clase.description" class="form-control" required="true" type="text" name="description" />
 
-                                   <label>Hora de comienzo <span style="color:red;">*</span></label>
-                                    <input required="true" ng-model="clase.start" class="form-control" type="text" name="start" 
 
-                                    placeholder="HH:mm" />
-                                    
-                                    <label>Hora de fin <span style="color:red;">*</span></label>
-                                    <input required="true" ng-model="clase.end" class="form-control" type="text" name="end" placeholder="HH:mm"/>
 
-                                  <label>Color para la visualización en la agenda <span style="color:red;">*</span></label>
-                                  <select required="true" ng-model="clase.color" class="form-control" name="color">
-                                      <option value="RED">Rojo</option>
-                                      <option value="GREEN">Verde</option>
-                                      <option value="BLUE">Azul</option>
-                                      <option value="ORANGE">Naranja</option>
-                                      <option value="BROWN">Marron</option>
-                                  </select>
+ <div id="exTabHora">
+                    <ul class="nav nav-tabs" id="tabContent">
+                        <li class="active"><a id="cintos" href="#horarios" data-toggle="tab">Horarios</a></li>
+                        <li><a id="cintos" href="#instructores" data-toggle="tab">Instructores</a></li>
+                        
+                    </ul>
 
-                                   <button class="btn btn-lg btn-primary btn-block" ng-disabled="horarioForm.$invalid" type="submit">Crear horario</button>  
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="horarios">
+                            
+                                <div class="row">
+                                          <div class="col-sm-6">
+                                                <form ng-submit="creaHorario(academiaId)" name="horarioForm">
+                                                      <label>Disciplina <span style="color:red;">*</span></label>
+                                                      <select ng-model="clase.title" class="form-control" name="title" required="true">
+                                                               <option value="Brazilian Jiu Jitsu">Brazilian Jiu Jitsu</option>
+                                                               <option value="Grappling">Grappling</option>
+                                                               <option value="MMA">MMA</option>
+                                                               <option value="Boxeo">Boxeo</option>
+                                                               <option value="Muay Thai">Muay Thai</option>
+                                                               <option value="Wrestling">Wrestling</option>
+                                                      </select>
 
-                            </form>
-                      </div>
-                      <div class="col-sm-6">
-                                  <table class="table table-hover">
-                                  <thead>
-                                      <tr>
-                                        <th>Titulo</th>
-                                        <th>Descripcion</th>
-                                        <th>color</th>      
-                                        <th>Inicio</th>          
-                                        <th>Fin</th>
-                                        <th>Opciones</th>
-                                      </tr>
-                                  </thead>
-                                  <tbody>
-                                    <tr ng-repeat="hora in horarios">
-                                      <td>{{ hora.title }}</td>
-                                      <td>{{ hora.description }}</td>
-                                      <td>{{ hora.color }}</td>
-                                      <td>{{ hora.start }}</td>
-                                      <td>{{ hora.end }}</td>
-                                      <td><button ng-click="deleteHorario(hora._id,academiaId)" type="button" ng-click="" class="btn btn-primary">Borrar</button></td>
-                                    </tr>
-                                  </tbody>
-                                </table>
 
-                      </div>
-        
+                                                      <label>Instructor <span style="color:red;">*</span></label>
+                                                    
+                                                      
 
-         </div> 
+                                                      <select name='instructor' 
+                                                        ng-model='clase.instructor' 
+                                                        class="form-control" required="true"
+                                                        ng-options='item._id as item.nombre for item in instructores'>
+                                                      </select>
+
+                                                      <label>Descripcion <span style="color:red;">*</span></label> 
+                                                        <input ng-model="clase.description" class="form-control" required="true" type="text" name="description" />
+
+                                                       <label>Hora de comienzo <span style="color:red;">*</span></label>
+                                                        <input required="true" ng-model="clase.start" class="form-control" type="text" name="start" 
+
+                                                        placeholder="HH:mm" />
+                                                        
+                                                        <label>Hora de fin <span style="color:red;">*</span></label>
+                                                        <input required="true" ng-model="clase.end" class="form-control" type="text" name="end" placeholder="HH:mm"/>
+
+                                                      <label>Color para la visualización en la agenda <span style="color:red;">*</span></label>
+                                                      <select required="true" ng-model="clase.color" class="form-control" name="color">
+                                                          <option value="RED">Rojo</option>
+                                                          <option value="GREEN">Verde</option>
+                                                          <option value="BLUE">Azul</option>
+                                                          <option value="ORANGE">Naranja</option>
+                                                          <option value="BROWN">Marron</option>
+                                                      </select>
+
+                                                       <button class="btn btn-lg btn-primary btn-block" ng-disabled="horarioForm.$invalid" type="submit">Crear horario</button>  
+
+                                                </form>
+                                          </div>
+                                          <div class="col-sm-6">
+                                                      <table class="table table-hover">
+                                                      <thead>
+                                                          <tr>
+                                                            <th>Titulo</th>
+                                                            <th>Descripcion</th>
+                                                            <th>Instructor</th>
+                                                            <th>color</th>      
+                                                            <th>Inicio</th>          
+                                                            <th>Fin</th>
+                                                            <th>Opciones</th>
+                                                          </tr>
+                                                      </thead>
+                                                      <tbody>
+                                                        <tr ng-repeat="hora in horarios">
+                                                          <td>{{ hora.title }}</td>
+                                                          <td>{{ hora.description }}</td>
+                                                          <td>{{ hora.instructor.nombre }} {{ hora.instructor.apellidos }}</td>
+                                                          <td>{{ hora.color }}</td>
+                                                          <td>{{ hora.start }}</td>
+                                                          <td>{{ hora.end }}</td>
+                                                          <td><button ng-click="deleteHorario(hora._id,academiaId)" type="button" ng-click="" class="btn btn-primary">Borrar</button></td>
+                                                        </tr>
+                                                      </tbody>
+                                                    </table>
+
+                                          </div>
+                            
+                             </div>
+
+
+                        </div>
+                        <div class="tab-pane" id="instructores">
+                            
+                                  <div class="row">
+                                              <div class="col-sm-6">
+                                                    <form ng-submit="creaInstructor(academiaId)" name="instructorForm">
+                                                         
+
+                                                          <label>Nombre del instructor <span style="color:red;">*</span></label> 
+                                                            <input ng-model="instructor.nombre" class="form-control" required="true" type="text" name="nombre" />
+
+                                                            <label>Apellidos <span style="color:red;">*</span></label> 
+                                                            <input ng-model="instructor.apellidos" class="form-control" required="true" type="text" name="apellidos" />
+
+                                                           
+                                                           <button class="btn btn-lg btn-primary btn-block" ng-disabled="instructorForm.$invalid" type="submit">Crear Instructor</button>  
+
+                                                    </form>
+                                              </div>
+                                              <div class="col-sm-6">
+                                                          <table class="table table-hover">
+                                                          <thead>
+                                                              <tr>
+                                                                <th>Nombre</th>
+                                                                <th>Apellidos</th>
+                                                                <th>Opciones</th>
+                                                              </tr>
+                                                          </thead>
+                                                          <tbody>
+                                                            <tr ng-repeat="instructor in instructores">
+                                                              <td>{{ instructor.nombre }}</td>
+                                                              <td>{{ instructor.apellidos }}</td>
+                                                              <td>-</td>
+                                                            </tr>
+                                                          </tbody>
+                                                        </table>
+
+                                              </div>
+                                
+
+                                 </div>
+
+
+                        </div>
+
+
+                    
+                  </div>
+</div>
+
+
+
+
+
+          
+
+
+
 
      
 
