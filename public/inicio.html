@@ -14,6 +14,13 @@
   <script src='moment/moment.min.js'></script>
   <script src='calendar/fullcalendar.js'></script>
   <script src='calendar/locale/es.js'></script>
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.0/angular.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="angular-momentjs/angular-momentjs.js"></script>
+    <script src="controller.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.6/Chart.min.js'></script>
+    <script src='http://cdn.jsdelivr.net/angular.chartjs/latest/angular-chart.min.js'></script>
+
   
 
 <script>
@@ -112,9 +119,9 @@
 <div ng-include="'entrenamiento.html'"></div>
 
 <!-- Listado de academias -->
-<div class="container">
+<div class="container" ngCloak>
     
-      <table class="table table-hover">
+      <table class="table table-hover" >
         <thead>
             <tr>
               <th>Nombre</th>
@@ -140,12 +147,7 @@
 
 </div>
   
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.0/angular.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="angular-momentjs/angular-momentjs.js"></script>
-    <script src="controller.js"></script>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.6/Chart.min.js'></script>
-    <script src='http://cdn.jsdelivr.net/angular.chartjs/latest/angular-chart.min.js'></script>
+    
 
 </body>
 </html>
